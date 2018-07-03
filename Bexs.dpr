@@ -5,7 +5,8 @@ uses
   Forms,
   ufMain in 'ufMain.pas' {FrmMain},
   DataModule in 'DataModule.pas' {DataModule2: TDataModule},
-  ufEolink in 'ufEolink.pas' {FrmEolink};
+  ufEolink in 'ufEolink.pas' {FrmEolink},
+  ufTask in 'ufTask.pas' {FrmTask};
 
 {$R *.res}
 

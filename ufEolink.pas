@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
   cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  StdCtrls;
+  StdCtrls, ComCtrls, ToolWin;
 
 type
   TFrmEolink = class(TForm)
@@ -32,42 +32,63 @@ type
     cxGrid1Level1: TcxGridLevel;
     cxGrid1: TcxGrid;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
+    cxGrid1DBTableView1PARENT_ID: TcxGridDBColumn;
+    cxGrid1DBTableView1FK_OBJTP: TcxGridDBColumn;
+    cxGrid1DBTableView1NAME: TcxGridDBColumn;
     cxGrid1DBTableView1REU: TcxGridDBColumn;
-    cxGrid1DBTableView1KUL: TcxGridDBColumn;
+    cxGrid1DBTableView1UK: TcxGridDBColumn;
+    cxGrid1DBTableView1STREET: TcxGridDBColumn;
     cxGrid1DBTableView1ND: TcxGridDBColumn;
-    cxGrid1DBTableView1KW: TcxGridDBColumn;
-    cxGrid1DBTableView1LSK: TcxGridDBColumn;
     cxGrid1DBTableView1ENTRY: TcxGridDBColumn;
-    cxGrid1DBTableView1USL: TcxGridDBColumn;
-    cxGrid1DBTableView1ID_CNT: TcxGridDBColumn;
+    cxGrid1DBTableView1KW: TcxGridDBColumn;
     cxGrid1DBTableView1GUID: TcxGridDBColumn;
     cxGrid1DBTableView1CD: TcxGridDBColumn;
-    cxGrid1DBTableView1FK_OBJTP: TcxGridDBColumn;
     cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn;
-    cxGrid1DBTableView1FK_OBJTPX: TcxGridDBColumn;
     cxGrid1DBTableView1APP_TP: TcxGridDBColumn;
     cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn;
-    cxGrid1DBTableView1PARENT_ID: TcxGridDBColumn;
     cxGrid1DBTableView1OGRN: TcxGridDBColumn;
     cxGrid1DBTableView1DT_CRT: TcxGridDBColumn;
-    cxGrid1DBTableView1FK_USER: TcxGridDBColumn;
-    cxGrid1DBTableView1STATUS: TcxGridDBColumn;
-    cxGrid1DBTableView1ID_GRP: TcxGridDBColumn;
-    cxGrid1DBTableView1C_LSK_ID: TcxGridDBColumn;
-    cxGrid1DBTableView1COMM: TcxGridDBColumn;
     cxGrid1DBTableView1DT_UPD: TcxGridDBColumn;
-    Button1: TButton;
-    Button2: TButton;
+    cxGrid1DBTableView1KUL: TcxGridDBColumn;
+    OD_EolinkID: TFloatField;
+    OD_EolinkPARENT_ID: TFloatField;
+    OD_EolinkFK_OBJTP: TFloatField;
+    OD_EolinkNAME: TStringField;
+    OD_EolinkREU: TStringField;
+    OD_EolinkUK: TStringField;
+    OD_EolinkKUL: TStringField;
+    OD_EolinkSTREET: TStringField;
+    OD_EolinkND: TStringField;
+    OD_EolinkENTRY: TFloatField;
+    OD_EolinkKW: TStringField;
+    OD_EolinkGUID: TStringField;
+    OD_EolinkCD: TStringField;
+    OD_EolinkUNIQNUM: TStringField;
+    OD_EolinkAPP_TP: TFloatField;
+    OD_EolinkFK_KLSK_OBJ: TFloatField;
+    OD_EolinkOGRN: TStringField;
+    OD_EolinkDT_CRT: TDateTimeField;
+    OD_EolinkDT_UPD: TDateTimeField;
+    OD_EolinkCOMM: TStringField;
+    cxGrid1DBTableView1COMM: TcxGridDBColumn;
+    ToolBar1: TToolBar;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    Edit1: TEdit;
+    ToolButton4: TToolButton;
+    ToolButton5: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
+    procedure ToolButton1Click(Sender: TObject);
+    procedure ToolButton2Click(Sender: TObject);
+    procedure ToolButton4Click(Sender: TObject);
+    procedure ToolButton5Click(Sender: TObject);
   private
     { Private declarations }
   public
-    { Public declarations }
+    procedure setFltById(id: Integer);
   end;
 
 var
@@ -77,24 +98,18 @@ implementation
 
 {$R *.dfm}
 
+// фильтр по Id
+procedure TFrmEolink.setFltById(id: Integer);
+begin
+  // установить фильтр по одному Id (или не устанавливать, если 0)
+  OD_Eolink.SetVariable('FLTID', id);
+  OD_Eolink.Active:=false;
+  OD_Eolink.Active:=true;
+end;
+
 procedure TFrmEolink.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action:=caFree;
-end;
-
-procedure TFrmEolink.FormCreate(Sender: TObject);
-begin
-  OD_Eolink.Active:=True;
-end;
-
-procedure TFrmEolink.Button1Click(Sender: TObject);
-begin
-  OD_Eolink.ExecuteQBE;
-end;
-
-procedure TFrmEolink.Button2Click(Sender: TObject);
-begin
-  OD_Eolink.QBEMode:=True;
 end;
 
 procedure TFrmEolink.OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
@@ -113,6 +128,35 @@ begin
      Action:=afStop;
     end;
   end;
+
+end;
+
+procedure TFrmEolink.ToolButton1Click(Sender: TObject);
+begin
+  OD_Eolink.QBEMode:=True;
+end;
+
+procedure TFrmEolink.ToolButton2Click(Sender: TObject);
+begin
+  OD_Eolink.ExecuteQBE;
+end;
+
+procedure TFrmEolink.ToolButton4Click(Sender: TObject);
+begin
+  // установить фильтр по id записей
+  OD_Eolink.SetVariable('IDSUBST', '('+Edit1.Text+')');
+  OD_Eolink.SetVariable('FLT', 1);
+  OD_Eolink.Active:=false;
+  OD_Eolink.Active:=true;
+
+end;
+
+procedure TFrmEolink.ToolButton5Click(Sender: TObject);
+begin
+  // снять фильтр по id записей
+  OD_Eolink.SetVariable('FLT', 0);
+  OD_Eolink.Active:=false;
+  OD_Eolink.Active:=true;
 
 end;
 

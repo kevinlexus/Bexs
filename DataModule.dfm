@@ -2,14 +2,13 @@ object DataModule2: TDataModule2
   OldCreateOrder = False
   Left = 1291
   Top = 193
-  Height = 150
-  Width = 215
+  Height = 237
+  Width = 272
   object OracleSession1: TOracleSession
     DesignConnection = True
-    LogonUsername = 'lev'
-    LogonPassword = 'testtest1'
-    LogonDatabase = 'RKCDB'
-    Connected = True
+    LogonUsername = 'scott'
+    LogonPassword = 'monemyro'
+    LogonDatabase = 'ORCL'
     Left = 40
     Top = 24
   end
