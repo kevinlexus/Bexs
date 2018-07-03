@@ -78,6 +78,8 @@ type
     ToolButton5: TToolButton;
     PopupMenu1: TPopupMenu;
     Eolink1: TMenuItem;
+    OD_TaskEOLTP_NAME: TStringField;
+    cxGrid1DBTableView1EOLTPNAME: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -88,7 +90,7 @@ type
   private
     { Private declarations }
   public
-    { Public declarations }
+    procedure setFltById(id: Integer);
   end;
 
 var
@@ -99,6 +101,15 @@ implementation
 uses ufEolink;
 
 {$R *.dfm}
+
+// фильтр по Id
+procedure TFrmTask.setFltById(id: Integer);
+begin
+  // установить фильтр по одному Id (или не устанавливать, если 0)
+  OD_Task.SetVariable('FLTID', id);
+  OD_Task.Active:=false;
+  OD_Task.Active:=true;
+end;
 
 procedure TFrmTask.FormClose(Sender: TObject; var Action: TCloseAction);
 begin

@@ -40,79 +40,84 @@ object FrmTask: TFrmTask
       OptionsView.GroupByBox = False
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 54
+        Width = 36
       end
       object cxGrid1DBTableView1PARENT_ID: TcxGridDBColumn
         DataBinding.FieldName = 'PARENT_ID'
-        Width = 66
+        Width = 45
       end
       object cxGrid1DBTableView1DEP_ID: TcxGridDBColumn
         DataBinding.FieldName = 'DEP_ID'
-        Width = 44
+        Width = 29
       end
       object cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_EOLINK'
-        Width = 63
+        Width = 43
+      end
+      object cxGrid1DBTableView1EOLTPNAME: TcxGridDBColumn
+        Caption = #1058#1080#1087' '#1086#1073#1098#1077#1082#1090#1072
+        DataBinding.FieldName = 'EOLTP_NAME'
+        Width = 42
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 87
+        Width = 91
       end
       object cxGrid1DBTableView1STATE: TcxGridDBColumn
         DataBinding.FieldName = 'STATE'
-        Width = 40
+        Width = 42
       end
       object cxGrid1DBTableView1FK_ACT: TcxGridDBColumn
         DataBinding.FieldName = 'FK_ACT'
-        Width = 42
+        Width = 44
       end
       object cxGrid1DBTableView1ACT_NAME: TcxGridDBColumn
         DataBinding.FieldName = 'ACT_NAME'
-        Width = 106
+        Width = 112
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 59
+        Width = 61
       end
       object cxGrid1DBTableView1RESULT: TcxGridDBColumn
         DataBinding.FieldName = 'RESULT'
-        Width = 88
+        Width = 93
       end
       object cxGrid1DBTableView1ERRACKCNT: TcxGridDBColumn
         DataBinding.FieldName = 'ERRACKCNT'
-        Width = 68
+        Width = 72
       end
       object cxGrid1DBTableView1PRIORITY: TcxGridDBColumn
         DataBinding.FieldName = 'PRIORITY'
-        Width = 79
+        Width = 83
       end
       object cxGrid1DBTableView1TRACE: TcxGridDBColumn
         DataBinding.FieldName = 'TRACE'
-        Width = 64
+        Width = 67
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 37
+        Width = 39
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 39
+        Width = 41
       end
       object cxGrid1DBTableView1FK_USER: TcxGridDBColumn
         DataBinding.FieldName = 'FK_USER'
-        Width = 38
+        Width = 40
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
-        Width = 53
+        Width = 55
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 84
+        Width = 89
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 76
+        Width = 80
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -192,18 +197,26 @@ object FrmTask: TFrmTask
         'select t.id, t.parent_id, t.dep_id, t.fk_eolink, t.state, t.uniq' +
         'num, t.cd, t.errackcnt, t.priority, t.trace,'
       't.fk_act, s.name as act_name, t.result, t.guid, t.tguid, '
-      't.fk_user, t.dt_crt, t.dt_upd, t.comm'
+      
+        't.fk_user, t.dt_crt, t.dt_upd, t.comm, tp.name as eoltp_name, t.' +
+        'rowid'
       ' from EXS.TASK t'
       ' join bs.list s on t.fk_act=s.id '
-      'where (:flt=0 or t.id in :idSubst)'
+      ' left join EXS.EOLINK e on t.fk_eolink=e.id'
+      ' left join bs.addr_tp tp on e.fk_objtp=tp.id'
+      ''
+      
+        'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
+        ':fltId)'
       'order by t.cd, t.id, t.parent_id, t.dep_id')
     Optimize = False
     Variables.Data = {
-      0300000002000000080000003A49445355425354050000001500000028333134
+      0300000003000000080000003A49445355425354050000001500000028333134
       3636362C31363635322C3430353137290000000000040000003A464C54030000
-      00040000000000000000000000}
+      00040000000000000000000000060000003A464C544944030000000000000000
+      000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000013000000020000004944010000000000040000004755494401000000
+      0400000014000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000009
       000000504152454E545F49440100000000000600000044545F43525401000000
       00000600000044545F55504401000000000004000000434F4D4D010000000000
@@ -212,7 +225,8 @@ object FrmTask: TFrmTask
       0000000000080000005052494F52495459010000000000050000005452414345
       01000000000006000000464B5F414354010000000000080000004143545F4E41
       4D4501000000000006000000524553554C540100000000000500000054475549
-      4401000000000007000000464B5F55534552010000000000}
+      4401000000000007000000464B5F555345520100000000000A000000454F4C54
+      505F4E414D45010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     Session = DataModule2.OracleSession1
@@ -305,6 +319,11 @@ object FrmTask: TFrmTask
       FieldName = 'COMM'
       Origin = 't.COMM'
       Size = 1024
+    end
+    object OD_TaskEOLTP_NAME: TStringField
+      FieldName = 'EOLTP_NAME'
+      Origin = 'tp.name'
+      Size = 100
     end
   end
   object DS_task: TDataSource

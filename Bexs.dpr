@@ -6,7 +6,9 @@ uses
   ufMain in 'ufMain.pas' {FrmMain},
   DataModule in 'DataModule.pas' {DataModule2: TDataModule},
   ufEolink in 'ufEolink.pas' {FrmEolink},
-  ufTask in 'ufTask.pas' {FrmTask};
+  ufTask in 'ufTask.pas' {FrmTask},
+  ufReference in 'ufReference.pas' {FrmReference},
+  ufRefCorrespond in 'ufRefCorrespond.pas' {FrmRefCorrespond};
 
 {$R *.res}
 

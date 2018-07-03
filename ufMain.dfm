@@ -31,6 +31,17 @@ object FrmMain: TFrmMain
         OnClick = Eolink1Click
       end
     end
+    object N2: TMenuItem
+      Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080
+      object N3: TMenuItem
+        Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080' '#1043#1048#1057
+        OnClick = N3Click
+      end
+      object N4: TMenuItem
+        Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082' '#1089#1086#1086#1090#1074#1077#1090#1089#1090#1074#1080#1103' '#1091#1089#1083#1091#1075
+        OnClick = N4Click
+      end
+    end
   end
   object ImageList1: TImageList
     Left = 24

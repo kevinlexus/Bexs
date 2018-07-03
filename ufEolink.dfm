@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 337
-  Top = 205
+  Left = 254
+  Top = 200
   Width = 1226
   Height = 475
   Caption = 'Eolink'
@@ -23,6 +23,7 @@ object FrmEolink: TFrmEolink
     Width = 1210
     Height = 407
     Align = alClient
+    PopupMenu = PopupMenu1
     TabOrder = 0
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
@@ -341,5 +342,13 @@ object FrmEolink: TFrmEolink
     DataSet = OD_Eolink
     Left = 72
     Top = 152
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 120
+    Top = 152
+    object Eolink1: TMenuItem
+      Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1077' Task'
+      OnClick = Eolink1Click
+    end
   end
 end

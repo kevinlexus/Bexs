@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
   cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  StdCtrls, ComCtrls, ToolWin;
+  StdCtrls, ComCtrls, ToolWin, Menus, ufTask;
 
 type
   TFrmEolink = class(TForm)
@@ -78,6 +78,8 @@ type
     Edit1: TEdit;
     ToolButton4: TToolButton;
     ToolButton5: TToolButton;
+    PopupMenu1: TPopupMenu;
+    Eolink1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -85,6 +87,7 @@ type
     procedure ToolButton2Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
+    procedure Eolink1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -158,6 +161,13 @@ begin
   OD_Eolink.Active:=false;
   OD_Eolink.Active:=true;
 
+end;
+
+procedure TFrmEolink.Eolink1Click(Sender: TObject);
+begin
+  // найти задания Task
+  Application.CreateForm(TFrmTask, FrmTask);
+  FrmTask.setFltById(OD_Eolink.FieldByName('ID').asInteger);
 end;
 
 end.

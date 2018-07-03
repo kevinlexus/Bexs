@@ -9,6 +9,7 @@ object DataModule2: TDataModule2
     LogonUsername = 'scott'
     LogonPassword = 'monemyro'
     LogonDatabase = 'ORCL'
+    Connected = True
     Left = 40
     Top = 24
   end
