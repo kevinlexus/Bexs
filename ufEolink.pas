@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
   cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  StdCtrls, ComCtrls, ToolWin, Menus, ufTask;
+  StdCtrls, ComCtrls, ToolWin, Menus, ufTask, Oracle;
 
 type
   TFrmEolink = class(TForm)
@@ -80,6 +80,8 @@ type
     ToolButton5: TToolButton;
     PopupMenu1: TPopupMenu;
     Eolink1: TMenuItem;
+    N1: TMenuItem;
+    OQ_add_house: TOracleQuery;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -88,6 +90,8 @@ type
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
+    procedure N1Click(Sender: TObject);
+    procedure PopupMenu1Popup(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,6 +103,8 @@ var
 
 implementation
 
+uses DataModule;
+
 {$R *.dfm}
 
 // фильтр по Id
@@ -108,6 +114,11 @@ begin
   OD_Eolink.SetVariable('FLTID', id);
   OD_Eolink.Active:=false;
   OD_Eolink.Active:=true;
+  // права доступа
+  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+  begin
+    OD_Eolink.ReadOnly:=true;
+  end
 end;
 
 procedure TFrmEolink.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -168,6 +179,31 @@ begin
   // найти задания Task
   Application.CreateForm(TFrmTask, FrmTask);
   FrmTask.setFltById(OD_Eolink.FieldByName('ID').asInteger);
+end;
+
+procedure TFrmEolink.N1Click(Sender: TObject);
+begin
+  if Application.MessageBox('В данную организацию будут добавлены недостающие дома из справочника обмена с ГИС ЖКХ',
+    'Внимание!', MB_OKCANCEL + MB_ICONWARNING) = IDOK then
+  begin
+    // добавить к организации недостающие дома с guid
+    // из справочника для обмена с ГИС
+    OQ_add_house.SetVariable('REU', OD_Eolink.FieldByName('REU').AsString);
+    OQ_add_house.SetVariable('FK_EOLINK', OD_Eolink.FieldByName('ID').AsInteger);
+    OQ_add_house.Execute;
+    OD_Eolink.Active:=false;
+    OD_Eolink.Active:=true;
+  end;
+end;
+
+procedure TFrmEolink.PopupMenu1Popup(Sender: TObject);
+begin
+  // погасить добавление домов, если не организация
+  if OD_Eolink.FieldByName('FK_OBJTP').AsInteger <> 1 then
+      N1.Enabled:=false
+  else
+      N1.Enabled:=True;
+
 end;
 
 end.

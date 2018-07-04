@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, OracleData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  ExtCtrls;
+  ExtCtrls, DataModule;
 
 type
   TFrmReference = class(TForm)
@@ -37,14 +37,12 @@ type
     OD_ListTpGRP: TStringField;
     OD_ListTpFK_EXT: TFloatField;
     OD_ListTpFK_EOLINK: TFloatField;
-    OD_ListTpCOMM: TStringField;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
     cxGrid1DBTableView1CD: TcxGridDBColumn;
     cxGrid1DBTableView1NAME: TcxGridDBColumn;
     cxGrid1DBTableView1GRP: TcxGridDBColumn;
     cxGrid1DBTableView1FK_EXT: TcxGridDBColumn;
     cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn;
-    cxGrid1DBTableView1COMM: TcxGridDBColumn;
     Splitter1: TSplitter;
     OD_list: TOracleDataSet;
     Ds_List: TDataSource;
@@ -71,7 +69,10 @@ type
     cxGridDBTableView1ACTUAL: TcxGridDBColumn;
     cxGridDBTableView1NAME: TcxGridDBColumn;
     cxGridDBTableView1S1: TcxGridDBColumn;
+    OD_ListTpNAME_ORG: TStringField;
+    cxGrid1DBTableView1NAME_ORG: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -89,6 +90,12 @@ procedure TFrmReference.FormCreate(Sender: TObject);
 begin
   OD_ListTp.Active:=True;
   OD_List.Active:=True;
+end;
+
+procedure TFrmReference.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  Action:=caFree;
 end;
 
 end.

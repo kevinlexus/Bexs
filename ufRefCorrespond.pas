@@ -26,26 +26,23 @@ uses
 
 type
   TFrmRefCorrespond = class(TForm)
-    OD_ServGis: TOracleDataSet;
-    DS_ServGis: TDataSource;
-    OD_ServGisID: TFloatField;
-    OD_ServGisFK_SERV: TFloatField;
-    OD_ServGisFK_USL: TStringField;
-    OD_ServGisFK_LIST: TFloatField;
-    OD_ServGisGRP: TFloatField;
-    OD_ServGisFK_EOLINK: TFloatField;
-    OD_List: TOracleDataSet;
-    DS_List: TDataSource;
-    OD_Eolink: TOracleDataSet;
+    OD_servgis: TOracleDataSet;
+    DS_servgis: TDataSource;
+    OD_servgisID: TFloatField;
+    OD_servgisFK_USL: TStringField;
+    OD_servgisFK_LIST: TFloatField;
+    OD_servgisGRP: TFloatField;
+    OD_servgisFK_EOLINK: TFloatField;
+    OD_list: TOracleDataSet;
+    DS_list: TDataSource;
+    OD_eolink: TOracleDataSet;
     DS_eolink: TDataSource;
     cxGrid1: TcxGrid;
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1DBTableView1ID: TcxGridDBColumn;
-    cxGrid1DBTableView1FK_SERV: TcxGridDBColumn;
     cxGrid1DBTableView1FK_USL: TcxGridDBColumn;
     cxGrid1DBTableView1FK_LIST: TcxGridDBColumn;
     cxGrid1DBTableView1GRP: TcxGridDBColumn;
-    cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn;
     cxGrid1Level1: TcxGridLevel;
     cxGrid2: TcxGrid;
     cxGridDBTableView1: TcxGridDBTableView;
@@ -53,11 +50,13 @@ type
     cxGridDBTableView1ID: TcxGridDBColumn;
     cxGridDBTableView1NAME: TcxGridDBColumn;
     Splitter1: TSplitter;
-    OD_ServGisLKUPLIST: TIntegerField;
-    cxGrid1DBTableView1LKUPLIST: TcxGridDBColumn;
-    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    OD_usl: TOracleDataSet;
+    DS_usl: TDataSource;
+    cxGrid1DBTableView1USLNAME: TcxGridDBColumn;
+    cxGrid1DBTableView1LISTNAME: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure OD_servgisAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -78,9 +77,17 @@ end;
 
 procedure TFrmRefCorrespond.FormCreate(Sender: TObject);
 begin
-  OD_Eolink.Active:=true;
-  OD_ServGis.Active:=true;
-  OD_List.Active:=true;
+  OD_eolink.Active:=true;
+  OD_servgis.Active:=true;
+  OD_list.Active:=true;
+  OD_usl.Active:=true;
+end;
+
+procedure TFrmRefCorrespond.OD_servgisAfterInsert(DataSet: TDataSet);
+begin
+  // установить ID организации для справочника
+  OD_servgis.FieldByName('FK_EOLINK').AsInteger:=
+    OD_eolink.FieldByName('ID').AsInteger;
 end;
 
 end.

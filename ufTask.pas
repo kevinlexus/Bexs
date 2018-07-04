@@ -83,7 +83,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
@@ -98,7 +97,7 @@ var
 
 implementation
 
-uses ufEolink;
+uses ufEolink, DataModule;
 
 {$R *.dfm}
 
@@ -109,6 +108,10 @@ begin
   OD_Task.SetVariable('FLTID', id);
   OD_Task.Active:=false;
   OD_Task.Active:=true;
+  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+  begin
+    OD_Task.ReadOnly:=true;
+  end
 end;
 
 procedure TFrmTask.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -124,11 +127,6 @@ end;
 procedure TFrmTask.ToolButton2Click(Sender: TObject);
 begin
   OD_Task.ExecuteQBE;
-end;
-
-procedure TFrmTask.FormCreate(Sender: TObject);
-begin
-  OD_Task.Active:=true;
 end;
 
 procedure TFrmTask.ToolButton4Click(Sender: TObject);

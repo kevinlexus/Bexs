@@ -1,6 +1,6 @@
 object FrmReference: TFrmReference
-  Left = 723
-  Top = 231
+  Left = 737
+  Top = 278
   Width = 907
   Height = 540
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080' '#1043#1048#1057
@@ -12,8 +12,9 @@ object FrmReference: TFrmReference
   Font.Style = []
   FormStyle = fsMDIChild
   OldCreateOrder = False
-  Position = poDefault
+  Position = poMainFormCenter
   Visible = True
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -39,40 +40,41 @@ object FrmReference: TFrmReference
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
+      OptionsBehavior.CellHints = True
       OptionsSelection.InvertSelect = False
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 36
+        Width = 20
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 34
+        Width = 20
       end
       object cxGrid1DBTableView1NAME: TcxGridDBColumn
         Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077
         DataBinding.FieldName = 'NAME'
-        Width = 107
+        Width = 58
       end
-      object cxGrid1DBTableView1COMM: TcxGridDBColumn
+      object cxGrid1DBTableView1NAME_ORG: TcxGridDBColumn
         Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
-        DataBinding.FieldName = 'COMM'
-        Width = 82
+        DataBinding.FieldName = 'NAME_ORG'
+        Width = 87
       end
       object cxGrid1DBTableView1GRP: TcxGridDBColumn
         Caption = #1043#1088#1091#1087#1087#1072
         DataBinding.FieldName = 'GRP'
-        Width = 30
+        Width = 61
       end
       object cxGrid1DBTableView1FK_EXT: TcxGridDBColumn
         Caption = #8470
         DataBinding.FieldName = 'FK_EXT'
-        Width = 30
+        Width = 60
       end
       object cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_EOLINK'
-        Width = 31
+        Width = 61
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -95,6 +97,7 @@ object FrmReference: TFrmReference
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
+      OptionsBehavior.CellHints = True
       OptionsSelection.InvertSelect = False
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
@@ -140,22 +143,24 @@ object FrmReference: TFrmReference
   end
   object OD_ListTp: TOracleDataSet
     SQL.Strings = (
-      'select t.id, t.cd, t.name, t.grp, t.fk_ext, t.fk_eolink, e.comm'
+      
+        'select t.id, t.cd, t.name, t.grp, t.fk_ext, t.fk_eolink, o.name ' +
+        'as name_org'
       ' from EXS.U_LISTTP t'
       'left join exs.eolink e on t.fk_eolink=e.id'
-      'order by decode(t.fk_ext, 1, 0, 2, 0, 51, 0, 50, 0, 1),'
+      'left join scott.t_org o on e.reu=o.reu'
+      'order by decode(t.fk_ext, 1, 0, 2, 0, 51, 0, 50, 0, 1), o.name,'
       't.name ')
     Optimize = False
     QBEDefinition.QBEFieldDefs = {
       0400000007000000020000004944010000000000020000004344010000000000
-      040000004E414D4501000000000004000000434F4D4D01000000000003000000
-      47525001000000000006000000464B5F45585401000000000009000000464B5F
-      454F4C494E4B010000000000}
+      040000004E414D45010000000000030000004752500100000000000600000046
+      4B5F45585401000000000009000000464B5F454F4C494E4B0100000000000800
+      00004E414D455F4F5247010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     Session = DataModule2.OracleSession1
     DesignActivation = True
-    Active = True
     Left = 32
     Top = 152
     object OD_ListTpID: TFloatField
@@ -182,9 +187,9 @@ object FrmReference: TFrmReference
     object OD_ListTpFK_EOLINK: TFloatField
       FieldName = 'FK_EOLINK'
     end
-    object OD_ListTpCOMM: TStringField
-      FieldName = 'COMM'
-      Size = 1024
+    object OD_ListTpNAME_ORG: TStringField
+      FieldName = 'NAME_ORG'
+      Size = 64
     end
   end
   object OD_list: TOracleDataSet

@@ -34,6 +34,7 @@ object FrmEolink: TFrmEolink
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
+      OptionsBehavior.CellHints = True
       OptionsSelection.InvertSelect = False
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
@@ -233,7 +234,6 @@ object FrmEolink: TFrmEolink
     object OD_EolinkID: TFloatField
       FieldName = 'ID'
       Origin = 't.id'
-      Required = True
     end
     object OD_EolinkPARENT_ID: TFloatField
       FieldName = 'PARENT_ID'
@@ -344,11 +344,39 @@ object FrmEolink: TFrmEolink
     Top = 152
   end
   object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
     Left = 120
     Top = 152
     object Eolink1: TMenuItem
       Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1077' Task'
       OnClick = Eolink1Click
     end
+    object N1: TMenuItem
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1076#1086#1084#1072' '#1087#1086' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+      OnClick = N1Click
+    end
+  end
+  object OQ_add_house: TOracleQuery
+    SQL.Strings = (
+      'begin'
+      'insert into exs.eolink'
+      '  (reu, guid, parent_id)'
+      
+        'select distinct k.reu, t.houseguid as guid, :fk_eolink from scot' +
+        't.kart k'
+      'join PREP_HOUSE_FIAS t on k.house_id=t.fk_house'
+      'where k.reu=:reu'
+      
+        'and not exists (select * from exs.eolink e where t.houseguid=e.g' +
+        'uid);'
+      ' commit;'
+      'end;')
+    Session = DataModule2.OracleSession1
+    Optimize = False
+    Variables.Data = {
+      0300000002000000040000003A5245550500000000000000000000000A000000
+      3A464B5F454F4C494E4B030000000000000000000000}
+    Left = 32
+    Top = 216
   end
 end

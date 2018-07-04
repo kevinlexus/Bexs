@@ -15,7 +15,6 @@ object FrmTask: TFrmTask
   Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object cxGrid1: TcxGrid
@@ -35,6 +34,7 @@ object FrmTask: TFrmTask
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
       DataController.Summary.SummaryGroups = <>
+      OptionsBehavior.CellHints = True
       OptionsSelection.InvertSelect = False
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
@@ -236,7 +236,6 @@ object FrmTask: TFrmTask
     object OD_TaskID: TFloatField
       FieldName = 'ID'
       Origin = 't.id'
-      Required = True
     end
     object OD_TaskPARENT_ID: TFloatField
       FieldName = 'PARENT_ID'
