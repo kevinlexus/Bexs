@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 254
-  Top = 200
+  Left = 212
+  Top = 483
   Width = 1226
   Height = 475
   Caption = 'Eolink'
@@ -17,12 +17,18 @@ object FrmEolink: TFrmEolink
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 929
+    Top = 29
+    Width = 8
+    Height = 407
+  end
   object cxGrid1: TcxGrid
     Left = 0
     Top = 29
-    Width = 1210
+    Width = 929
     Height = 407
-    Align = alClient
+    Align = alLeft
     PopupMenu = PopupMenu1
     TabOrder = 0
     object cxGrid1DBTableView1: TcxGridDBTableView
@@ -191,6 +197,70 @@ object FrmEolink: TFrmEolink
       OnClick = ToolButton5Click
     end
   end
+  object cxGrid2: TcxGrid
+    Left = 937
+    Top = 29
+    Width = 273
+    Height = 407
+    Align = alClient
+    PopupMenu = PopupMenu1
+    TabOrder = 2
+    object cxGridDBTableView1: TcxGridDBTableView
+      Navigator.Buttons.CustomButtons = <>
+      Navigator.Visible = True
+      DataController.DataModeController.GridModeBufferCount = 100
+      DataController.DataSource = DS_eolxpar
+      DataController.KeyFieldNames = 'ID'
+      DataController.Summary.DefaultGroupSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.SummaryGroups = <>
+      OptionsBehavior.CellHints = True
+      OptionsSelection.InvertSelect = False
+      OptionsView.ColumnAutoWidth = True
+      OptionsView.GroupByBox = False
+      object cxGridDBTableView1ID: TcxGridDBColumn
+        DataBinding.FieldName = 'ID'
+        Width = 20
+      end
+      object cxGridDBTableView1FK_PAR: TcxGridDBColumn
+        DataBinding.FieldName = 'FK_PAR'
+        Width = 43
+      end
+      object cxGridDBTableView1Column1: TcxGridDBColumn
+        Caption = #1055#1072#1088#1072#1084#1077#1090#1088
+        DataBinding.FieldName = 'FK_PAR'
+        PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.DropDownSizeable = True
+        Properties.DropDownWidth = 250
+        Properties.KeyFieldNames = 'ID'
+        Properties.ListColumns = <
+          item
+            FieldName = 'NAME'
+          end>
+        Properties.ListSource = DataModule2.DS_par
+        MinWidth = 25
+        Width = 134
+      end
+      object cxGridDBTableView1N1: TcxGridDBColumn
+        DataBinding.FieldName = 'N1'
+        Width = 35
+      end
+      object cxGridDBTableView1S1: TcxGridDBColumn
+        DataBinding.FieldName = 'S1'
+        Width = 59
+      end
+      object cxGridDBTableView1D1: TcxGridDBColumn
+        DataBinding.FieldName = 'D1'
+        PropertiesClassName = 'TcxDateEditProperties'
+        Properties.DateButtons = [btnClear, btnNow, btnToday]
+        Properties.Kind = ckDateTime
+        Width = 92
+      end
+    end
+    object cxGridLevel1: TcxGridLevel
+      GridView = cxGridDBTableView1
+    end
+  end
   object OD_Eolink: TOracleDataSet
     SQL.Strings = (
       
@@ -229,6 +299,7 @@ object FrmEolink: TFrmEolink
     AfterFetchRecord = OD_EolinkAfterFetchRecord
     Session = DataModule2.OracleSession1
     DesignActivation = True
+    AfterScroll = OD_EolinkAfterScroll
     Left = 32
     Top = 152
     object OD_EolinkID: TFloatField
@@ -360,11 +431,13 @@ object FrmEolink: TFrmEolink
     SQL.Strings = (
       'begin'
       'insert into exs.eolink'
-      '  (reu, guid, parent_id)'
+      '  (reu, kul, nd, guid, parent_id, fk_objtp)'
       
-        'select distinct k.reu, t.houseguid as guid, :fk_eolink from scot' +
-        't.kart k'
+        'select distinct k.reu, k.kul, k.nd, t.houseguid as guid, :fk_eol' +
+        'ink, tp.id as fk_objtp'
+      ' from scott.kart k'
       'join PREP_HOUSE_FIAS t on k.house_id=t.fk_house'
+      'join bs.addr_tp tp on tp.cd='#39#1044#1086#1084#39
       'where k.reu=:reu'
       
         'and not exists (select * from exs.eolink e where t.houseguid=e.g' +
@@ -378,5 +451,62 @@ object FrmEolink: TFrmEolink
       3A464B5F454F4C494E4B030000000000000000000000}
     Left = 32
     Top = 216
+  end
+  object OD_eolxpar: TOracleDataSet
+    SQL.Strings = (
+      
+        'select t.*, p.val_tp, t.rowid from EXS.EOLXPAR t, oralv.u_hfpar ' +
+        'p'
+      'where t.fk_eolink=:fk_eolink and t.fk_par=p.id')
+    Optimize = False
+    Variables.Data = {
+      03000000010000000A0000003A464B5F454F4C494E4B03000000000000000000
+      0000}
+    QBEDefinition.QBEFieldDefs = {
+      040000000700000002000000494401000000000009000000464B5F454F4C494E
+      4B01000000000006000000464B5F504152010000000000020000004E31010000
+      0000000200000053310100000000000200000044310100000000000600000056
+      414C5F5450010000000000}
+    Master = OD_Eolink
+    MasterFields = 'ID'
+    DetailFields = 'FK_EOLINK'
+    QueryAllRecords = False
+    RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
+    Session = DataModule2.OracleSession1
+    DesignActivation = True
+    Active = True
+    AfterInsert = OD_eolxparAfterInsert
+    AfterScroll = OD_eolxparAfterScroll
+    Left = 640
+    Top = 120
+    object OD_eolxparID: TFloatField
+      FieldName = 'ID'
+    end
+    object OD_eolxparFK_EOLINK: TFloatField
+      FieldName = 'FK_EOLINK'
+    end
+    object OD_eolxparFK_PAR: TFloatField
+      FieldName = 'FK_PAR'
+      Required = True
+    end
+    object OD_eolxparN1: TFloatField
+      FieldName = 'N1'
+    end
+    object OD_eolxparS1: TStringField
+      FieldName = 'S1'
+      Size = 1024
+    end
+    object OD_eolxparD1: TDateTimeField
+      FieldName = 'D1'
+    end
+    object OD_eolxparVAL_TP: TStringField
+      FieldName = 'VAL_TP'
+      Size = 2
+    end
+  end
+  object DS_eolxpar: TDataSource
+    DataSet = OD_eolxpar
+    Left = 680
+    Top = 120
   end
 end

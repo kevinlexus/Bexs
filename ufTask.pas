@@ -22,7 +22,8 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
-  ComCtrls, ToolWin, StdCtrls, Menus;
+  ComCtrls, ToolWin, StdCtrls, Menus, cxDBLookupComboBox, cxCalendar,
+  ExtCtrls;
 
 type
   TFrmTask = class(TForm)
@@ -80,12 +81,33 @@ type
     Eolink1: TMenuItem;
     OD_TaskEOLTP_NAME: TStringField;
     cxGrid1DBTableView1EOLTPNAME: TcxGridDBColumn;
+    OD_taskxpar: TOracleDataSet;
+    OD_taskxparID: TFloatField;
+    OD_taskxparFK_PAR: TFloatField;
+    OD_taskxparN1: TFloatField;
+    OD_taskxparS1: TStringField;
+    OD_taskxparD1: TDateTimeField;
+    OD_taskxparVAL_TP: TStringField;
+    DS_taskxpar: TDataSource;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    cxGridDBTableView1ID: TcxGridDBColumn;
+    cxGridDBTableView1FK_PAR: TcxGridDBColumn;
+    cxGridDBTableView1Column1: TcxGridDBColumn;
+    cxGridDBTableView1N1: TcxGridDBColumn;
+    cxGridDBTableView1S1: TcxGridDBColumn;
+    cxGridDBTableView1D1: TcxGridDBColumn;
+    cxGridLevel1: TcxGridLevel;
+    Splitter1: TSplitter;
+    OD_taskxparFK_TASK: TFloatField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
+    procedure OD_taskxparAfterScroll(DataSet: TDataSet);
+    procedure OD_taskxparAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -111,7 +133,8 @@ begin
   if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
   begin
     OD_Task.ReadOnly:=true;
-  end
+  end;
+  OD_taskxpar.Active:=true;
 end;
 
 procedure TFrmTask.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -152,6 +175,36 @@ begin
   // найти объект Eolink
   Application.CreateForm(TFrmEolink, FrmEolink);
   FrmEolink.setFltById(OD_Task.FieldByName('FK_EOLINK').asInteger);
+end;
+
+procedure TFrmTask.OD_taskxparAfterScroll(DataSet: TDataSet);
+begin
+  if (OD_taskxpar.FieldByName('VAL_TP').AsString='NM')
+      or (OD_taskxpar.FieldByName('VAL_TP').AsString='BL') then
+  begin
+      OD_taskxpar.FieldByName('N1').ReadOnly:=False;
+      OD_taskxpar.FieldByName('S1').ReadOnly:=True;
+      OD_taskxpar.FieldByName('D1').ReadOnly:=True;
+  end
+  else if OD_taskxpar.FieldByName('VAL_TP').AsString='ST' then
+  begin
+      OD_taskxpar.FieldByName('N1').ReadOnly:=True;
+      OD_taskxpar.FieldByName('S1').ReadOnly:=False;
+      OD_taskxpar.FieldByName('D1').ReadOnly:=True;
+  end
+  else if OD_taskxpar.FieldByName('VAL_TP').AsString='DT' then
+  begin
+      OD_taskxpar.FieldByName('N1').ReadOnly:=True;
+      OD_taskxpar.FieldByName('S1').ReadOnly:=True;
+      OD_taskxpar.FieldByName('D1').ReadOnly:=False;
+  end
+
+end;
+
+procedure TFrmTask.OD_taskxparAfterInsert(DataSet: TDataSet);
+begin
+  OD_taskxpar.FieldByName('FK_TASK').AsInteger:=
+    OD_task.FieldByName('ID').AsInteger;
 end;
 
 end.

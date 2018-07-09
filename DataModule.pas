@@ -3,12 +3,15 @@ unit DataModule;
 interface
 
 uses
-  SysUtils, Classes, Oracle;
+  SysUtils, Classes, Oracle, DB, OracleData;
 
 type
   TDataModule2 = class(TDataModule)
     OracleSession1: TOracleSession;
     OracleLogon1: TOracleLogon;
+    OD_par: TOracleDataSet;
+    DS_par: TDataSource;
+    procedure OracleSession1AfterLogOn(Sender: TOracleSession);
   private
     { Private declarations }
   public
@@ -21,5 +24,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TDataModule2.OracleSession1AfterLogOn(Sender: TOracleSession);
+begin
+  OD_par.Active:=true;
+end;
 
 end.

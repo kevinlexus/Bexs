@@ -15,7 +15,8 @@ uses
 begin
   Application.Initialize;
   Application.CreateForm(TDataModule2, DataModule2);
-  DataModule2.OracleLogon1.Execute;
+  if not DataModule2.OracleLogon1.Execute then
+    Application.Terminate;
   Application.CreateForm(TFrmMain, FrmMain);
   Application.Run;
 end.
