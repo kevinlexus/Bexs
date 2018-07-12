@@ -8,7 +8,8 @@ uses
   ufEolink in 'ufEolink.pas' {FrmEolink},
   ufTask in 'ufTask.pas' {FrmTask},
   ufReference in 'ufReference.pas' {FrmReference},
-  ufRefCorrespond in 'ufRefCorrespond.pas' {FrmRefCorrespond};
+  ufRefCorrespond in 'ufRefCorrespond.pas' {FrmRefCorrespond},
+  ufCrone in 'ufCrone.pas' {FrmCrone};
 
 {$R *.res}
 

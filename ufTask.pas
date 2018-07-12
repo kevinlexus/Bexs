@@ -89,6 +89,9 @@ type
     OD_taskxparD1: TDateTimeField;
     OD_taskxparVAL_TP: TStringField;
     DS_taskxpar: TDataSource;
+    Splitter1: TSplitter;
+    OD_taskxparFK_TASK: TFloatField;
+    Panel1: TPanel;
     cxGrid2: TcxGrid;
     cxGridDBTableView1: TcxGridDBTableView;
     cxGridDBTableView1ID: TcxGridDBColumn;
@@ -98,8 +101,13 @@ type
     cxGridDBTableView1S1: TcxGridDBColumn;
     cxGridDBTableView1D1: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
-    Splitter1: TSplitter;
-    OD_taskxparFK_TASK: TFloatField;
+    PopupMenu2: TPopupMenu;
+    Crone1: TMenuItem;
+    INS1: TMenuItem;
+    STP1: TMenuItem;
+    ACK1: TMenuItem;
+    RPT1: TMenuItem;
+    N1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -108,18 +116,28 @@ type
     procedure Eolink1Click(Sender: TObject);
     procedure OD_taskxparAfterScroll(DataSet: TDataSet);
     procedure OD_taskxparAfterInsert(DataSet: TDataSet);
+    procedure Crone1Click(Sender: TObject);
+    procedure INS1Click(Sender: TObject);
+    procedure STP1Click(Sender: TObject);
+    procedure ACK1Click(Sender: TObject);
+    procedure RPT1Click(Sender: TObject);
+    procedure OD_TaskAfterFetchRecord(Sender: TOracleDataSet;
+      FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
+    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
     procedure setFltById(id: Integer);
+    procedure changeState(State: String);
   end;
 
 var
   FrmTask: TFrmTask;
+  loadRec: Integer;
 
 implementation
 
-uses ufEolink, DataModule;
+uses ufEolink, DataModule, ufCrone;
 
 {$R *.dfm}
 
@@ -135,6 +153,29 @@ begin
     OD_Task.ReadOnly:=true;
   end;
   OD_taskxpar.Active:=true;
+    // счетчик записей
+  loadRec:=0;
+end;
+
+procedure TFrmTask.OD_TaskAfterFetchRecord(Sender: TOracleDataSet;
+  FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
+begin
+  loadRec:=loadRec+1;
+  if loadRec > 10000 then
+  begin
+    if Application.MessageBox('Загрузить еще?',
+      'Вы загрузили свыше 10000 записей', MB_YESNO +
+      MB_ICONQUESTION + MB_TOPMOST) = IDYES then
+    begin
+     Action:=afContinue;
+     loadRec:=0;
+    end
+    else
+    begin
+     Action:=afStop;
+    end;
+  end;
+
 end;
 
 procedure TFrmTask.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -174,7 +215,7 @@ procedure TFrmTask.Eolink1Click(Sender: TObject);
 begin
   // найти объект Eolink
   Application.CreateForm(TFrmEolink, FrmEolink);
-  FrmEolink.setFltById(OD_Task.FieldByName('FK_EOLINK').asInteger);
+  FrmEolink.setFltById(OD_Task.FieldByName('FK_EOLINK').asInteger, 0);
 end;
 
 procedure TFrmTask.OD_taskxparAfterScroll(DataSet: TDataSet);
@@ -185,18 +226,21 @@ begin
       OD_taskxpar.FieldByName('N1').ReadOnly:=False;
       OD_taskxpar.FieldByName('S1').ReadOnly:=True;
       OD_taskxpar.FieldByName('D1').ReadOnly:=True;
+      Crone1.Enabled:=false;
   end
   else if OD_taskxpar.FieldByName('VAL_TP').AsString='ST' then
   begin
       OD_taskxpar.FieldByName('N1').ReadOnly:=True;
       OD_taskxpar.FieldByName('S1').ReadOnly:=False;
       OD_taskxpar.FieldByName('D1').ReadOnly:=True;
+      Crone1.Enabled:=true;
   end
   else if OD_taskxpar.FieldByName('VAL_TP').AsString='DT' then
   begin
       OD_taskxpar.FieldByName('N1').ReadOnly:=True;
       OD_taskxpar.FieldByName('S1').ReadOnly:=True;
       OD_taskxpar.FieldByName('D1').ReadOnly:=False;
+      Crone1.Enabled:=false;
   end
 
 end;
@@ -205,6 +249,46 @@ procedure TFrmTask.OD_taskxparAfterInsert(DataSet: TDataSet);
 begin
   OD_taskxpar.FieldByName('FK_TASK').AsInteger:=
     OD_task.FieldByName('ID').AsInteger;
+end;
+
+procedure TFrmTask.Crone1Click(Sender: TObject);
+begin
+  Application.CreateForm(TFrmCrone, FrmCrone);
+end;
+
+procedure TFrmTask.changeState(State: String);
+begin
+  if OD_Task.State <> dsEdit then
+  OD_Task.Edit;
+  OD_Task.FieldByName('STATE').AsString:=State;
+  OD_Task.Post;
+end;
+procedure TFrmTask.INS1Click(Sender: TObject);
+begin
+  changeState('INS');
+end;
+
+procedure TFrmTask.STP1Click(Sender: TObject);
+begin
+  changeState('STP');
+end;
+
+procedure TFrmTask.ACK1Click(Sender: TObject);
+begin
+  changeState('ACK');
+end;
+
+procedure TFrmTask.RPT1Click(Sender: TObject);
+begin
+  changeState('RPT');
+end;
+
+procedure TFrmTask.N1Click(Sender: TObject);
+begin
+  // найти иерархию объектов Eolink
+  Application.CreateForm(TFrmEolink, FrmEolink);
+  FrmEolink.setFltById(OD_Task.FieldByName('FK_EOLINK').asInteger, 2);
+
 end;
 
 end.

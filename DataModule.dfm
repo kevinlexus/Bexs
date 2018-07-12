@@ -60,4 +60,22 @@ object DataModule2: TDataModule2
     Left = 80
     Top = 88
   end
+  object OD_crone: TOracleDataSet
+    SQL.Strings = (
+      'select t.* from EXS.CRONE t'
+      'order by t.id')
+    Optimize = False
+    QBEDefinition.QBEFieldDefs = {
+      040000000300000002000000494401000000000004000000434F4D4D01000000
+      00000400000045585052010000000000}
+    Session = OracleSession1
+    Active = True
+    Left = 40
+    Top = 144
+  end
+  object DS_crone: TDataSource
+    DataSet = OD_crone
+    Left = 80
+    Top = 144
+  end
 end

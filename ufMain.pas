@@ -36,7 +36,7 @@ implementation
 procedure TFrmMain.N1Click(Sender: TObject);
 begin
    Application.CreateForm(TFrmEolink, FrmEolink);
-   FrmEolink.setFltById(0);
+   FrmEolink.setFltById(0, 3);
 end;
 
 procedure TFrmMain.Eolink1Click(Sender: TObject);

@@ -42,7 +42,6 @@ type
     cxGrid1DBTableView1ID: TcxGridDBColumn;
     cxGrid1DBTableView1FK_USL: TcxGridDBColumn;
     cxGrid1DBTableView1FK_LIST: TcxGridDBColumn;
-    cxGrid1DBTableView1GRP: TcxGridDBColumn;
     cxGrid1Level1: TcxGridLevel;
     cxGrid2: TcxGrid;
     cxGridDBTableView1: TcxGridDBTableView;

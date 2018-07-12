@@ -102,6 +102,8 @@ type
     OD_eolxparD1: TDateTimeField;
     cxGridDBTableView1Column1: TcxGridDBColumn;
     OD_eolxparVAL_TP: TStringField;
+    OD_EolinkLSK: TStringField;
+    cxGrid1DBTableView1LSK: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -118,11 +120,12 @@ type
   private
     { Private declarations }
   public
-    procedure setFltById(id: Integer);
+    procedure setFltById(id: Integer; tp: Integer);
   end;
 
 var
   FrmEolink: TFrmEolink;
+  loadRec: Integer;
 
 implementation
 
@@ -130,11 +133,51 @@ uses DataModule;
 
 {$R *.dfm}
 
-// фильтр по Id
-procedure TFrmEolink.setFltById(id: Integer);
+// настроить главный датасет
+procedure TFrmEolink.setFltById(id: Integer; tp: Integer);
 begin
-  // установить фильтр по одному Id (или не устанавливать, если 0)
-  OD_Eolink.SetVariable('FLTID', id);
+  if tp=0 then
+  begin
+    // фильтр по одному Id
+    OD_Eolink.SetVariable('TP', 0);
+    // фильтр по одному Id
+    OD_Eolink.SetVariable('FLTID', id);
+    OD_Eolink.SetVariable('IDSUBST', '(0)');
+    // connect by - убрать
+    OD_Eolink.SetVariable('SUBSTEXP1', '');
+    // where
+    //OD_Eolink.SetVariable('SUBSTEXP1', 'where ('+IntToStr(:flt)+'=0 or t.id in '+IntToStr(:flt)+') and (:fltId=0 or t.id=:fltId)');
+    // order by
+    OD_Eolink.SetVariable('SUBSTEXP2', 'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
+  end
+  else if tp=1 then
+  begin
+    // фильтр по нескольким Id
+    OD_Eolink.SetVariable('TP', 1);
+    OD_Eolink.SetVariable('IDSUBST', '('+Edit1.Text+')');
+    // connect by - убрать
+    OD_Eolink.SetVariable('SUBSTEXP1', '');
+    OD_Eolink.SetVariable('SUBSTEXP2', 'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
+  end
+  else if tp=3 then
+  begin
+    // снять фильтр по нескольким Id
+    OD_Eolink.SetVariable('TP', -1);
+    OD_Eolink.SetVariable('IDSUBST', '(0)');
+    // connect by - убрать
+    OD_Eolink.SetVariable('SUBSTEXP1', '');
+    OD_Eolink.SetVariable('SUBSTEXP2', 'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
+  end
+  else
+  begin
+    // фильтр дерево, начиная с Id
+    OD_Eolink.SetVariable('TP', 2);
+    OD_Eolink.SetVariable('IDSUBST', '(0)');
+    OD_Eolink.SetVariable('SUBSTEXP1', 'start with t.id='+IntToStr(id)+' connect by prior t.id=t.parent_id');
+    // order by - убрать
+    OD_Eolink.SetVariable('SUBSTEXP2', '');
+  end;
+
   OD_Eolink.Active:=false;
   OD_Eolink.Active:=true;
   // права доступа
@@ -143,6 +186,8 @@ begin
     OD_Eolink.ReadOnly:=true;
   end;
   OD_eolxpar.Active:=true;
+  // счетчик записей
+  loadRec:=0;
 end;
 
 procedure TFrmEolink.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -153,13 +198,15 @@ end;
 procedure TFrmEolink.OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
   FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
 begin
-  if OD_Eolink.RecNo > 10000 then
+  loadRec:=loadRec+1;
+  if loadRec > 10000 then
   begin
     if Application.MessageBox('Загрузить еще?',
       'Вы загрузили свыше 10000 записей', MB_YESNO +
       MB_ICONQUESTION + MB_TOPMOST) = IDYES then
     begin
      Action:=afContinue;
+     loadRec:=0;
     end
     else
     begin
@@ -181,21 +228,14 @@ end;
 
 procedure TFrmEolink.ToolButton4Click(Sender: TObject);
 begin
-  // установить фильтр по id записей
-  OD_Eolink.SetVariable('IDSUBST', '('+Edit1.Text+')');
-  OD_Eolink.SetVariable('FLT', 1);
-  OD_Eolink.Active:=false;
-  OD_Eolink.Active:=true;
-
+  // установить фильтр по списку id записей
+  setFltById(0, 1);
 end;
 
 procedure TFrmEolink.ToolButton5Click(Sender: TObject);
 begin
   // снять фильтр по id записей
-  OD_Eolink.SetVariable('FLT', 0);
-  OD_Eolink.Active:=false;
-  OD_Eolink.Active:=true;
-
+  setFltById(0, 3);
 end;
 
 procedure TFrmEolink.Eolink1Click(Sender: TObject);

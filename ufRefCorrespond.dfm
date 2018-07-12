@@ -91,11 +91,6 @@ object FrmRefCorrespond: TFrmRefCorrespond
         Properties.ListSource = DS_list
         Width = 122
       end
-      object cxGrid1DBTableView1GRP: TcxGridDBColumn
-        Caption = #1043#1088#1091#1087#1087#1072' '#1076#1083#1103' '#1088#1072#1089#1094#1077#1085#1082#1080
-        DataBinding.FieldName = 'GRP'
-        Width = 65
-      end
     end
     object cxGrid1Level1: TcxGridLevel
       GridView = cxGrid1DBTableView1
@@ -192,8 +187,8 @@ object FrmRefCorrespond: TFrmRefCorrespond
       ' from EXS.U_LIST t'
       ' join EXS.U_LISTTP tp on t.fk_listtp=tp.id and'
       
-        '  (tp.fk_ext in (1,51) and tp.fk_eolink=:fk_eolink or tp.fk_ext=' +
-        '50)'
+        '  (tp.fk_ext in (1,2,51) and tp.fk_eolink=:fk_eolink or tp.fk_ex' +
+        't=50)'
       'where t.guid is not null'
       'and (tp.fk_eolink=:fk_eolink  or tp.fk_ext=50)'
       'order by serv_name')

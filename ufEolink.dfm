@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 212
-  Top = 483
+  Left = 225
+  Top = 178
   Width = 1226
   Height = 475
   Caption = 'Eolink'
@@ -77,6 +77,10 @@ object FrmEolink: TFrmEolink
       object cxGrid1DBTableView1KUL: TcxGridDBColumn
         DataBinding.FieldName = 'KUL'
         Width = 66
+      end
+      object cxGrid1DBTableView1LSK: TcxGridDBColumn
+        Caption = #1051#1080#1094'.'#1089#1095'.'
+        DataBinding.FieldName = 'LSK'
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
@@ -157,6 +161,7 @@ object FrmEolink: TFrmEolink
       ImageIndex = 1
       ParentShowHint = False
       ShowHint = True
+      OnClick = ToolButton2Click
     end
     object ToolButton3: TToolButton
       Left = 46
@@ -264,8 +269,8 @@ object FrmEolink: TFrmEolink
   object OD_Eolink: TOracleDataSet
     SQL.Strings = (
       
-        'select t.id, t.parent_id, t.fk_objtp, tp.name, o.name as uk, t.c' +
-        'omm as comm, t.reu, t.kul, s.name as street, '
+        'select t.id, t.parent_id, t.lsk, t.fk_objtp, tp.name, o.name as ' +
+        'uk, t.comm as comm, t.reu, t.kul, s.name as street, '
       ' ltrim(t.nd,'#39'0'#39') as nd, t.entry,  ltrim(t.kw,'#39'0'#39') as kw, '
       
         ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj, t.ogrn, t.dt_' +
@@ -274,17 +279,22 @@ object FrmEolink: TFrmEolink
       'left join bs.addr_tp tp on t.fk_objtp=tp.id'
       'left join scott.spul s on t.kul=s.id'
       'left join scott.t_org o on t.reu=o.reu'
-      'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.id=:fltId)'
+      'where (:tp<>0 or t.id=:fltId) and (:tp<>1 or t.id in :idSubst) '
+      ':substExp1'
+      ':substExp2'
+      ''
       
-        'order by t.id, t.parent_id, s.name, ltrim(t.nd,'#39'0'#39'), ltrim(t.kw,' +
-        #39'0'#39')')
+        '/*order by t.id, t.parent_id, s.name, ltrim(t.nd,'#39'0'#39'), ltrim(t.k' +
+        'w,'#39'0'#39')*/')
     Optimize = False
     Variables.Data = {
-      0300000003000000040000003A464C5403000000040000000000000000000000
-      080000003A49445355425354010000000F0000002831313231322C3132333234
-      35290000000000060000003A464C544944030000000000000000000000}
+      03000000050000000A0000003A53554253544558503101000000000000000000
+      00000A0000003A53554253544558503201000000000000000000000008000000
+      3A4944535542535401000000100000002831313131312C313131313131312900
+      00000000060000003A464C544944030000000000000000000000030000003A54
+      50030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000014000000020000004944010000000000030000005245550100000000
+      0400000015000000020000004944010000000000030000005245550100000000
       00020000004E44010000000000020000004B5701000000000005000000454E54
       5259010000000000040000004755494401000000000002000000434401000000
       000008000000464B5F4F424A545001000000000007000000554E49514E554D01
@@ -293,7 +303,7 @@ object FrmEolink: TFrmEolink
       004F47524E0100000000000600000044545F4352540100000000000600000044
       545F555044010000000000040000004E414D4501000000000002000000554B01
       000000000006000000535452454554010000000000030000004B554C01000000
-      000004000000434F4D4D010000000000}
+      000004000000434F4D4D010000000000030000004C534B010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterFetchRecord = OD_EolinkAfterFetchRecord
@@ -327,11 +337,12 @@ object FrmEolink: TFrmEolink
       Size = 4
     end
     object OD_EolinkUK: TStringField
-      FieldKind = fkCalculated
+      DisplayWidth = 25
+      FieldKind = fkInternalCalc
       FieldName = 'UK'
       Origin = 'o.name'
-      Size = 6
-      Calculated = True
+      ReadOnly = True
+      Size = 25
     end
     object OD_EolinkKUL: TStringField
       FieldName = 'KUL'
@@ -407,6 +418,11 @@ object FrmEolink: TFrmEolink
       FieldName = 'COMM'
       Origin = 't.COMM'
       Size = 1024
+    end
+    object OD_EolinkLSK: TStringField
+      FieldName = 'LSK'
+      Origin = 't.lsk'
+      Size = 8
     end
   end
   object DS_eolink: TDataSource

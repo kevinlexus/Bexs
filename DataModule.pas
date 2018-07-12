@@ -11,6 +11,8 @@ type
     OracleLogon1: TOracleLogon;
     OD_par: TOracleDataSet;
     DS_par: TDataSource;
+    OD_crone: TOracleDataSet;
+    DS_crone: TDataSource;
     procedure OracleSession1AfterLogOn(Sender: TOracleSession);
   private
     { Private declarations }
@@ -28,6 +30,7 @@ implementation
 procedure TDataModule2.OracleSession1AfterLogOn(Sender: TOracleSession);
 begin
   OD_par.Active:=true;
+  OD_crone.Active:=true;
 end;
 
 end.
