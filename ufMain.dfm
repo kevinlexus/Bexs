@@ -21,14 +21,21 @@ object FrmMain: TFrmMain
     Left = 80
     Top = 32
     object File1: TMenuItem
-      Caption = 'File'
+      Caption = #1060#1072#1081#1083
       object N1: TMenuItem
-        Caption = 'Eolink'
+        Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
         OnClick = N1Click
       end
       object Eolink1: TMenuItem
-        Caption = 'Task'
+        Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
         OnClick = Eolink1Click
+      end
+      object N5: TMenuItem
+        Caption = '---'
+      end
+      object N6: TMenuItem
+        Caption = #1042#1099#1093#1086#1076
+        OnClick = N6Click
       end
     end
     object N2: TMenuItem

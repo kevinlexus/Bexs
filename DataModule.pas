@@ -13,17 +13,19 @@ type
     DS_par: TDataSource;
     OD_crone: TOracleDataSet;
     DS_crone: TDataSource;
+    OP_gis: TOraclePackage;
     procedure OracleSession1AfterLogOn(Sender: TOracleSession);
   private
     { Private declarations }
   public
-    { Public declarations }
   end;
 
 var
   DataModule2: TDataModule2;
 
 implementation
+
+uses ufEolink;
 
 {$R *.dfm}
 

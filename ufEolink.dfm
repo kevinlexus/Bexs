@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 225
-  Top = 178
+  Left = 262
+  Top = 474
   Width = 1226
   Height = 475
   Caption = 'Eolink'
@@ -46,89 +46,90 @@ object FrmEolink: TFrmEolink
       OptionsView.GroupByBox = False
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 49
+        Width = 37
       end
       object cxGrid1DBTableView1PARENT_ID: TcxGridDBColumn
         DataBinding.FieldName = 'PARENT_ID'
-        Width = 49
+        Width = 36
       end
       object cxGrid1DBTableView1FK_OBJTP: TcxGridDBColumn
         DataBinding.FieldName = 'FK_OBJTP'
-        Width = 49
+        Width = 37
       end
       object cxGrid1DBTableView1NAME: TcxGridDBColumn
         Caption = #1058#1080#1087
         DataBinding.FieldName = 'NAME'
         BestFitMaxWidth = 20
-        Width = 53
+        Width = 62
       end
       object cxGrid1DBTableView1UK: TcxGridDBColumn
         DataBinding.FieldName = 'UK'
-        Width = 47
+        Width = 67
       end
       object cxGrid1DBTableView1REU: TcxGridDBColumn
         DataBinding.FieldName = 'REU'
-        Width = 51
+        Width = 35
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
-        Width = 45
+        Width = 32
       end
       object cxGrid1DBTableView1KUL: TcxGridDBColumn
         DataBinding.FieldName = 'KUL'
-        Width = 66
+        Width = 45
       end
       object cxGrid1DBTableView1LSK: TcxGridDBColumn
         Caption = #1051#1080#1094'.'#1089#1095'.'
         DataBinding.FieldName = 'LSK'
+        Width = 36
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
-        Width = 65
+        Width = 45
       end
       object cxGrid1DBTableView1ND: TcxGridDBColumn
         DataBinding.FieldName = 'ND'
-        Width = 66
+        Width = 45
       end
       object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
         DataBinding.FieldName = 'ENTRY'
-        Width = 65
+        Width = 45
       end
       object cxGrid1DBTableView1KW: TcxGridDBColumn
         DataBinding.FieldName = 'KW'
-        Width = 65
+        Width = 45
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 66
+        Width = 46
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 63
+        Width = 44
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 66
+        Width = 45
       end
       object cxGrid1DBTableView1APP_TP: TcxGridDBColumn
         DataBinding.FieldName = 'APP_TP'
-        Width = 65
+        Width = 45
       end
       object cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn
         DataBinding.FieldName = 'FK_KLSK_OBJ'
-        Width = 66
+        Width = 45
       end
       object cxGrid1DBTableView1OGRN: TcxGridDBColumn
         DataBinding.FieldName = 'OGRN'
-        Width = 64
+        Width = 44
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 66
+        Width = 46
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 65
+        Width = 45
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -309,6 +310,7 @@ object FrmEolink: TFrmEolink
     AfterFetchRecord = OD_EolinkAfterFetchRecord
     Session = DataModule2.OracleSession1
     DesignActivation = True
+    Active = True
     AfterScroll = OD_EolinkAfterScroll
     Left = 32
     Top = 152
@@ -437,6 +439,17 @@ object FrmEolink: TFrmEolink
     object Eolink1: TMenuItem
       Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1077' Task'
       OnClick = Eolink1Click
+    end
+    object N2: TMenuItem
+      Caption = #1053#1072#1081#1090#1080' '#1080#1077#1088#1072#1088#1093#1080#1102' '#1086#1073#1098#1077#1082#1090#1086#1074' Eolink '#1090#1080#1087#1072' "'#1044#1086#1084'"'
+      OnClick = N2Click
+    end
+    object Eolink2: TMenuItem
+      Caption = #1053#1072#1081#1090#1080' '#1080#1077#1088#1072#1088#1093#1080#1102' '#1086#1073#1098#1077#1082#1090#1086#1074' Eolink '#1090#1080#1087#1072' "'#1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103'"'
+      OnClick = Eolink2Click
+    end
+    object N3: TMenuItem
+      Caption = '---'
     end
     object N1: TMenuItem
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1076#1086#1084#1072' '#1087#1086' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080

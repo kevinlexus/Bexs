@@ -1,7 +1,7 @@
 object FrmRefCorrespond: TFrmRefCorrespond
-  Left = 328
-  Top = 429
-  Width = 685
+  Left = 355
+  Top = 268
+  Width = 800
   Height = 491
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082' '#1089#1086#1086#1090#1074#1077#1090#1089#1090#1074#1080#1103' '#1091#1089#1083#1091#1075
   Color = clBtnFace
@@ -27,7 +27,7 @@ object FrmRefCorrespond: TFrmRefCorrespond
   object cxGrid1: TcxGrid
     Left = 201
     Top = 0
-    Width = 468
+    Width = 583
     Height = 452
     Align = alClient
     TabOrder = 0
@@ -47,11 +47,11 @@ object FrmRefCorrespond: TFrmRefCorrespond
       OptionsView.HeaderAutoHeight = True
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 44
+        Width = 34
       end
       object cxGrid1DBTableView1FK_USL: TcxGridDBColumn
         DataBinding.FieldName = 'FK_USL'
-        Width = 48
+        Width = 51
       end
       object cxGrid1DBTableView1USLNAME: TcxGridDBColumn
         Caption = #1059#1089#1083#1091#1075#1072', '#1073#1080#1083#1083#1080#1085#1075
@@ -64,32 +64,43 @@ object FrmRefCorrespond: TFrmRefCorrespond
             FieldName = 'NAME'
           end>
         Properties.ListSource = DS_usl
-        Width = 127
+        Width = 150
       end
       object cxGrid1DBTableView1FK_LIST: TcxGridDBColumn
         DataBinding.FieldName = 'FK_LIST'
-        Width = 53
+        Width = 58
       end
       object cxGrid1DBTableView1LISTNAME: TcxGridDBColumn
         Caption = #1059#1089#1083#1091#1075#1072', '#1043#1048#1057
         DataBinding.FieldName = 'FK_LIST'
         PropertiesClassName = 'TcxLookupComboBoxProperties'
         Properties.DropDownSizeable = True
-        Properties.DropDownWidth = 325
+        Properties.DropDownWidth = 600
         Properties.KeyFieldNames = 'ID'
         Properties.ListColumns = <
           item
             FieldName = 'FK_EXT'
           end
           item
-            FieldName = 'GRP'
+            FieldName = 'TP'
           end
           item
+            MinWidth = 60
+            FieldName = 'ACTUAL'
+          end
+          item
+            MinWidth = 220
             FieldName = 'SERV_NAME'
+          end
+          item
+            MinWidth = 220
+            Width = 220
+            FieldName = 'GUID'
           end>
-        Properties.ListFieldIndex = 2
+        Properties.ListFieldIndex = 3
+        Properties.ListOptions.RowSelect = False
         Properties.ListSource = DS_list
-        Width = 122
+        Width = 288
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -179,27 +190,31 @@ object FrmRefCorrespond: TFrmRefCorrespond
   end
   object OD_list: TOracleDataSet
     SQL.Strings = (
-      'select t.id, t.actual, tp.grp, tp.fk_ext,'
-      ' (select t2.s1 from exs.u_list t2 where t.id=t2.parent_id '
+      'select t.id, t.tp, t.actual, tp.grp, tp.fk_ext, t.guid,'
+      
+        ' (select '#39#1057#1087#1088' '#8470#39'||tp.fk_ext||'#39'-'#39'||t2.s1 from exs.u_list t2 where' +
+        ' t.id=t2.parent_id '
       
         ' and t2.name in ('#39#1042#1080#1076' '#1078#1080#1083#1080#1097#1085#1086#1081'  '#1091#1089#1083#1091#1075#1080#39','#39#1043#1083#1072#1074#1085#1072#1103' '#1082#1086#1084#1084#1091#1085#1072#1083#1100#1085#1072#1103' '#1091#1089 +
-        #1083#1091#1075#1072#39','#39#1042#1080#1076' '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086#1081' '#1091#1089#1083#1091#1075#1080#39')) as serv_name'
+        #1083#1091#1075#1072#39','#39#1042#1080#1076' '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086#1081' '#1091#1089#1083#1091#1075#1080#39', '#39#1042#1080#1076' '#1082#1086#1084#1084#1091#1085#1072#1083#1100#1085#1086#1075#1086' '#1088#1077#1089#1091#1088#1089#1072#39'))' +
+        ' as serv_name'
       ' from EXS.U_LIST t'
       ' join EXS.U_LISTTP tp on t.fk_listtp=tp.id and'
       
-        '  (tp.fk_ext in (1,2,51) and tp.fk_eolink=:fk_eolink or tp.fk_ex' +
-        't=50)'
+        '  (tp.fk_ext in (1,51) and tp.fk_eolink=:fk_eolink or tp.fk_ext ' +
+        'in (2,50))'
       'where t.guid is not null'
-      'and (tp.fk_eolink=:fk_eolink  or tp.fk_ext=50)'
+      'and (tp.fk_eolink=:fk_eolink  or tp.fk_ext in (2,50))'
       'order by serv_name')
     Optimize = False
     Variables.Data = {
       03000000010000000A0000003A464B5F454F4C494E4B0300000004000000FDC8
       0A0000000000}
     QBEDefinition.QBEFieldDefs = {
-      04000000050000000200000049440100000000000600000041435455414C0100
+      04000000070000000200000049440100000000000600000041435455414C0100
       0000000009000000534552565F4E414D4501000000000006000000464B5F4558
-      5401000000000003000000475250010000000000}
+      5401000000000003000000475250010000000000020000005450010000000000
+      0400000047554944010000000000}
     Master = OD_eolink
     MasterFields = 'ID'
     DetailFields = 'FK_EOLINK'
@@ -207,7 +222,6 @@ object FrmRefCorrespond: TFrmRefCorrespond
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     Session = DataModule2.OracleSession1
     DesignActivation = True
-    Active = True
     Left = 32
     Top = 200
   end

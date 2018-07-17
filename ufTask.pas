@@ -108,6 +108,9 @@ type
     ACK1: TMenuItem;
     RPT1: TMenuItem;
     N1: TMenuItem;
+    Eolink2: TMenuItem;
+    Eolink3: TMenuItem;
+    N2: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -124,6 +127,8 @@ type
     procedure OD_TaskAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure N1Click(Sender: TObject);
+    procedure Eolink3Click(Sender: TObject);
+    procedure Eolink2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -137,7 +142,7 @@ var
 
 implementation
 
-uses ufEolink, DataModule, ufCrone;
+uses ufEolink, DataModule, ufCrone, ufMain;
 
 {$R *.dfm}
 
@@ -288,6 +293,22 @@ begin
   // найти иерархию объектов Eolink
   Application.CreateForm(TFrmEolink, FrmEolink);
   FrmEolink.setFltById(OD_Task.FieldByName('FK_EOLINK').asInteger, 2);
+
+end;
+
+procedure TFrmTask.Eolink3Click(Sender: TObject);
+begin
+  // найти корневую запись
+  FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
+                      'Организация');
+
+end;
+
+procedure TFrmTask.Eolink2Click(Sender: TObject);
+begin
+  // найти корневую запись
+  FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
+                      'Дом');
 
 end;
 

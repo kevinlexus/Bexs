@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, OracleData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  ExtCtrls, DataModule;
+  ExtCtrls, DataModule, StdCtrls;
 
 type
   TFrmReference = class(TForm)
@@ -46,9 +46,6 @@ type
     Splitter1: TSplitter;
     OD_list: TOracleDataSet;
     Ds_List: TDataSource;
-    cxGrid2: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
-    cxGridLevel1: TcxGridLevel;
     OD_listID: TFloatField;
     OD_listPARENT_ID: TFloatField;
     OD_listFK_LISTTP: TFloatField;
@@ -59,6 +56,12 @@ type
     OD_listACTUAL: TFloatField;
     OD_listNAME: TStringField;
     OD_listS1: TStringField;
+    OD_ListTpNAME_ORG: TStringField;
+    cxGrid1DBTableView1NAME_ORG: TcxGridDBColumn;
+    OD_listTP2: TFloatField;
+    Panel1: TPanel;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
     cxGridDBTableView1ID: TcxGridDBColumn;
     cxGridDBTableView1PARENT_ID: TcxGridDBColumn;
     cxGridDBTableView1FK_LISTTP: TcxGridDBColumn;
@@ -69,8 +72,8 @@ type
     cxGridDBTableView1ACTUAL: TcxGridDBColumn;
     cxGridDBTableView1NAME: TcxGridDBColumn;
     cxGridDBTableView1S1: TcxGridDBColumn;
-    OD_ListTpNAME_ORG: TStringField;
-    cxGrid1DBTableView1NAME_ORG: TcxGridDBColumn;
+    cxGridLevel1: TcxGridLevel;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -90,6 +93,12 @@ procedure TFrmReference.FormCreate(Sender: TObject);
 begin
   OD_ListTp.Active:=True;
   OD_List.Active:=True;
+  // права доступа
+  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+  begin
+    OD_List.ReadOnly:=true;
+    OD_ListTp.ReadOnly:=true;
+  end;
 end;
 
 procedure TFrmReference.FormClose(Sender: TObject;

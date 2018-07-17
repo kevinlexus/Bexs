@@ -104,6 +104,9 @@ type
     OD_eolxparVAL_TP: TStringField;
     OD_EolinkLSK: TStringField;
     cxGrid1DBTableView1LSK: TcxGridDBColumn;
+    N2: TMenuItem;
+    Eolink2: TMenuItem;
+    N3: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -117,6 +120,8 @@ type
     procedure OD_EolinkAfterScroll(DataSet: TDataSet);
     procedure OD_eolxparAfterScroll(DataSet: TDataSet);
     procedure OD_eolxparAfterInsert(DataSet: TDataSet);
+    procedure N2Click(Sender: TObject);
+    procedure Eolink2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -129,7 +134,7 @@ var
 
 implementation
 
-uses DataModule;
+uses DataModule, ufMain;
 
 {$R *.dfm}
 
@@ -308,6 +313,21 @@ procedure TFrmEolink.OD_eolxparAfterInsert(DataSet: TDataSet);
 begin
   OD_eolxpar.FieldByName('FK_EOLINK').AsInteger:=
     OD_eolink.FieldByName('ID').AsInteger;
+end;
+
+procedure TFrmEolink.N2Click(Sender: TObject);
+begin
+  // найти корневую запись
+  FrmMain.findRoot(OD_Eolink.FieldByName('parent_id').asInteger,
+                      'Дом');
+end;
+
+
+procedure TFrmEolink.Eolink2Click(Sender: TObject);
+begin
+  // найти корневую запись
+  FrmMain.findRoot(OD_Eolink.FieldByName('parent_id').asInteger,
+                      'Организация');
 end;
 
 end.

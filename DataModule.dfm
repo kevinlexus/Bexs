@@ -78,4 +78,10 @@ object DataModule2: TDataModule2
     Left = 80
     Top = 144
   end
+  object OP_gis: TOraclePackage
+    Session = OracleSession1
+    PackageName = 'exs.p_gis'
+    Left = 40
+    Top = 200
+  end
 end

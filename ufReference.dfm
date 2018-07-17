@@ -1,7 +1,7 @@
 object FrmReference: TFrmReference
-  Left = 737
-  Top = 278
-  Width = 907
+  Left = 246
+  Top = 447
+  Width = 1094
   Height = 540
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080' '#1043#1048#1057
   Color = clBtnFace
@@ -81,59 +81,90 @@ object FrmReference: TFrmReference
       GridView = cxGrid1DBTableView1
     end
   end
-  object cxGrid2: TcxGrid
+  object Panel1: TPanel
     Left = 377
     Top = 0
-    Width = 514
+    Width = 701
     Height = 501
     Align = alClient
+    Caption = 'Panel1'
     TabOrder = 1
-    object cxGridDBTableView1: TcxGridDBTableView
-      Navigator.Buttons.CustomButtons = <>
-      Navigator.Visible = True
-      DataController.DataModeController.GridModeBufferCount = 100
-      DataController.DataSource = Ds_List
-      DataController.KeyFieldNames = 'ID'
-      DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <>
-      DataController.Summary.SummaryGroups = <>
-      OptionsBehavior.CellHints = True
-      OptionsSelection.InvertSelect = False
-      OptionsView.ColumnAutoWidth = True
-      OptionsView.GroupByBox = False
-      object cxGridDBTableView1ID: TcxGridDBColumn
-        DataBinding.FieldName = 'ID'
+    object cxGrid2: TcxGrid
+      Left = 1
+      Top = 33
+      Width = 699
+      Height = 467
+      Align = alClient
+      TabOrder = 0
+      object cxGridDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        Navigator.Visible = True
+        DataController.DataModeController.GridModeBufferCount = 100
+        DataController.DataSource = Ds_List
+        DataController.KeyFieldNames = 'ID'
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsBehavior.CellHints = True
+        OptionsSelection.InvertSelect = False
+        OptionsView.ColumnAutoWidth = True
+        OptionsView.GroupByBox = False
+        object cxGridDBTableView1ID: TcxGridDBColumn
+          DataBinding.FieldName = 'ID'
+          Width = 27
+        end
+        object cxGridDBTableView1PARENT_ID: TcxGridDBColumn
+          DataBinding.FieldName = 'PARENT_ID'
+          Width = 28
+        end
+        object cxGridDBTableView1FK_LISTTP: TcxGridDBColumn
+          DataBinding.FieldName = 'FK_LISTTP'
+          Width = 27
+        end
+        object cxGridDBTableView1FK_EXT: TcxGridDBColumn
+          DataBinding.FieldName = 'FK_EXT'
+          Width = 27
+        end
+        object cxGridDBTableView1CD: TcxGridDBColumn
+          DataBinding.FieldName = 'CD'
+          Width = 29
+        end
+        object cxGridDBTableView1NPP: TcxGridDBColumn
+          DataBinding.FieldName = 'NPP'
+          Width = 27
+        end
+        object cxGridDBTableView1GUID: TcxGridDBColumn
+          DataBinding.FieldName = 'GUID'
+          Width = 43
+        end
+        object cxGridDBTableView1ACTUAL: TcxGridDBColumn
+          DataBinding.FieldName = 'ACTUAL'
+          Width = 44
+        end
+        object cxGridDBTableView1NAME: TcxGridDBColumn
+          DataBinding.FieldName = 'NAME'
+          Width = 152
+        end
+        object cxGridDBTableView1S1: TcxGridDBColumn
+          DataBinding.FieldName = 'S1'
+          Width = 213
+        end
       end
-      object cxGridDBTableView1PARENT_ID: TcxGridDBColumn
-        DataBinding.FieldName = 'PARENT_ID'
-      end
-      object cxGridDBTableView1FK_LISTTP: TcxGridDBColumn
-        DataBinding.FieldName = 'FK_LISTTP'
-      end
-      object cxGridDBTableView1FK_EXT: TcxGridDBColumn
-        DataBinding.FieldName = 'FK_EXT'
-      end
-      object cxGridDBTableView1CD: TcxGridDBColumn
-        DataBinding.FieldName = 'CD'
-      end
-      object cxGridDBTableView1NPP: TcxGridDBColumn
-        DataBinding.FieldName = 'NPP'
-      end
-      object cxGridDBTableView1GUID: TcxGridDBColumn
-        DataBinding.FieldName = 'GUID'
-      end
-      object cxGridDBTableView1ACTUAL: TcxGridDBColumn
-        DataBinding.FieldName = 'ACTUAL'
-      end
-      object cxGridDBTableView1NAME: TcxGridDBColumn
-        DataBinding.FieldName = 'NAME'
-      end
-      object cxGridDBTableView1S1: TcxGridDBColumn
-        DataBinding.FieldName = 'S1'
+      object cxGridLevel1: TcxGridLevel
+        GridView = cxGridDBTableView1
       end
     end
-    object cxGridLevel1: TcxGridLevel
-      GridView = cxGridDBTableView1
+    object Memo1: TMemo
+      Left = 1
+      Top = 1
+      Width = 699
+      Height = 32
+      Align = alTop
+      Lines.Strings = (
+        
+          #1055#1088#1080' '#1079#1072#1087#1086#1083#1085#1077#1085#1080#1080' '#1089#1087#1088#1072#1074#1086#1095#1085#1080#1082#1072', '#1082#1086#1085#1090#1088#1086#1083#1080#1088#1086#1074#1072#1090#1100' '#1085#1072#1083#1080#1095#1080#1077' '#1072#1082#1090#1091#1072#1083#1100#1085#1086#1089#1090#1080' ' +
+          'ACTUAL=1')
+      TabOrder = 1
     end
   end
   object DS_ListTp: TDataSource
@@ -145,7 +176,7 @@ object FrmReference: TFrmReference
     SQL.Strings = (
       
         'select t.id, t.cd, t.name, t.grp, t.fk_ext, t.fk_eolink, o.name ' +
-        'as name_org'
+        'as name_org, t.rowid'
       ' from EXS.U_LISTTP t'
       'left join exs.eolink e on t.fk_eolink=e.id'
       'left join scott.t_org o on e.reu=o.reu'
@@ -196,7 +227,7 @@ object FrmReference: TFrmReference
     SQL.Strings = (
       
         'select t.id, t.parent_id, t.fk_listtp, tp.fk_ext, t.cd, t.npp, t' +
-        '.guid, t.actual, t.name, t.s1'
+        '.guid, t.actual, t.name, t.s1, t.tp, t.rowid'
       ' from EXS.U_LIST t'
       ' join EXS.U_LISTTP tp on t.fk_listtp=tp.id'
       'where t.fk_listtp=:fk_listtp'
@@ -206,11 +237,12 @@ object FrmReference: TFrmReference
       03000000010000000A0000003A464B5F4C49535454500300000004000000DB1D
       010000000000}
     QBEDefinition.QBEFieldDefs = {
-      040000000A000000020000004944010000000000020000004344010000000000
+      040000000B000000020000004944010000000000020000004344010000000000
       09000000504152454E545F494401000000000009000000464B5F4C4953545450
       010000000000030000004E505001000000000004000000475549440100000000
       000600000041435455414C01000000000006000000464B5F4558540100000000
-      00040000004E414D45010000000000020000005331010000000000}
+      00040000004E414D450100000000000200000053310100000000000200000054
+      50010000000000}
     Master = OD_ListTp
     MasterFields = 'ID'
     DetailFields = 'FK_LISTTP'
@@ -259,6 +291,9 @@ object FrmReference: TFrmReference
     object OD_listS1: TStringField
       FieldName = 'S1'
       Size = 2000
+    end
+    object OD_listTP2: TFloatField
+      FieldName = 'TP'
     end
   end
   object Ds_List: TDataSource
