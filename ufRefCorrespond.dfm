@@ -205,6 +205,7 @@ object FrmRefCorrespond: TFrmRefCorrespond
         'in (2,50))'
       'where t.guid is not null'
       'and (tp.fk_eolink=:fk_eolink  or tp.fk_ext in (2,50))'
+      'and t.actual=1'
       'order by serv_name')
     Optimize = False
     Variables.Data = {

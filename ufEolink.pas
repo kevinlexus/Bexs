@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
   cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
-  StdCtrls, ComCtrls, ToolWin, Menus, ufTask, Oracle, ExtCtrls,
+  StdCtrls, ComCtrls, ToolWin, Menus, ufTask, ufPdoc, Oracle, ExtCtrls,
   cxDBLookupComboBox, cxCalendar;
 
 type
@@ -107,6 +107,8 @@ type
     N2: TMenuItem;
     Eolink2: TMenuItem;
     N3: TMenuItem;
+    N4: TMenuItem;
+    OD_EolinkOBJTPCD: TStringField;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -122,6 +124,9 @@ type
     procedure OD_eolxparAfterInsert(DataSet: TDataSet);
     procedure N2Click(Sender: TObject);
     procedure Eolink2Click(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+    procedure OD_EolinkAfterQuery(Sender: TOracleDataSet);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -131,6 +136,7 @@ type
 var
   FrmEolink: TFrmEolink;
   loadRec: Integer;
+  isLoadAllRec: Boolean;
 
 implementation
 
@@ -206,16 +212,18 @@ begin
   loadRec:=loadRec+1;
   if loadRec > 10000 then
   begin
-    if Application.MessageBox('Загрузить еще?',
+    if (isLoadAllRec) or (Application.MessageBox('Загрузить все записи?',
       'Вы загрузили свыше 10000 записей', MB_YESNO +
-      MB_ICONQUESTION + MB_TOPMOST) = IDYES then
+      MB_ICONQUESTION + MB_TOPMOST) = IDYES) then
     begin
      Action:=afContinue;
      loadRec:=0;
+     isLoadAllRec:=True;
     end
     else
     begin
      Action:=afStop;
+     isLoadAllRec:=False;
     end;
   end;
 
@@ -277,11 +285,15 @@ end;
 
 procedure TFrmEolink.OD_EolinkAfterScroll(DataSet: TDataSet);
 begin
-  if OD_Eolink.FieldByName('FK_OBJTP').AsInteger=1 then
+  if OD_Eolink.FieldByName('OBJTPCD').AsString='Организация' then
      N1.Enabled:=true
   else
      N1.Enabled:=false;
 
+  if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
+     N4.Enabled:=true
+  else
+     N4.Enabled:=false;
 
 end;
 
@@ -328,6 +340,27 @@ begin
   // найти корневую запись
   FrmMain.findRoot(OD_Eolink.FieldByName('parent_id').asInteger,
                       'Организация');
+end;
+
+procedure TFrmEolink.N4Click(Sender: TObject);
+begin
+  // найти ПД
+  Application.CreateForm(TFrmPdoc, FrmPdoc);
+  FrmPdoc.setFltById(OD_Eolink.FieldByName('ID').asInteger, 0);
+
+end;
+
+procedure TFrmEolink.OD_EolinkAfterQuery(Sender: TOracleDataSet);
+begin
+  // запрет выгрузки всех записей
+  isLoadAllRec:=False;
+
+end;
+
+procedure TFrmEolink.FormCreate(Sender: TObject);
+begin
+  // запрет выгрузки всех записей
+  isLoadAllRec:=False;
 end;
 
 end.

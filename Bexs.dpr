@@ -9,7 +9,9 @@ uses
   ufTask in 'ufTask.pas' {FrmTask},
   ufReference in 'ufReference.pas' {FrmReference},
   ufRefCorrespond in 'ufRefCorrespond.pas' {FrmRefCorrespond},
-  ufCrone in 'ufCrone.pas' {FrmCrone};
+  ufCrone in 'ufCrone.pas' {FrmCrone},
+  ufPdoc in 'ufPdoc.pas' {FrmPdoc},
+  ufNotif in 'ufNotif.pas' {FrmNotif};
 
 {$R *.res}
 

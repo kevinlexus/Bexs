@@ -1,9 +1,9 @@
 object FrmEolink: TFrmEolink
-  Left = 262
-  Top = 474
+  Left = 667
+  Top = 172
   Width = 1226
   Height = 475
-  Caption = 'Eolink'
+  Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,6 +15,7 @@ object FrmEolink: TFrmEolink
   Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -270,8 +271,9 @@ object FrmEolink: TFrmEolink
   object OD_Eolink: TOracleDataSet
     SQL.Strings = (
       
-        'select t.id, t.parent_id, t.lsk, t.fk_objtp, tp.name, o.name as ' +
-        'uk, t.comm as comm, t.reu, t.kul, s.name as street, '
+        'select t.id, t.parent_id, t.lsk, t.fk_objtp, tp.name, tp.cd as o' +
+        'bjTpCd, o.name as uk, t.comm as comm, t.reu, t.kul, s.name as st' +
+        'reet, '
       ' ltrim(t.nd,'#39'0'#39') as nd, t.entry,  ltrim(t.kw,'#39'0'#39') as kw, '
       
         ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj, t.ogrn, t.dt_' +
@@ -295,7 +297,7 @@ object FrmEolink: TFrmEolink
       00000000060000003A464C544944030000000000000000000000030000003A54
       50030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000015000000020000004944010000000000030000005245550100000000
+      0400000016000000020000004944010000000000030000005245550100000000
       00020000004E44010000000000020000004B5701000000000005000000454E54
       5259010000000000040000004755494401000000000002000000434401000000
       000008000000464B5F4F424A545001000000000007000000554E49514E554D01
@@ -304,9 +306,11 @@ object FrmEolink: TFrmEolink
       004F47524E0100000000000600000044545F4352540100000000000600000044
       545F555044010000000000040000004E414D4501000000000002000000554B01
       000000000006000000535452454554010000000000030000004B554C01000000
-      000004000000434F4D4D010000000000030000004C534B010000000000}
+      000004000000434F4D4D010000000000030000004C534B010000000000070000
+      004F424A54504344010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
+    AfterQuery = OD_EolinkAfterQuery
     AfterFetchRecord = OD_EolinkAfterFetchRecord
     Session = DataModule2.OracleSession1
     DesignActivation = True
@@ -426,6 +430,10 @@ object FrmEolink: TFrmEolink
       Origin = 't.lsk'
       Size = 8
     end
+    object OD_EolinkOBJTPCD: TStringField
+      FieldName = 'OBJTPCD'
+      Size = 100
+    end
   end
   object DS_eolink: TDataSource
     DataSet = OD_Eolink
@@ -437,7 +445,7 @@ object FrmEolink: TFrmEolink
     Left = 120
     Top = 152
     object Eolink1: TMenuItem
-      Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1077' Task'
+      Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1103' Task '#1087#1086' '#1086#1073#1098#1077#1082#1090#1091' Eolink'
       OnClick = Eolink1Click
     end
     object N2: TMenuItem
@@ -447,6 +455,10 @@ object FrmEolink: TFrmEolink
     object Eolink2: TMenuItem
       Caption = #1053#1072#1081#1090#1080' '#1080#1077#1088#1072#1088#1093#1080#1102' '#1086#1073#1098#1077#1082#1090#1086#1074' Eolink '#1090#1080#1087#1072' "'#1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103'"'
       OnClick = Eolink2Click
+    end
+    object N4: TMenuItem
+      Caption = #1053#1072#1081#1090#1080' '#1087#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' '#1087#1086' '#1051#1057
+      OnClick = N4Click
     end
     object N3: TMenuItem
       Caption = '---'

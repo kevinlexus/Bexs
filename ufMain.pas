@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ufEolink, ufTask, ufReference, ufRefCorrespond, ImgList;
+  Dialogs, Menus, ufEolink, ufTask, ufPdoc, ufReference, ufRefCorrespond, ImgList;
 
 type
   TFrmMain = class(TForm)
@@ -18,11 +18,15 @@ type
     N4: TMenuItem;
     N5: TMenuItem;
     N6: TMenuItem;
+    Pdoc1: TMenuItem;
+    N7: TMenuItem;
     procedure N1Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
     procedure N3Click(Sender: TObject);
     procedure N4Click(Sender: TObject);
     procedure N6Click(Sender: TObject);
+    procedure Pdoc1Click(Sender: TObject);
+    procedure N7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,7 +40,7 @@ var
 
 implementation
 
-uses DataModule;
+uses DataModule, ufNotif;
 
 {$R *.dfm}
 
@@ -88,6 +92,19 @@ end;
 procedure TFrmMain.N6Click(Sender: TObject);
 begin
   Application.Terminate;
+end;
+
+procedure TFrmMain.Pdoc1Click(Sender: TObject);
+begin
+   Application.CreateForm(TFrmPdoc, FrmPdoc);
+   FrmPdoc.setFltById(0,0);
+end;
+
+procedure TFrmMain.N7Click(Sender: TObject);
+begin
+   Application.CreateForm(TFrmNotif, FrmNotif);
+   FrmNotif.setFltById(0,0);
+
 end;
 
 end.

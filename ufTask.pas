@@ -111,6 +111,8 @@ type
     Eolink2: TMenuItem;
     Eolink3: TMenuItem;
     N2: TMenuItem;
+    OD_TaskOBJ_ADR: TStringField;
+    cxGrid1DBTableView1OBJ_ADR: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -129,6 +131,8 @@ type
     procedure N1Click(Sender: TObject);
     procedure Eolink3Click(Sender: TObject);
     procedure Eolink2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure OD_TaskAfterQuery(Sender: TOracleDataSet);
   private
     { Private declarations }
   public
@@ -139,6 +143,7 @@ type
 var
   FrmTask: TFrmTask;
   loadRec: Integer;
+  isLoadAllRec: Boolean;
 
 implementation
 
@@ -168,16 +173,18 @@ begin
   loadRec:=loadRec+1;
   if loadRec > 10000 then
   begin
-    if Application.MessageBox('Загрузить еще?',
+    if (isLoadAllRec) or (Application.MessageBox('Загрузить еще?',
       'Вы загрузили свыше 10000 записей', MB_YESNO +
-      MB_ICONQUESTION + MB_TOPMOST) = IDYES then
+      MB_ICONQUESTION + MB_TOPMOST) = IDYES) then
     begin
      Action:=afContinue;
      loadRec:=0;
+     isLoadAllRec:=True;
     end
     else
     begin
      Action:=afStop;
+     isLoadAllRec:=False;
     end;
   end;
 
@@ -310,6 +317,18 @@ begin
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
                       'Дом');
 
+end;
+
+procedure TFrmTask.FormCreate(Sender: TObject);
+begin
+  // запрет выгрузки всех записей
+  isLoadAllRec:=False;
+end;
+
+procedure TFrmTask.OD_TaskAfterQuery(Sender: TOracleDataSet);
+begin
+  // запрет выгрузки всех записей
+  isLoadAllRec:=False;
 end;
 
 end.

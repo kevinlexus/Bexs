@@ -1,6 +1,6 @@
 object FrmMain: TFrmMain
-  Left = 1115
-  Top = 325
+  Left = 1211
+  Top = 188
   Width = 739
   Height = 644
   Caption = 'Bexs'
@@ -23,12 +23,20 @@ object FrmMain: TFrmMain
     object File1: TMenuItem
       Caption = #1060#1072#1081#1083
       object N1: TMenuItem
-        Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
+        Caption = #1054#1073#1098#1077#1082#1090#1099
         OnClick = N1Click
       end
       object Eolink1: TMenuItem
-        Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
+        Caption = #1047#1072#1076#1072#1085#1080#1103
         OnClick = Eolink1Click
+      end
+      object Pdoc1: TMenuItem
+        Caption = #1055#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099
+        OnClick = Pdoc1Click
+      end
+      object N7: TMenuItem
+        Caption = #1048#1079#1074#1077#1097#1077#1085#1080#1103
+        OnClick = N7Click
       end
       object N5: TMenuItem
         Caption = '---'
