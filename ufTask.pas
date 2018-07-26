@@ -180,7 +180,7 @@ begin
      Action:=afContinue;
      loadRec:=0;
      isLoadAllRec:=True;
-    end
+    end                                           
     else
     begin
      Action:=afStop;
