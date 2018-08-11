@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 667
-  Top = 172
+  Left = 537
+  Top = 227
   Width = 1226
   Height = 475
   Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
@@ -86,51 +86,51 @@ object FrmEolink: TFrmEolink
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
-        Width = 45
+        Width = 80
       end
       object cxGrid1DBTableView1ND: TcxGridDBColumn
         DataBinding.FieldName = 'ND'
-        Width = 45
+        Width = 42
       end
       object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
         DataBinding.FieldName = 'ENTRY'
-        Width = 45
+        Width = 41
       end
       object cxGrid1DBTableView1KW: TcxGridDBColumn
         DataBinding.FieldName = 'KW'
-        Width = 45
+        Width = 43
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 46
+        Width = 42
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 44
+        Width = 41
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 45
+        Width = 42
       end
       object cxGrid1DBTableView1APP_TP: TcxGridDBColumn
         DataBinding.FieldName = 'APP_TP'
-        Width = 45
+        Width = 41
       end
       object cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn
         DataBinding.FieldName = 'FK_KLSK_OBJ'
-        Width = 45
+        Width = 42
       end
       object cxGrid1DBTableView1OGRN: TcxGridDBColumn
         DataBinding.FieldName = 'OGRN'
-        Width = 44
+        Width = 42
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 46
+        Width = 42
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 45
+        Width = 42
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -466,6 +466,35 @@ object FrmEolink: TFrmEolink
     object N1: TMenuItem
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1076#1086#1084#1072' '#1087#1086' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
       OnClick = N1Click
+    end
+    object N5: TMenuItem
+      Caption = '---'
+    end
+    object Excel1: TMenuItem
+      Caption = #1069#1082#1089#1087#1086#1088#1090' '#1074' Excel'
+      OnClick = Excel1Click
+    end
+    object N9: TMenuItem
+      Caption = '---'
+    end
+    object N8: TMenuItem
+      Caption = #1056#1072#1073#1086#1090#1072' '#1089' '#1055#1044
+      object N6: TMenuItem
+        Caption = #1054#1090#1084#1077#1085#1080#1090#1100' '#1074#1089#1077' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091
+        OnClick = N6Click
+      end
+      object N10: TMenuItem
+        Caption = #1054#1090#1084#1077#1085#1080#1090#1100' '#1074#1089#1077' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1055#1044' '#1087#1086' '#1059#1050
+        OnClick = N10Click
+      end
+      object N7: TMenuItem
+        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091
+        OnClick = N7Click
+      end
+      object N11: TMenuItem
+        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1087#1086' '#1059#1050
+        OnClick = N11Click
+      end
     end
   end
   object OQ_add_house: TOracleQuery

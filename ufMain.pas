@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ufEolink, ufTask, ufPdoc, ufReference, ufRefCorrespond, ImgList;
+  Dialogs, Menus, ufEolink, ufTask, ufPdoc, ufReference, ufRefCorrespond,
+  ImgList, cxGrid, cxGridExportLink;
 
 type
   TFrmMain = class(TForm)
@@ -20,6 +21,7 @@ type
     N6: TMenuItem;
     Pdoc1: TMenuItem;
     N7: TMenuItem;
+    N8: TMenuItem;
     procedure N1Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
     procedure N3Click(Sender: TObject);
@@ -27,6 +29,8 @@ type
     procedure N6Click(Sender: TObject);
     procedure Pdoc1Click(Sender: TObject);
     procedure N7Click(Sender: TObject);
+    procedure expToExcel(fname: string; cxGrid1: TcxGrid);
+    procedure N8Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +77,7 @@ procedure TFrmMain.findRoot(parentId: Integer; // Id первого родителя
                    );
 var
   id: Integer;
+  str: string;
 begin
   id:=DataModule2.OP_gis.CallIntegerFunction('get_root_eolink',
       [parentId, tp]);
@@ -84,7 +89,8 @@ begin
   end
   else
   begin
-    Application.MessageBox('Объект с типом "+PChar(tp)+" не найден!', 'Внимание!',
+    str:='Объект с типом '+tp+' не найден!';
+    Application.MessageBox(PChar(str), 'Внимание!',
       MB_OK + MB_ICONSTOP);
   end;
 end;
@@ -105,6 +111,24 @@ begin
    Application.CreateForm(TFrmNotif, FrmNotif);
    FrmNotif.setFltById(0,0);
 
+end;
+
+procedure TFrmMain.expToExcel(fname: string; cxGrid1: TcxGrid);
+ var
+   dir, str: string;
+begin
+  dir := GetCurrentDir;
+  ExportGridToExcel(fname, cxGrid1, false, true, true, 'xls');
+  str:='Сохранено в '+dir+'\'+fname+'.xls';
+  Application.MessageBox(PChar(str), 'Внимание!', MB_OK +
+    MB_ICONINFORMATION);
+end;
+
+procedure TFrmMain.N8Click(Sender: TObject);
+var
+  i : Word;
+begin
+  for i := 0 to MDIChildCount - 1 do MDIChildren[i].Close;
 end;
 
 end.

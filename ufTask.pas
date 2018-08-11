@@ -23,7 +23,7 @@ uses
   cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
   ComCtrls, ToolWin, StdCtrls, Menus, cxDBLookupComboBox, cxCalendar,
-  ExtCtrls;
+  ExtCtrls, cxGridExportLink;
 
 type
   TFrmTask = class(TForm)
@@ -113,6 +113,8 @@ type
     N2: TMenuItem;
     OD_TaskOBJ_ADR: TStringField;
     cxGrid1DBTableView1OBJ_ADR: TcxGridDBColumn;
+    N3: TMenuItem;
+    Excel1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -133,6 +135,7 @@ type
     procedure Eolink2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure OD_TaskAfterQuery(Sender: TOracleDataSet);
+    procedure Excel1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -329,6 +332,11 @@ procedure TFrmTask.OD_TaskAfterQuery(Sender: TOracleDataSet);
 begin
   // запрет выгрузки всех записей
   isLoadAllRec:=False;
+end;
+
+procedure TFrmTask.Excel1Click(Sender: TObject);
+begin
+  FrmMain.expToExcel('Задания', cxGrid1);
 end;
 
 end.

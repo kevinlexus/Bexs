@@ -79,6 +79,8 @@ type
     cxGrid1DBTableView1SUMMA: TcxGridDBColumn;
     cxGrid1DBTableView1FK_KWTP_MG: TcxGridDBColumn;
     N1: TMenuItem;
+    N3: TMenuItem;
+    Excel1: TMenuItem;
     procedure OD_NotifAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -92,6 +94,7 @@ type
     procedure Eolink3Click(Sender: TObject);
     procedure INS1Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
+    procedure Excel1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -225,6 +228,11 @@ begin
   Application.CreateForm(TFrmPdoc, FrmPdoc);
   FrmPdoc.setFltById(0, OD_Notif.FieldByName('FK_PDOC').asInteger);
 
+end;
+
+procedure TFrmNotif.Excel1Click(Sender: TObject);
+begin
+  FrmMain.expToExcel('Извещения', cxGrid1);
 end;
 
 end.

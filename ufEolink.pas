@@ -109,6 +109,14 @@ type
     N3: TMenuItem;
     N4: TMenuItem;
     OD_EolinkOBJTPCD: TStringField;
+    N5: TMenuItem;
+    Excel1: TMenuItem;
+    N6: TMenuItem;
+    N7: TMenuItem;
+    N8: TMenuItem;
+    N9: TMenuItem;
+    N10: TMenuItem;
+    N11: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -127,6 +135,11 @@ type
     procedure N4Click(Sender: TObject);
     procedure OD_EolinkAfterQuery(Sender: TOracleDataSet);
     procedure FormCreate(Sender: TObject);
+    procedure Excel1Click(Sender: TObject);
+    procedure N6Click(Sender: TObject);
+    procedure N7Click(Sender: TObject);
+    procedure N10Click(Sender: TObject);
+    procedure N11Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -286,9 +299,28 @@ end;
 procedure TFrmEolink.OD_EolinkAfterScroll(DataSet: TDataSet);
 begin
   if OD_Eolink.FieldByName('OBJTPCD').AsString='Организация' then
-     N1.Enabled:=true
+  begin
+     N1.Enabled:=true;
+     N10.Enabled:=true;
+     N11.Enabled:=true;
+  end
   else
+  begin
      N1.Enabled:=false;
+     N10.Enabled:=false;
+     N11.Enabled:=false;
+  end;
+
+  if OD_Eolink.FieldByName('OBJTPCD').AsString='Дом' then
+  begin
+     N6.Enabled:=true;
+     N7.Enabled:=true;
+  end
+  else
+  begin
+     N6.Enabled:=False;
+     N7.Enabled:=False;
+  end;
 
   if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
      N4.Enabled:=true
@@ -361,6 +393,81 @@ procedure TFrmEolink.FormCreate(Sender: TObject);
 begin
   // запрет выгрузки всех записей
   isLoadAllRec:=False;
+end;
+
+procedure TFrmEolink.Excel1Click(Sender: TObject);
+begin
+  FrmMain.expToExcel('Объекты', cxGrid1);
+end;
+
+procedure TFrmEolink.N6Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Отменить все активные ПД по дому?',
+    'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // отменить все активные ПД по дому
+    ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_house',
+        [OD_Eolink.FieldByName('ID').AsInteger]);
+    chr:='Обработано ПД: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmEolink.N7Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Загрузить все недостающие ПД по дому?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // загрузить все недостающие ПД по дому
+    ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_house',
+        [OD_Eolink.FieldByName('ID').AsInteger]);
+    chr:='Обработано ПД: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+
+end;
+
+procedure TFrmEolink.N10Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Отменить все активные ПД по УК?',
+    'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // отменить все активные ПД по УК
+    ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_uk',
+        [OD_Eolink.FieldByName('ID').AsInteger]);
+    chr:='Обработано ПД: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmEolink.N11Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Загрузить все недостающие ПД по УК?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // загрузить все недостающие ПД по УК
+    ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_uk',
+        [OD_Eolink.FieldByName('ID').AsInteger]);
+    chr:='Обработано ПД: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+
 end;
 
 end.

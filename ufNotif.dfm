@@ -312,5 +312,12 @@ object FrmNotif: TFrmNotif
       Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1074' '#1043#1048#1057
       OnClick = INS1Click
     end
+    object N3: TMenuItem
+      Caption = '---'
+    end
+    object Excel1: TMenuItem
+      Caption = #1069#1082#1089#1087#1086#1088#1090' '#1074' Excel'
+      OnClick = Excel1Click
+    end
   end
 end

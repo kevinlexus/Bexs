@@ -1,6 +1,6 @@
 object FrmTask: TFrmTask
-  Left = 452
-  Top = 481
+  Left = 332
+  Top = 486
   Width = 1222
   Height = 493
   Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
@@ -12,7 +12,7 @@ object FrmTask: TFrmTask
   Font.Style = []
   FormStyle = fsMDIChild
   OldCreateOrder = False
-  Position = poMainFormCenter
+  Position = poDefault
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -59,17 +59,17 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_EOLINK'
-        Width = 20
+        Width = 59
       end
       object cxGrid1DBTableView1EOLTPNAME: TcxGridDBColumn
         Caption = #1058#1080#1087' '#1086#1073#1098#1077#1082#1090#1072
         DataBinding.FieldName = 'EOLTP_NAME'
-        Width = 20
+        Width = 24
       end
       object cxGrid1DBTableView1OBJ_ADR: TcxGridDBColumn
         Caption = #1040#1076#1088#1077#1089
         DataBinding.FieldName = 'OBJ_ADR'
-        Width = 80
+        Width = 76
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
@@ -77,59 +77,59 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1STATE: TcxGridDBColumn
         DataBinding.FieldName = 'STATE'
-        Width = 20
+        Width = 30
       end
       object cxGrid1DBTableView1FK_ACT: TcxGridDBColumn
         DataBinding.FieldName = 'FK_ACT'
-        Width = 20
+        Width = 42
       end
       object cxGrid1DBTableView1ACT_NAME: TcxGridDBColumn
         DataBinding.FieldName = 'ACT_NAME'
-        Width = 20
-      end
-      object cxGrid1DBTableView1COMM: TcxGridDBColumn
-        DataBinding.FieldName = 'COMM'
-        Width = 61
+        Width = 101
       end
       object cxGrid1DBTableView1RESULT: TcxGridDBColumn
         DataBinding.FieldName = 'RESULT'
-        Width = 62
+        Width = 52
+      end
+      object cxGrid1DBTableView1COMM: TcxGridDBColumn
+        DataBinding.FieldName = 'COMM'
+        Width = 23
       end
       object cxGrid1DBTableView1ERRACKCNT: TcxGridDBColumn
         DataBinding.FieldName = 'ERRACKCNT'
-        Width = 61
+        Width = 50
       end
       object cxGrid1DBTableView1PRIORITY: TcxGridDBColumn
         DataBinding.FieldName = 'PRIORITY'
-        Width = 61
+        Width = 49
       end
       object cxGrid1DBTableView1TRACE: TcxGridDBColumn
         DataBinding.FieldName = 'TRACE'
-        Width = 62
+        Width = 49
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 61
+        Width = 50
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 62
+        Width = 50
       end
       object cxGrid1DBTableView1FK_USER: TcxGridDBColumn
         DataBinding.FieldName = 'FK_USER'
-        Width = 61
+        Width = 50
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 61
+        Width = 51
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 62
+        Width = 47
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 61
+        Width = 52
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -285,8 +285,8 @@ object FrmTask: TFrmTask
       't.fk_act, s.name as act_name, t.result, t.guid, t.tguid, '
       't.fk_user, t.dt_crt, t.dt_upd, t.comm, tp.name as eoltp_name, '
       
-        ' '#39'REU:'#39'||e.reu||'#39','#39'||g.name||'#39', '#39'||sp.name||'#39', '#39'||ltrim(e.nd,'#39'0'#39 +
-        ')||'#39', '#39'||ltrim(e.kw,'#39'0'#39') as obj_adr, '
+        ' '#39'REU:'#39'||e.reu||'#39','#39'||trim(g.name)||'#39', '#39'||trim(sp.name)||'#39', '#39'||lt' +
+        'rim(e.nd,'#39'0'#39')||'#39', '#39'||ltrim(e.kw,'#39'0'#39') as obj_adr, '
       ' t.rowid'
       ' from EXS.TASK t'
       ' join bs.list s on t.fk_act=s.id '
@@ -478,6 +478,13 @@ object FrmTask: TFrmTask
     object RPT1: TMenuItem
       Caption = #1055#1077#1088#1077#1074#1077#1089#1090#1080' '#1074' RPT'
       OnClick = RPT1Click
+    end
+    object N3: TMenuItem
+      Caption = '---'
+    end
+    object Excel1: TMenuItem
+      Caption = #1069#1082#1089#1087#1086#1088#1090' '#1074' Excel'
+      OnClick = Excel1Click
     end
   end
   object OD_taskxpar: TOracleDataSet

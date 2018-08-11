@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
-  StdCtrls, ComCtrls, ToolWin, Menus;
+  StdCtrls, ComCtrls, ToolWin, Menus, cxCheckBox;
 
 type
   TFrmPdoc = class(TForm)
@@ -74,6 +74,8 @@ type
     N2: TMenuItem;
     INS1: TMenuItem;
     N1: TMenuItem;
+    N3: TMenuItem;
+    Excel1: TMenuItem;
     procedure OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -87,6 +89,7 @@ type
     procedure Eolink3Click(Sender: TObject);
     procedure INS1Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
+    procedure Excel1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -220,6 +223,11 @@ begin
   Application.CreateForm(TFrmNotif, FrmNotif);
   FrmNotif.setFltById(0, OD_Pdoc.FieldByName('ID').asInteger);
 
+end;
+
+procedure TFrmPdoc.Excel1Click(Sender: TObject);
+begin
+  FrmMain.expToExcel('Платежные_документы', cxGrid1);
 end;
 
 end.

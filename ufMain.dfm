@@ -1,6 +1,6 @@
 object FrmMain: TFrmMain
-  Left = 1211
-  Top = 188
+  Left = 459
+  Top = 294
   Width = 739
   Height = 644
   Caption = 'Bexs'
@@ -40,6 +40,10 @@ object FrmMain: TFrmMain
       end
       object N5: TMenuItem
         Caption = '---'
+      end
+      object N8: TMenuItem
+        Caption = #1047#1072#1082#1088#1099#1090#1100' '#1074#1089#1077' '#1086#1082#1085#1072
+        OnClick = N8Click
       end
       object N6: TMenuItem
         Caption = #1042#1099#1093#1086#1076
