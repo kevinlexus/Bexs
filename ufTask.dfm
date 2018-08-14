@@ -12,7 +12,7 @@ object FrmTask: TFrmTask
   Font.Style = []
   FormStyle = fsMDIChild
   OldCreateOrder = False
-  Position = poDefault
+  Position = poMainFormCenter
   Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
@@ -35,6 +35,7 @@ object FrmTask: TFrmTask
       PopupMenu = PopupMenu1
       Navigator.Buttons.CustomButtons = <>
       Navigator.Visible = True
+      OnCustomDrawCell = cxGrid1DBTableView1CustomDrawCell
       DataController.DataModeController.GridModeBufferCount = 100
       DataController.DataSource = DS_task
       DataController.KeyFieldNames = 'ID'

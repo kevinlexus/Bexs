@@ -117,6 +117,10 @@ type
     N9: TMenuItem;
     N10: TMenuItem;
     N11: TMenuItem;
+    N12: TMenuItem;
+    N13: TMenuItem;
+    N14: TMenuItem;
+    N15: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -140,6 +144,10 @@ type
     procedure N7Click(Sender: TObject);
     procedure N10Click(Sender: TObject);
     procedure N11Click(Sender: TObject);
+    procedure N12Click(Sender: TObject);
+    procedure N13Click(Sender: TObject);
+    procedure N14Click(Sender: TObject);
+    procedure N15Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -303,23 +311,31 @@ begin
      N1.Enabled:=true;
      N10.Enabled:=true;
      N11.Enabled:=true;
+     N13.Enabled:=true;
+     N15.Enabled:=true;
   end
   else
   begin
      N1.Enabled:=false;
      N10.Enabled:=false;
      N11.Enabled:=false;
+     N13.Enabled:=false;
+     N15.Enabled:=false;
   end;
 
   if OD_Eolink.FieldByName('OBJTPCD').AsString='Дом' then
   begin
      N6.Enabled:=true;
      N7.Enabled:=true;
+     N12.Enabled:=true;
+     N14.Enabled:=true;
   end
   else
   begin
      N6.Enabled:=False;
      N7.Enabled:=False;
+     N12.Enabled:=false;
+     N14.Enabled:=false;
   end;
 
   if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
@@ -411,6 +427,7 @@ begin
     // отменить все активные ПД по дому
     ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_house',
         [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;    
     chr:='Обработано ПД: '+IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
@@ -428,6 +445,7 @@ begin
     // загрузить все недостающие ПД по дому
     ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_house',
         [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;    
     chr:='Обработано ПД: '+IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
@@ -446,6 +464,7 @@ begin
     // отменить все активные ПД по УК
     ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_uk',
         [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;    
     chr:='Обработано ПД: '+IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
@@ -463,7 +482,88 @@ begin
     // загрузить все недостающие ПД по УК
     ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_uk',
         [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;
     chr:='Обработано ПД: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+
+end;
+
+procedure TFrmEolink.N12Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Активировать задания по загрузке ПД по дому?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // активировать задания по загрузке ПД по дому
+    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_house',
+        [OD_Eolink.FieldByName('ID').AsInteger,
+        'GIS_IMP_PAY_DOCS']);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано Заданий: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+
+end;
+
+procedure TFrmEolink.N13Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Активировать задания по загрузке ПД по УК?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // активировать задания по загрузке ПД по УК
+    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
+        [OD_Eolink.FieldByName('ID').AsInteger,
+        'GIS_IMP_PAY_DOCS']);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано Заданий: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+
+end;
+
+procedure TFrmEolink.N14Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС по дому?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // активировать задания по экспорту ПД из ГИС по дому
+    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_house',
+        [OD_Eolink.FieldByName('ID').AsInteger,
+        'GIS_EXP_PAY_DOCS']);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано Заданий: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+
+end;
+
+procedure TFrmEolink.N15Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС по УК?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // активировать задания по экспорту ПД по УК
+    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
+        [OD_Eolink.FieldByName('ID').AsInteger,
+        'GIS_EXP_PAY_DOCS']);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано Заданий: '+IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;

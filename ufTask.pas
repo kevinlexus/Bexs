@@ -136,6 +136,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure OD_TaskAfterQuery(Sender: TOracleDataSet);
     procedure Excel1Click(Sender: TObject);
+    procedure cxGrid1DBTableView1CustomDrawCell(
+      Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
   private
     { Private declarations }
   public
@@ -337,6 +340,25 @@ end;
 procedure TFrmTask.Excel1Click(Sender: TObject);
 begin
   FrmMain.expToExcel('Задания', cxGrid1);
+end;
+
+procedure TFrmTask.cxGrid1DBTableView1CustomDrawCell(
+  Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+var
+ s : string;
+begin
+  // цвет записи
+  s := AViewInfo.GridRecord.DisplayTexts[7];
+  if (s = 'ERR') or (s = 'ERS') then
+  begin
+    // ошибка
+    ACanvas.Font.Color:= clRed;
+  end
+  else
+  begin
+
+  end;
 end;
 
 end.

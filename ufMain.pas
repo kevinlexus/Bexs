@@ -128,7 +128,12 @@ procedure TFrmMain.N8Click(Sender: TObject);
 var
   i : Word;
 begin
-  for i := 0 to MDIChildCount - 1 do MDIChildren[i].Close;
+  // закрыть все MDI окна
+  try
+   for i := 0 to MDIChildCount - 1 do MDIChildren[i].Close;
+  except
+
+  end;
 end;
 
 end.

@@ -1,8 +1,8 @@
 object FrmReference: TFrmReference
-  Left = 246
-  Top = 447
-  Width = 1094
-  Height = 540
+  Left = 222
+  Top = 166
+  Width = 1263
+  Height = 563
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080' '#1043#1048#1057
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,13 +22,13 @@ object FrmReference: TFrmReference
     Left = 369
     Top = 0
     Width = 8
-    Height = 501
+    Height = 524
   end
   object cxGrid1: TcxGrid
     Left = 0
     Top = 0
     Width = 369
-    Height = 501
+    Height = 524
     Align = alLeft
     TabOrder = 0
     object cxGrid1DBTableView1: TcxGridDBTableView
@@ -84,16 +84,16 @@ object FrmReference: TFrmReference
   object Panel1: TPanel
     Left = 377
     Top = 0
-    Width = 701
-    Height = 501
+    Width = 870
+    Height = 524
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 1
     object cxGrid2: TcxGrid
       Left = 1
       Top = 33
-      Width = 699
-      Height = 467
+      Width = 868
+      Height = 490
       Align = alClient
       TabOrder = 0
       object cxGridDBTableView1: TcxGridDBTableView
@@ -109,45 +109,57 @@ object FrmReference: TFrmReference
         OptionsSelection.InvertSelect = False
         OptionsView.ColumnAutoWidth = True
         OptionsView.GroupByBox = False
+        OptionsView.HeaderAutoHeight = True
         object cxGridDBTableView1ID: TcxGridDBColumn
           DataBinding.FieldName = 'ID'
-          Width = 27
-        end
-        object cxGridDBTableView1PARENT_ID: TcxGridDBColumn
-          DataBinding.FieldName = 'PARENT_ID'
-          Width = 28
+          Width = 31
         end
         object cxGridDBTableView1FK_LISTTP: TcxGridDBColumn
           DataBinding.FieldName = 'FK_LISTTP'
-          Width = 27
+          Width = 32
         end
         object cxGridDBTableView1FK_EXT: TcxGridDBColumn
           DataBinding.FieldName = 'FK_EXT'
-          Width = 27
+          Width = 31
         end
         object cxGridDBTableView1CD: TcxGridDBColumn
           DataBinding.FieldName = 'CD'
-          Width = 29
+          Width = 34
         end
         object cxGridDBTableView1NPP: TcxGridDBColumn
           DataBinding.FieldName = 'NPP'
-          Width = 27
+          Width = 31
         end
         object cxGridDBTableView1GUID: TcxGridDBColumn
           DataBinding.FieldName = 'GUID'
-          Width = 43
+          Width = 50
         end
         object cxGridDBTableView1ACTUAL: TcxGridDBColumn
           DataBinding.FieldName = 'ACTUAL'
-          Width = 44
+          Width = 52
         end
         object cxGridDBTableView1NAME: TcxGridDBColumn
           DataBinding.FieldName = 'NAME'
-          Width = 152
+          Width = 135
         end
         object cxGridDBTableView1S1: TcxGridDBColumn
           DataBinding.FieldName = 'S1'
-          Width = 213
+          Width = 81
+        end
+        object cxGridDBTableView1PARENT_ID: TcxGridDBColumn
+          Caption = #1048#1047' '#1043#1048#1057' '#1046#1050#1061': '#1057#1074#1103#1079#1100' '#1079#1072#1087#1080#1089#1080' '#1076#1086#1095#1077#1088#1085#1077#1075#1086' '#1101#1083#1077#1084#1077#1085#1090#1072' '#1089' '#1075#1083#1072#1074#1085#1086#1081' '#1079#1072#1087#1080#1089#1100#1102
+          DataBinding.FieldName = 'PARENT_ID'
+          Width = 146
+        end
+        object cxGridDBTableView1PARENT_ID2: TcxGridDBColumn
+          Caption = #1057#1074#1103#1079#1100' '#1079#1072#1087#1080#1089#1080' '#1091#1089#1083#1091#1075#1080' '#1054#1048' '#1089' '#1086#1089#1085#1086#1074#1085#1086#1081' '#1091#1089#1083#1091#1075#1086#1081
+          DataBinding.FieldName = 'PARENT_ID2'
+          Width = 122
+        end
+        object cxGridDBTableView1PARENT_ID3: TcxGridDBColumn
+          Caption = #1057#1074#1103#1079#1100' '#1091#1089#1083#1091#1075#1080' '#1087#1086#1074#1099#1096'. '#1082#1086#1101#1092#1092' '#1089' '#1086#1089#1085#1086#1074#1085#1086#1081' '#1091#1089#1083#1091#1075#1086#1081
+          DataBinding.FieldName = 'PARENT_ID3'
+          Width = 121
         end
       end
       object cxGridLevel1: TcxGridLevel
@@ -157,7 +169,7 @@ object FrmReference: TFrmReference
     object Memo1: TMemo
       Left = 1
       Top = 1
-      Width = 699
+      Width = 868
       Height = 32
       Align = alTop
       Lines.Strings = (
@@ -226,8 +238,9 @@ object FrmReference: TFrmReference
   object OD_list: TOracleDataSet
     SQL.Strings = (
       
-        'select t.id, t.parent_id, t.fk_listtp, tp.fk_ext, t.cd, t.npp, t' +
-        '.guid, t.actual, t.name, t.s1, t.tp, t.rowid'
+        'select t.id, t.parent_id, t.parent_id2, t.parent_id3, t.fk_listt' +
+        'p, tp.fk_ext, t.npp, t.guid, t.actual, t.name, t.s1, t.tp, t.row' +
+        'id'
       ' from EXS.U_LIST t'
       ' join EXS.U_LISTTP tp on t.fk_listtp=tp.id'
       'where t.fk_listtp=:fk_listtp'
@@ -237,12 +250,13 @@ object FrmReference: TFrmReference
       03000000010000000A0000003A464B5F4C49535454500300000004000000DB1D
       010000000000}
     QBEDefinition.QBEFieldDefs = {
-      040000000B000000020000004944010000000000020000004344010000000000
-      09000000504152454E545F494401000000000009000000464B5F4C4953545450
-      010000000000030000004E505001000000000004000000475549440100000000
-      000600000041435455414C01000000000006000000464B5F4558540100000000
-      00040000004E414D450100000000000200000053310100000000000200000054
-      50010000000000}
+      040000000C00000002000000494401000000000009000000504152454E545F49
+      4401000000000009000000464B5F4C4953545450010000000000030000004E50
+      5001000000000004000000475549440100000000000600000041435455414C01
+      000000000006000000464B5F455854010000000000040000004E414D45010000
+      0000000200000053310100000000000200000054500100000000000A00000050
+      4152454E545F4944320100000000000A000000504152454E545F494433010000
+      000000}
     Master = OD_ListTp
     MasterFields = 'ID'
     DetailFields = 'FK_LISTTP'
@@ -250,7 +264,6 @@ object FrmReference: TFrmReference
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     Session = DataModule2.OracleSession1
     DesignActivation = True
-    Active = True
     Left = 32
     Top = 208
     object OD_listID: TFloatField
@@ -266,11 +279,6 @@ object FrmReference: TFrmReference
     end
     object OD_listFK_EXT: TFloatField
       FieldName = 'FK_EXT'
-    end
-    object OD_listCD: TStringField
-      FieldName = 'CD'
-      Required = True
-      Size = 255
     end
     object OD_listNPP: TFloatField
       FieldName = 'NPP'
@@ -294,6 +302,12 @@ object FrmReference: TFrmReference
     end
     object OD_listTP2: TFloatField
       FieldName = 'TP'
+    end
+    object OD_listPARENT_ID2: TFloatField
+      FieldName = 'PARENT_ID2'
+    end
+    object OD_listPARENT_ID3: TFloatField
+      FieldName = 'PARENT_ID3'
     end
   end
   object Ds_List: TDataSource

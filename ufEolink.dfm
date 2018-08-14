@@ -92,45 +92,45 @@ object FrmEolink: TFrmEolink
         DataBinding.FieldName = 'ND'
         Width = 42
       end
-      object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
-        DataBinding.FieldName = 'ENTRY'
-        Width = 41
-      end
       object cxGrid1DBTableView1KW: TcxGridDBColumn
         DataBinding.FieldName = 'KW'
-        Width = 43
+        Width = 45
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 42
+        Width = 45
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 41
+        Width = 43
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 42
+        Width = 44
       end
       object cxGrid1DBTableView1APP_TP: TcxGridDBColumn
         DataBinding.FieldName = 'APP_TP'
-        Width = 41
+        Width = 43
       end
       object cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn
         DataBinding.FieldName = 'FK_KLSK_OBJ'
-        Width = 42
+        Width = 44
       end
       object cxGrid1DBTableView1OGRN: TcxGridDBColumn
         DataBinding.FieldName = 'OGRN'
-        Width = 42
+        Width = 45
+      end
+      object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
+        DataBinding.FieldName = 'ENTRY'
+        Width = 21
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 42
+        Width = 44
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 42
+        Width = 44
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -494,6 +494,22 @@ object FrmEolink: TFrmEolink
       object N11: TMenuItem
         Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1087#1086' '#1059#1050
         OnClick = N11Click
+      end
+      object N12: TMenuItem
+        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1080#1084#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091' '#1074' '#1043#1048#1057
+        OnClick = N12Click
+      end
+      object N13: TMenuItem
+        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1080#1084#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1059#1050' '#1074' '#1043#1048#1057
+        OnClick = N13Click
+      end
+      object N14: TMenuItem
+        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1101#1082#1089#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091' '#1080#1079' '#1043#1048#1057
+        OnClick = N14Click
+      end
+      object N15: TMenuItem
+        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1101#1082#1089#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1059#1050' '#1080#1079' '#1043#1048#1057
+        OnClick = N15Click
       end
     end
   end

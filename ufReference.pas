@@ -50,7 +50,6 @@ type
     OD_listPARENT_ID: TFloatField;
     OD_listFK_LISTTP: TFloatField;
     OD_listFK_EXT: TFloatField;
-    OD_listCD: TStringField;
     OD_listNPP: TFloatField;
     OD_listGUID: TStringField;
     OD_listACTUAL: TFloatField;
@@ -74,6 +73,10 @@ type
     cxGridDBTableView1S1: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
     Memo1: TMemo;
+    OD_listPARENT_ID2: TFloatField;
+    OD_listPARENT_ID3: TFloatField;
+    cxGridDBTableView1PARENT_ID2: TcxGridDBColumn;
+    cxGridDBTableView1PARENT_ID3: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

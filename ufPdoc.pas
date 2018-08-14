@@ -76,6 +76,18 @@ type
     N1: TMenuItem;
     N3: TMenuItem;
     Excel1: TMenuItem;
+    OD_PdocUK: TStringField;
+    OD_PdocSTREET: TStringField;
+    OD_PdocND: TStringField;
+    OD_PdocENTRY: TFloatField;
+    OD_PdocKW: TStringField;
+    cxGrid1DBTableView1UK: TcxGridDBColumn;
+    cxGrid1DBTableView1STREET: TcxGridDBColumn;
+    cxGrid1DBTableView1ND: TcxGridDBColumn;
+    cxGrid1DBTableView1ENTRY: TcxGridDBColumn;
+    cxGrid1DBTableView1KW: TcxGridDBColumn;
+    OD_PdocCOMM: TStringField;
+    cxGrid1DBTableView1COMM: TcxGridDBColumn;
     procedure OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -90,6 +102,9 @@ type
     procedure INS1Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
     procedure Excel1Click(Sender: TObject);
+    procedure cxGrid1DBTableView1CustomDrawCell(
+      Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
   private
     { Private declarations }
   public
@@ -228,6 +243,28 @@ end;
 procedure TFrmPdoc.Excel1Click(Sender: TObject);
 begin
   FrmMain.expToExcel('Платежные_документы', cxGrid1);
+end;
+
+procedure TFrmPdoc.cxGrid1DBTableView1CustomDrawCell(
+  Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+var
+ s : string;
+begin
+  // цвет записи
+  s := AViewInfo.GridRecord.DisplayTexts[12];
+  if s = '1' then
+  begin
+    // активная запись
+    //ACanvas.Brush.Color:= clRed;
+    //ACanvas.Font.Color:= clBlack;
+  end
+  else
+  begin
+    // неактивная запись
+     //ACanvas.Brush.Color:= $00E1E1E1;
+     ACanvas.Font.Color:= clGray;
+  end;
 end;
 
 end.
