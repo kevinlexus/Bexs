@@ -22,6 +22,7 @@ type
     Pdoc1: TMenuItem;
     N7: TMenuItem;
     N8: TMenuItem;
+    N9: TMenuItem;
     procedure N1Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
     procedure N3Click(Sender: TObject);
@@ -31,10 +32,11 @@ type
     procedure N7Click(Sender: TObject);
     procedure expToExcel(fname: string; cxGrid1: TcxGrid);
     procedure N8Click(Sender: TObject);
+    procedure N9Click(Sender: TObject);
   private
     { Private declarations }
   public
-    procedure findRoot(parentId: Integer; // Id первого родителя
+    procedure findRoot(id: Integer; // Id элемента
                        tp: String         // Тип объекта для поиска
                        );
   end;
@@ -44,7 +46,7 @@ var
 
 implementation
 
-uses DataModule, ufNotif;
+uses DataModule, ufNotif, ufErrStat;
 
 {$R *.dfm}
 
@@ -72,20 +74,20 @@ begin
 end;
 
 // найти корневой объект
-procedure TFrmMain.findRoot(parentId: Integer; // Id первого родителя
+procedure TFrmMain.findRoot(id: Integer; // Id элемента
                    tp: String         // Тип объекта для поиска
                    );
 var
-  id: Integer;
+  foundId: Integer;
   str: string;
 begin
-  id:=DataModule2.OP_gis.CallIntegerFunction('get_root_eolink',
-      [parentId, tp]);
-  if id <> 0 then
+  foundId:=DataModule2.OP_gis.CallIntegerFunction('get_root_eolink',
+      [id, tp]);
+  if foundId <> 0 then
   begin
     // найти иерархию объектов Eolink
     Application.CreateForm(TFrmEolink, FrmEolink);
-    FrmEolink.setFltById(id, 2);
+    FrmEolink.setFltById(foundId, 2);
   end
   else
   begin
@@ -134,6 +136,11 @@ begin
   except
 
   end;
+end;
+
+procedure TFrmMain.N9Click(Sender: TObject);
+begin
+  Application.CreateForm(TFrmErrStat, FrmErrStat);
 end;
 
 end.

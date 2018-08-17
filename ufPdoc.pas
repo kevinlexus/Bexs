@@ -129,10 +129,10 @@ begin
   OD_Pdoc.SetVariable('FLTID2', id2);
   OD_Pdoc.Active:=false;
   OD_Pdoc.Active:=true;
-  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+{  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
   begin
     OD_Pdoc.ReadOnly:=true;
-  end;
+  end;}
     // счетчик записей
   loadRec:=0;
 end;

@@ -38,6 +38,10 @@ object FrmMain: TFrmMain
         Caption = #1048#1079#1074#1077#1097#1077#1085#1080#1103
         OnClick = N7Click
       end
+      object N9: TMenuItem
+        Caption = #1050#1086#1085#1090#1088#1086#1083#1100
+        OnClick = N9Click
+      end
       object N5: TMenuItem
         Caption = '---'
       end

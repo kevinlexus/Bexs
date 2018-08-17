@@ -1,6 +1,6 @@
 object FrmReference: TFrmReference
-  Left = 222
-  Top = 166
+  Left = 330
+  Top = 349
   Width = 1263
   Height = 563
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080' '#1043#1048#1057
@@ -146,6 +146,13 @@ object FrmReference: TFrmReference
           DataBinding.FieldName = 'S1'
           Width = 81
         end
+        object cxGridDBTableView1HIDE_IN_PD: TcxGridDBColumn
+          Caption = #1057#1082#1088#1099#1090#1100' '#1074' '#1055#1044
+          DataBinding.FieldName = 'HIDE_IN_PD'
+          PropertiesClassName = 'TcxCheckBoxProperties'
+          Properties.ValueChecked = 1
+          Properties.ValueUnchecked = 'null;0'
+        end
         object cxGridDBTableView1PARENT_ID: TcxGridDBColumn
           Caption = #1048#1047' '#1043#1048#1057' '#1046#1050#1061': '#1057#1074#1103#1079#1100' '#1079#1072#1087#1080#1089#1080' '#1076#1086#1095#1077#1088#1085#1077#1075#1086' '#1101#1083#1077#1084#1077#1085#1090#1072' '#1089' '#1075#1083#1072#1074#1085#1086#1081' '#1079#1072#1087#1080#1089#1100#1102
           DataBinding.FieldName = 'PARENT_ID'
@@ -239,8 +246,8 @@ object FrmReference: TFrmReference
     SQL.Strings = (
       
         'select t.id, t.parent_id, t.parent_id2, t.parent_id3, t.fk_listt' +
-        'p, tp.fk_ext, t.npp, t.guid, t.actual, t.name, t.s1, t.tp, t.row' +
-        'id'
+        'p, tp.fk_ext, t.npp, t.guid, t.actual, t.name, t.s1, t.tp, t.hid' +
+        'e_in_pd, t.rowid'
       ' from EXS.U_LIST t'
       ' join EXS.U_LISTTP tp on t.fk_listtp=tp.id'
       'where t.fk_listtp=:fk_listtp'
@@ -250,13 +257,13 @@ object FrmReference: TFrmReference
       03000000010000000A0000003A464B5F4C49535454500300000004000000DB1D
       010000000000}
     QBEDefinition.QBEFieldDefs = {
-      040000000C00000002000000494401000000000009000000504152454E545F49
+      040000000D00000002000000494401000000000009000000504152454E545F49
       4401000000000009000000464B5F4C4953545450010000000000030000004E50
       5001000000000004000000475549440100000000000600000041435455414C01
       000000000006000000464B5F455854010000000000040000004E414D45010000
       0000000200000053310100000000000200000054500100000000000A00000050
       4152454E545F4944320100000000000A000000504152454E545F494433010000
-      000000}
+      0000000A000000484944455F494E5F5044010000000000}
     Master = OD_ListTp
     MasterFields = 'ID'
     DetailFields = 'FK_LISTTP'
@@ -308,6 +315,9 @@ object FrmReference: TFrmReference
     end
     object OD_listPARENT_ID3: TFloatField
       FieldName = 'PARENT_ID3'
+    end
+    object OD_listHIDE_IN_PD: TFloatField
+      FieldName = 'HIDE_IN_PD'
     end
   end
   object Ds_List: TDataSource

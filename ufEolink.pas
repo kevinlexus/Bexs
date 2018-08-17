@@ -378,7 +378,7 @@ end;
 procedure TFrmEolink.N2Click(Sender: TObject);
 begin
   // найти корневую запись
-  FrmMain.findRoot(OD_Eolink.FieldByName('parent_id').asInteger,
+  FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
                       'Дом');
 end;
 
@@ -386,7 +386,7 @@ end;
 procedure TFrmEolink.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
-  FrmMain.findRoot(OD_Eolink.FieldByName('parent_id').asInteger,
+  FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
                       'Организация');
 end;
 

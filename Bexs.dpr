@@ -11,7 +11,8 @@ uses
   ufRefCorrespond in 'ufRefCorrespond.pas' {FrmRefCorrespond},
   ufCrone in 'ufCrone.pas' {FrmCrone},
   ufPdoc in 'ufPdoc.pas' {FrmPdoc},
-  ufNotif in 'ufNotif.pas' {FrmNotif};
+  ufNotif in 'ufNotif.pas' {FrmNotif},
+  ufErrStat in 'ufErrStat.pas' {FrmErrStat};
 
 {$R *.res}
 

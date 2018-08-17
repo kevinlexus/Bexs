@@ -164,10 +164,10 @@ begin
   OD_Task.SetVariable('FLTID', id);
   OD_Task.Active:=false;
   OD_Task.Active:=true;
-  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+{  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
   begin
     OD_Task.ReadOnly:=true;
-  end;
+  end;}
   OD_taskxpar.Active:=true;
     // счетчик записей
   loadRec:=0;

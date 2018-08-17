@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, OracleData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  ExtCtrls, DataModule, StdCtrls;
+  ExtCtrls, DataModule, StdCtrls, cxCheckBox;
 
 type
   TFrmReference = class(TForm)
@@ -77,6 +77,8 @@ type
     OD_listPARENT_ID3: TFloatField;
     cxGridDBTableView1PARENT_ID2: TcxGridDBColumn;
     cxGridDBTableView1PARENT_ID3: TcxGridDBColumn;
+    OD_listHIDE_IN_PD: TFloatField;
+    cxGridDBTableView1HIDE_IN_PD: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

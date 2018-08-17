@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 537
-  Top = 227
+  Left = 529
+  Top = 341
   Width = 1226
   Height = 475
   Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
