@@ -121,6 +121,8 @@ type
     N13: TMenuItem;
     N14: TMenuItem;
     N15: TMenuItem;
+    OD_EolinkSTATUS: TFloatField;
+    cxGrid1DBTableView1STATUS: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -148,6 +150,9 @@ type
     procedure N13Click(Sender: TObject);
     procedure N14Click(Sender: TObject);
     procedure N15Click(Sender: TObject);
+    procedure cxGrid1DBTableView1CustomDrawCell(
+      Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
   private
     { Private declarations }
   public
@@ -379,7 +384,7 @@ procedure TFrmEolink.N2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
-                      'Дом');
+                      'Дом', true);
 end;
 
 
@@ -387,14 +392,14 @@ procedure TFrmEolink.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
-                      'Организация');
+                      'Организация', true);
 end;
 
 procedure TFrmEolink.N4Click(Sender: TObject);
 begin
   // найти ПД
   Application.CreateForm(TFrmPdoc, FrmPdoc);
-  FrmPdoc.setFltById(OD_Eolink.FieldByName('ID').asInteger, 0);
+  FrmPdoc.setFltById(OD_Eolink.FieldByName('ID').asInteger, 0, 1);
 
 end;
 
@@ -568,6 +573,30 @@ begin
       MB_ICONINFORMATION);
   end;
 
+end;
+
+procedure TFrmEolink.cxGrid1DBTableView1CustomDrawCell(
+  Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+var
+ col: TcxGridDBColumn;
+ s : string;
+begin
+  // цвет записи
+  col:=cxGrid1DBTableView1.GetColumnByFieldName('STATUS');
+  s := AViewInfo.GridRecord.DisplayTexts[col.Index];
+  if s = '1' then
+  begin
+    // активная запись
+    //ACanvas.Brush.Color:= clRed;
+    //ACanvas.Font.Color:= clBlack;
+  end
+  else
+  begin
+    // неактивная запись
+     //ACanvas.Brush.Color:= $00E1E1E1;
+     ACanvas.Font.Color:= clGray;
+  end;
 end;
 
 end.

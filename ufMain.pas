@@ -36,9 +36,10 @@ type
   private
     { Private declarations }
   public
-    procedure findRoot(id: Integer; // Id элемента
-                       tp: String         // Тип объекта для поиска
-                       );
+    function findRoot(id: Integer; // Id элемента
+                   tp: String;         // Тип объекта для поиска
+                   isCreateFrmEolink: Boolean // создавать ли форму Eolink или вернуть id
+                   ): Integer;
   end;
 
 var
@@ -74,9 +75,10 @@ begin
 end;
 
 // найти корневой объект
-procedure TFrmMain.findRoot(id: Integer; // Id элемента
-                   tp: String         // Тип объекта для поиска
-                   );
+function TFrmMain.findRoot(id: Integer; // Id элемента
+                   tp: String;         // Тип объекта для поиска
+                   isCreateFrmEolink: Boolean // создавать ли форму Eolink или вернуть id
+                   ): Integer;
 var
   foundId: Integer;
   str: string;
@@ -86,8 +88,16 @@ begin
   if foundId <> 0 then
   begin
     // найти иерархию объектов Eolink
-    Application.CreateForm(TFrmEolink, FrmEolink);
-    FrmEolink.setFltById(foundId, 2);
+    if isCreateFrmEolink then
+    begin
+      Application.CreateForm(TFrmEolink, FrmEolink);
+      FrmEolink.setFltById(foundId, 2);
+    end
+    else
+    begin
+      Result:=foundId;
+      exit;
+    end;
   end
   else
   begin
@@ -95,6 +105,7 @@ begin
     Application.MessageBox(PChar(str), 'Внимание!',
       MB_OK + MB_ICONSTOP);
   end;
+  Result:=-1;
 end;
 
 procedure TFrmMain.N6Click(Sender: TObject);
@@ -105,7 +116,7 @@ end;
 procedure TFrmMain.Pdoc1Click(Sender: TObject);
 begin
    Application.CreateForm(TFrmPdoc, FrmPdoc);
-   FrmPdoc.setFltById(0,0);
+   FrmPdoc.setFltById(0,0,1);
 end;
 
 procedure TFrmMain.N7Click(Sender: TObject);

@@ -313,7 +313,7 @@ procedure TFrmTask.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-                      'Организация');
+                      'Организация', true);
 
 end;
 
@@ -321,7 +321,7 @@ procedure TFrmTask.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-                      'Дом');
+                      'Дом', true);
 
 end;
 
@@ -346,9 +346,11 @@ procedure TFrmTask.cxGrid1DBTableView1CustomDrawCell(
   Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
+ col: TcxGridDBColumn;
  s : string;
 begin
   // цвет записи
+  col:=cxGrid1DBTableView1.GetColumnByFieldName('STATE');
   s := AViewInfo.GridRecord.DisplayTexts[7];
   if (s = 'ERR') or (s = 'ERS') then
   begin

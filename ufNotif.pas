@@ -194,7 +194,7 @@ procedure TFrmNotif.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Notif.FieldByName('fk_eolink').asInteger,
-                      'Дом');
+                      'Дом', true);
 
 end;
 
@@ -202,7 +202,7 @@ procedure TFrmNotif.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Notif.FieldByName('fk_eolink').asInteger,
-                      'Организация');
+                      'Организация', true);
 
 end;
 
@@ -226,7 +226,7 @@ procedure TFrmNotif.N1Click(Sender: TObject);
 begin
   // найти Извещение
   Application.CreateForm(TFrmPdoc, FrmPdoc);
-  FrmPdoc.setFltById(0, OD_Notif.FieldByName('FK_PDOC').asInteger);
+  FrmPdoc.setFltById(0, OD_Notif.FieldByName('FK_PDOC').asInteger, 1);
 
 end;
 

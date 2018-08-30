@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 529
-  Top = 341
+  Left = 835
+  Top = 273
   Width = 1226
   Height = 475
   Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
@@ -35,6 +35,7 @@ object FrmEolink: TFrmEolink
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Visible = True
+      OnCustomDrawCell = cxGrid1DBTableView1CustomDrawCell
       DataController.DataModeController.GridModeBufferCount = 100
       DataController.DataSource = DS_eolink
       DataController.KeyFieldNames = 'ID'
@@ -47,37 +48,41 @@ object FrmEolink: TFrmEolink
       OptionsView.GroupByBox = False
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 37
+        Width = 35
+      end
+      object cxGrid1DBTableView1STATUS: TcxGridDBColumn
+        DataBinding.FieldName = 'STATUS'
+        Width = 42
       end
       object cxGrid1DBTableView1PARENT_ID: TcxGridDBColumn
         DataBinding.FieldName = 'PARENT_ID'
-        Width = 36
+        Width = 34
       end
       object cxGrid1DBTableView1FK_OBJTP: TcxGridDBColumn
         DataBinding.FieldName = 'FK_OBJTP'
-        Width = 37
+        Width = 35
       end
       object cxGrid1DBTableView1NAME: TcxGridDBColumn
         Caption = #1058#1080#1087
         DataBinding.FieldName = 'NAME'
         BestFitMaxWidth = 20
-        Width = 62
+        Width = 59
       end
       object cxGrid1DBTableView1UK: TcxGridDBColumn
         DataBinding.FieldName = 'UK'
-        Width = 67
+        Width = 64
       end
       object cxGrid1DBTableView1REU: TcxGridDBColumn
         DataBinding.FieldName = 'REU'
-        Width = 35
+        Width = 34
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
-        Width = 32
+        Width = 31
       end
       object cxGrid1DBTableView1KUL: TcxGridDBColumn
         DataBinding.FieldName = 'KUL'
-        Width = 45
+        Width = 42
       end
       object cxGrid1DBTableView1LSK: TcxGridDBColumn
         Caption = #1051#1080#1094'.'#1089#1095'.'
@@ -86,51 +91,51 @@ object FrmEolink: TFrmEolink
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
-        Width = 80
+        Width = 76
       end
       object cxGrid1DBTableView1ND: TcxGridDBColumn
         DataBinding.FieldName = 'ND'
-        Width = 42
+        Width = 41
       end
       object cxGrid1DBTableView1KW: TcxGridDBColumn
         DataBinding.FieldName = 'KW'
-        Width = 45
+        Width = 42
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 45
+        Width = 43
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 43
+        Width = 41
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 44
+        Width = 42
       end
       object cxGrid1DBTableView1APP_TP: TcxGridDBColumn
         DataBinding.FieldName = 'APP_TP'
-        Width = 43
+        Width = 41
       end
       object cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn
         DataBinding.FieldName = 'FK_KLSK_OBJ'
-        Width = 44
+        Width = 43
       end
       object cxGrid1DBTableView1OGRN: TcxGridDBColumn
         DataBinding.FieldName = 'OGRN'
-        Width = 45
+        Width = 42
       end
       object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
         DataBinding.FieldName = 'ENTRY'
-        Width = 21
+        Width = 20
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 44
+        Width = 43
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 44
+        Width = 41
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -277,7 +282,7 @@ object FrmEolink: TFrmEolink
       ' ltrim(t.nd,'#39'0'#39') as nd, t.entry,  ltrim(t.kw,'#39'0'#39') as kw, '
       
         ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj, t.ogrn, t.dt_' +
-        'crt, t.dt_upd, '
+        'crt, t.dt_upd, t.status,'
       ' t.rowid from exs.eolink t'
       'left join bs.addr_tp tp on t.fk_objtp=tp.id'
       'left join scott.spul s on t.kul=s.id'
@@ -297,7 +302,7 @@ object FrmEolink: TFrmEolink
       00000000060000003A464C544944030000000000000000000000030000003A54
       50030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000016000000020000004944010000000000030000005245550100000000
+      0400000017000000020000004944010000000000030000005245550100000000
       00020000004E44010000000000020000004B5701000000000005000000454E54
       5259010000000000040000004755494401000000000002000000434401000000
       000008000000464B5F4F424A545001000000000007000000554E49514E554D01
@@ -307,7 +312,7 @@ object FrmEolink: TFrmEolink
       545F555044010000000000040000004E414D4501000000000002000000554B01
       000000000006000000535452454554010000000000030000004B554C01000000
       000004000000434F4D4D010000000000030000004C534B010000000000070000
-      004F424A54504344010000000000}
+      004F424A5450434401000000000006000000535441545553010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_EolinkAfterQuery
@@ -384,7 +389,6 @@ object FrmEolink: TFrmEolink
     object OD_EolinkGUID: TStringField
       FieldName = 'GUID'
       Origin = 't.guid'
-      ReadOnly = True
       Size = 36
     end
     object OD_EolinkCD: TStringField
@@ -434,6 +438,10 @@ object FrmEolink: TFrmEolink
       FieldName = 'OBJTPCD'
       Size = 100
     end
+    object OD_EolinkSTATUS: TFloatField
+      FieldName = 'STATUS'
+      Origin = 't.status'
+    end
   end
   object DS_eolink: TDataSource
     DataSet = OD_Eolink
@@ -480,35 +488,39 @@ object FrmEolink: TFrmEolink
     object N8: TMenuItem
       Caption = #1056#1072#1073#1086#1090#1072' '#1089' '#1055#1044
       object N6: TMenuItem
-        Caption = #1054#1090#1084#1077#1085#1080#1090#1100' '#1074#1089#1077' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091
+        Caption = #1054#1090#1084#1077#1085#1080#1090#1100' '#1074#1089#1077' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1055#1044' '#1079#1072' '#1047#1040#1043#1056#1059#1047#1054#1063#1053#1067#1049' '#1087#1077#1088#1080#1086#1076', '#1087#1086' '#1076#1086#1084#1091
         OnClick = N6Click
       end
       object N10: TMenuItem
-        Caption = #1054#1090#1084#1077#1085#1080#1090#1100' '#1074#1089#1077' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1055#1044' '#1087#1086' '#1059#1050
+        Caption = #1054#1090#1084#1077#1085#1080#1090#1100' '#1074#1089#1077' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1055#1044' '#1079#1072' '#1047#1040#1043#1056#1059#1047#1054#1063#1053#1067#1049' '#1087#1077#1088#1080#1086#1076', '#1087#1086' '#1059#1050
         OnClick = N10Click
       end
       object N7: TMenuItem
-        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091
+        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091' '#1079#1072' '#1047#1040#1043#1056#1059#1047#1054#1063#1053#1067#1049' '#1087#1077#1088#1080#1086#1076
         OnClick = N7Click
       end
       object N11: TMenuItem
-        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1087#1086' '#1059#1050
+        Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1077#1076#1086#1089#1090#1072#1102#1097#1080#1077' '#1055#1044' '#1079#1072' '#1047#1040#1043#1056#1059#1047#1054#1063#1053#1067#1049' '#1087#1077#1088#1080#1086#1076', '#1087#1086' '#1059#1050
         OnClick = N11Click
       end
       object N12: TMenuItem
-        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1080#1084#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091' '#1074' '#1043#1048#1057
+        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1080#1084#1087#1086#1088#1090' '#1055#1044' '#1079#1072' '#1051#1070#1041#1054#1049' '#1087#1077#1088#1080#1086#1076', '#1087#1086' '#1076#1086#1084#1091' '#1074' '#1043#1048#1057
         OnClick = N12Click
       end
       object N13: TMenuItem
-        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1080#1084#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1059#1050' '#1074' '#1043#1048#1057
+        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1080#1084#1087#1086#1088#1090' '#1055#1044' '#1079#1072' '#1051#1070#1041#1054#1049' '#1087#1077#1088#1080#1086#1076',  '#1087#1086' '#1059#1050' '#1074' '#1043#1048#1057
         OnClick = N13Click
       end
       object N14: TMenuItem
-        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1101#1082#1089#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1076#1086#1084#1091' '#1080#1079' '#1043#1048#1057
+        Caption = 
+          #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1101#1082#1089#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1059#1050#1040#1047#1040#1053#1053#1054#1052#1059' '#1074' Java '#1087#1077#1088#1080#1086#1076#1091',' +
+          ' '#1087#1086' '#1076#1086#1084#1091' '#1080#1079' '#1043#1048#1057' '
         OnClick = N14Click
       end
       object N15: TMenuItem
-        Caption = #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1101#1082#1089#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1059#1050' '#1080#1079' '#1043#1048#1057
+        Caption = 
+          #1040#1082#1090#1080#1074#1080#1088#1086#1074#1072#1090#1100' '#1079#1072#1076#1072#1085#1080#1103' '#1085#1072' '#1101#1082#1089#1087#1086#1088#1090' '#1055#1044' '#1087#1086' '#1059#1050#1040#1047#1040#1053#1053#1054#1052#1059' '#1074' Java '#1087#1077#1088#1080#1086#1076#1091',' +
+          '  '#1087#1086' '#1059#1050' '#1080#1079' '#1043#1048#1057
         OnClick = N15Click
       end
     end

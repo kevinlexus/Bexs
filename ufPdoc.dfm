@@ -1,6 +1,6 @@
 object FrmPdoc: TFrmPdoc
-  Left = 688
-  Top = 376
+  Left = 494
+  Top = 428
   Width = 1198
   Height = 590
   Caption = #1055#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' - Pdoc'
@@ -42,79 +42,95 @@ object FrmPdoc: TFrmPdoc
       OptionsView.GroupByBox = False
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1UK: TcxGridDBColumn
         DataBinding.FieldName = 'UK'
-        Width = 20
+        Width = 40
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1ND: TcxGridDBColumn
         DataBinding.FieldName = 'ND'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1KW: TcxGridDBColumn
         DataBinding.FieldName = 'KW'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
         DataBinding.FieldName = 'ENTRY'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1LSK: TcxGridDBColumn
         DataBinding.FieldName = 'LSK'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_EOLINK'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 20
+        Width = 40
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1STATUS: TcxGridDBColumn
         DataBinding.FieldName = 'STATUS'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1V: TcxGridDBColumn
         DataBinding.FieldName = 'V'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1DT: TcxGridDBColumn
         DataBinding.FieldName = 'DT'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1ERR: TcxGridDBColumn
         DataBinding.FieldName = 'ERR'
-        Width = 20
+        Width = 39
       end
       object cxGrid1DBTableView1RESULT: TcxGridDBColumn
         DataBinding.FieldName = 'RESULT'
-        Width = 65
+        Width = 128
+      end
+      object cxGrid1DBTableView1SUMMA_IN: TcxGridDBColumn
+        Caption = #1044#1086#1083#1075
+        DataBinding.FieldName = 'SUMMA_IN'
+      end
+      object cxGrid1DBTableView1PENYA_IN: TcxGridDBColumn
+        Caption = #1042' '#1090'.'#1095' '#1087#1077#1085#1103
+        DataBinding.FieldName = 'PENYA_IN'
+      end
+      object cxGrid1DBTableView1SUMMA_OUT: TcxGridDBColumn
+        Caption = #1044#1086#1083#1075' '#1043#1048#1057
+        DataBinding.FieldName = 'SUMMA_OUT'
+      end
+      object cxGrid1DBTableView1PENYA_OUT: TcxGridDBColumn
+        Caption = ' '#1074' '#1090'.'#1095' '#1087#1077#1085#1103' '#1043#1048#1057
+        DataBinding.FieldName = 'PENYA_OUT'
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         Caption = #1050#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081
@@ -205,6 +221,18 @@ object FrmPdoc: TFrmPdoc
       ShowHint = True
       OnClick = ToolButton5Click
     end
+    object CheckBox1: TCheckBox
+      Left = 303
+      Top = 2
+      Width = 74
+      Height = 22
+      Hint = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1083#1100#1082#1086' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' (V=1)'
+      Caption = #1040#1082#1090#1080#1074#1085#1099#1077' (V=1)'
+      Checked = True
+      State = cbChecked
+      TabOrder = 1
+      OnClick = CheckBox1Click
+    end
   end
   object OD_Pdoc: TOracleDataSet
     SQL.Strings = (
@@ -221,15 +249,17 @@ object FrmPdoc: TFrmPdoc
       
         'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
         ':fltId) and (:fltId2=0 or t.id=:fltId2)'
+      'and (:flt2=0 or t.v=1)'
       'order by t.id desc')
     Optimize = False
     Variables.Data = {
-      0300000004000000040000003A464C5403000000040000000000000000000000
+      0300000005000000040000003A464C5403000000040000000000000000000000
       080000003A49445355425354010000000600000028302C312900000000000600
       00003A464C54494403000000040000000000000000000000070000003A464C54
-      49443203000000040000000000000000000000}
+      49443203000000040000000000000000000000050000003A464C543203000000
+      0000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000014000000020000004944010000000000040000004755494401000000
+      0400000018000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000006
       00000044545F4352540100000000000600000044545F55504401000000000009
       000000464B5F454F4C494E4B01000000000006000000524553554C5401000000
@@ -238,7 +268,9 @@ object FrmPdoc: TFrmPdoc
       0000000000030000004C534B01000000000002000000554B0100000000000600
       0000535452454554010000000000020000004E4401000000000005000000454E
       545259010000000000020000004B5701000000000004000000434F4D4D010000
-      000000}
+      0000000800000053554D4D415F494E0100000000000800000050454E59415F49
+      4E0100000000000900000053554D4D415F4F5554010000000000090000005045
+      4E59415F4F5554010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterFetchRecord = OD_PdocAfterFetchRecord
@@ -248,78 +280,110 @@ object FrmPdoc: TFrmPdoc
     Top = 152
     object OD_PdocID: TFloatField
       FieldName = 'ID'
+      Origin = 't.id'
     end
     object OD_PdocGUID: TStringField
       FieldName = 'GUID'
+      Origin = 't.guid'
       Size = 36
     end
     object OD_PdocCD: TStringField
       FieldName = 'CD'
+      Origin = 't.cd'
       Size = 128
     end
     object OD_PdocUNIQNUM: TStringField
       FieldName = 'UNIQNUM'
+      Origin = 't.UNIQNUM'
       Size = 255
     end
     object OD_PdocFK_EOLINK: TFloatField
       FieldName = 'FK_EOLINK'
+      Origin = 't.FK_EOLINK'
       Required = True
     end
     object OD_PdocTGUID: TStringField
       FieldName = 'TGUID'
+      Origin = 't.tguid'
       Size = 36
     end
     object OD_PdocSTATUS: TFloatField
       FieldName = 'STATUS'
+      Origin = 't.status'
       Required = True
     end
     object OD_PdocV: TFloatField
       FieldName = 'V'
+      Origin = 't.v'
       Required = True
     end
     object OD_PdocDT: TDateTimeField
       FieldName = 'DT'
+      Origin = 't.dt'
     end
     object OD_PdocERR: TFloatField
       FieldName = 'ERR'
+      Origin = 't.err'
     end
     object OD_PdocDT_CRT: TDateTimeField
       FieldName = 'DT_CRT'
+      Origin = 't.dt_crt'
     end
     object OD_PdocDT_UPD: TDateTimeField
       FieldName = 'DT_UPD'
+      Origin = 't.dt_upd'
     end
     object OD_PdocRESULT: TStringField
       FieldName = 'RESULT'
+      Origin = 't.result'
       Size = 1024
     end
     object OD_PdocLSK: TStringField
       FieldName = 'LSK'
+      Origin = 'e.lsk'
       Size = 8
     end
     object OD_PdocUK: TStringField
       FieldName = 'UK'
+      Origin = 'o.name'
       Required = True
       Size = 64
     end
     object OD_PdocSTREET: TStringField
       FieldName = 'STREET'
+      Origin = 's.name'
       Size = 25
     end
     object OD_PdocND: TStringField
       FieldName = 'ND'
+      Origin = 'h.nd'
       Size = 6
     end
     object OD_PdocENTRY: TFloatField
       FieldName = 'ENTRY'
+      Origin = 'p.entry'
     end
     object OD_PdocKW: TStringField
       FieldName = 'KW'
+      Origin = 'k.kw'
       Size = 64
     end
     object OD_PdocCOMM: TStringField
       FieldName = 'COMM'
+      Origin = 't.comm'
       Size = 1024
+    end
+    object OD_PdocSUMMA_IN: TFloatField
+      FieldName = 'SUMMA_IN'
+    end
+    object OD_PdocPENYA_IN: TFloatField
+      FieldName = 'PENYA_IN'
+    end
+    object OD_PdocSUMMA_OUT: TFloatField
+      FieldName = 'SUMMA_OUT'
+    end
+    object OD_PdocPENYA_OUT: TFloatField
+      FieldName = 'PENYA_OUT'
     end
   end
   object DS_pdoc: TDataSource
@@ -341,6 +405,10 @@ object FrmPdoc: TFrmPdoc
     object Eolink3: TMenuItem
       Caption = #1053#1072#1081#1090#1080' '#1080#1077#1088#1072#1088#1093#1080#1102' '#1086#1073#1098#1077#1082#1090#1086#1074' '#1090#1080#1087#1072' "'#1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103'"'
       OnClick = Eolink3Click
+    end
+    object ask1: TMenuItem
+      Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1103' Task '#1087#1086' '#1086#1073#1098#1077#1082#1090#1091' '#1090#1080#1087#1072' "'#1044#1086#1084'"'
+      OnClick = ask1Click
     end
     object N1: TMenuItem
       Caption = #1053#1072#1081#1090#1080' '#1080#1079#1074#1077#1097#1077#1085#1080#1077

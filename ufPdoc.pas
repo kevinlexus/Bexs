@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
-  StdCtrls, ComCtrls, ToolWin, Menus, cxCheckBox;
+  StdCtrls, ComCtrls, ToolWin, Menus, cxCheckBox, ufTask;
 
 type
   TFrmPdoc = class(TForm)
@@ -88,6 +88,16 @@ type
     cxGrid1DBTableView1KW: TcxGridDBColumn;
     OD_PdocCOMM: TStringField;
     cxGrid1DBTableView1COMM: TcxGridDBColumn;
+    OD_PdocSUMMA_IN: TFloatField;
+    OD_PdocPENYA_IN: TFloatField;
+    OD_PdocSUMMA_OUT: TFloatField;
+    OD_PdocPENYA_OUT: TFloatField;
+    cxGrid1DBTableView1SUMMA_IN: TcxGridDBColumn;
+    cxGrid1DBTableView1PENYA_IN: TcxGridDBColumn;
+    cxGrid1DBTableView1SUMMA_OUT: TcxGridDBColumn;
+    cxGrid1DBTableView1PENYA_OUT: TcxGridDBColumn;
+    CheckBox1: TCheckBox;
+    ask1: TMenuItem;
     procedure OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -95,7 +105,7 @@ type
     procedure ToolButton2Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
-    procedure setFltById(id: Integer; id2: Integer);
+    procedure setFltById(id: Integer; id2: Integer; flt2: Integer);
     procedure Eolink1Click(Sender: TObject);
     procedure Eolink2Click(Sender: TObject);
     procedure Eolink3Click(Sender: TObject);
@@ -105,6 +115,8 @@ type
     procedure cxGrid1DBTableView1CustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+    procedure CheckBox1Click(Sender: TObject);
+    procedure ask1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -122,11 +134,12 @@ uses DataModule, ufEolink, ufMain, ufNotif;
 {$R *.dfm}
 
 // фильтр по Id
-procedure TFrmPdoc.setFltById(id: Integer;id2: Integer);
+procedure TFrmPdoc.setFltById(id: Integer; id2: Integer; flt2: Integer);
 begin
   // установить фильтр по одному Id (или не устанавливать, если 0)
   OD_Pdoc.SetVariable('FLTID', id);
   OD_Pdoc.SetVariable('FLTID2', id2);
+  OD_Pdoc.SetVariable('FLT2', flt2);
   OD_Pdoc.Active:=false;
   OD_Pdoc.Active:=true;
 {  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
@@ -204,7 +217,7 @@ procedure TFrmPdoc.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Pdoc.FieldByName('fk_eolink').asInteger,
-                      'Дом');
+                      'Дом', true);
 
 end;
 
@@ -212,7 +225,7 @@ procedure TFrmPdoc.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Pdoc.FieldByName('fk_eolink').asInteger,
-                      'Организация');
+                      'Организация', true);
 
 end;
 
@@ -249,10 +262,12 @@ procedure TFrmPdoc.cxGrid1DBTableView1CustomDrawCell(
   Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
- s : string;
+  col: TcxGridDBColumn;
+  s : string;
 begin
   // цвет записи
-  s := AViewInfo.GridRecord.DisplayTexts[12];
+  col:=cxGrid1DBTableView1.GetColumnByFieldName('STATUS');
+  s := AViewInfo.GridRecord.DisplayTexts[col.Index];
   if s = '1' then
   begin
     // активная запись
@@ -265,6 +280,28 @@ begin
      //ACanvas.Brush.Color:= $00E1E1E1;
      ACanvas.Font.Color:= clGray;
   end;
+end;
+
+procedure TFrmPdoc.CheckBox1Click(Sender: TObject);
+begin
+  if CheckBox1.Checked then
+    OD_Pdoc.SetVariable('FLT2', 1)
+  else
+    OD_Pdoc.SetVariable('FLT2', 0);
+  OD_Pdoc.Active:=false;
+  OD_Pdoc.Active:=true;
+end;
+
+procedure TFrmPdoc.ask1Click(Sender: TObject);
+var
+  id: Integer;
+begin
+  // найти корневую запись
+  id:=FrmMain.findRoot(OD_Pdoc.FieldByName('FK_EOLINK').asInteger,
+                      'Дом', false);
+  // найти задания Task
+  Application.CreateForm(TFrmTask, FrmTask);
+  FrmTask.setFltById(id);
 end;
 
 end.

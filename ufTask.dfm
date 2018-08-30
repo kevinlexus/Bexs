@@ -1,6 +1,6 @@
 object FrmTask: TFrmTask
-  Left = 332
-  Top = 486
+  Left = 818
+  Top = 222
   Width = 1222
   Height = 493
   Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
@@ -78,19 +78,19 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1STATE: TcxGridDBColumn
         DataBinding.FieldName = 'STATE'
-        Width = 30
+        Width = 39
       end
       object cxGrid1DBTableView1FK_ACT: TcxGridDBColumn
         DataBinding.FieldName = 'FK_ACT'
-        Width = 42
+        Width = 41
       end
       object cxGrid1DBTableView1ACT_NAME: TcxGridDBColumn
         DataBinding.FieldName = 'ACT_NAME'
-        Width = 101
+        Width = 100
       end
       object cxGrid1DBTableView1RESULT: TcxGridDBColumn
         DataBinding.FieldName = 'RESULT'
-        Width = 52
+        Width = 51
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
@@ -98,11 +98,11 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1ERRACKCNT: TcxGridDBColumn
         DataBinding.FieldName = 'ERRACKCNT'
-        Width = 50
+        Width = 49
       end
       object cxGrid1DBTableView1PRIORITY: TcxGridDBColumn
         DataBinding.FieldName = 'PRIORITY'
-        Width = 49
+        Width = 48
       end
       object cxGrid1DBTableView1TRACE: TcxGridDBColumn
         DataBinding.FieldName = 'TRACE'
@@ -114,11 +114,11 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 50
+        Width = 49
       end
       object cxGrid1DBTableView1FK_USER: TcxGridDBColumn
         DataBinding.FieldName = 'FK_USER'
-        Width = 50
+        Width = 49
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
@@ -126,11 +126,11 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 47
+        Width = 46
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 52
+        Width = 51
       end
     end
     object cxGrid1Level1: TcxGridLevel
