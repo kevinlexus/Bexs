@@ -22,7 +22,9 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
-  StdCtrls, ComCtrls, ToolWin, Menus, cxCheckBox, ufTask;
+  StdCtrls, ComCtrls, ToolWin, Menus, cxCheckBox, ufTask, cxContainer,
+  dxCore, cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar,
+  cxLabel;
 
 type
   TFrmPdoc = class(TForm)
@@ -98,6 +100,8 @@ type
     cxGrid1DBTableView1PENYA_OUT: TcxGridDBColumn;
     CheckBox1: TCheckBox;
     ask1: TMenuItem;
+    cxDateEdit1: TcxDateEdit;
+    cxLabel1: TcxLabel;
     procedure OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -117,6 +121,7 @@ type
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
     procedure CheckBox1Click(Sender: TObject);
     procedure ask1Click(Sender: TObject);
+    procedure cxDateEdit1PropertiesCloseUp(Sender: TObject);
   private
     { Private declarations }
   public
@@ -302,6 +307,13 @@ begin
   // найти задания Task
   Application.CreateForm(TFrmTask, FrmTask);
   FrmTask.setFltById(id);
+end;
+
+procedure TFrmPdoc.cxDateEdit1PropertiesCloseUp(Sender: TObject);
+begin
+  OD_Pdoc.SetVariable('P_DT', cxDateEdit1.Date);
+  OD_Pdoc.Active:=false;
+  OD_Pdoc.Active:=true;
 end;
 
 end.

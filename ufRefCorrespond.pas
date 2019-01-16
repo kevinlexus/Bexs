@@ -62,6 +62,9 @@ type
     { Public declarations }
   end;
 
+type
+  TControlAccess = class(TControl);
+
 var
   FrmRefCorrespond: TFrmRefCorrespond;
 

@@ -12,7 +12,8 @@ uses
   ufCrone in 'ufCrone.pas' {FrmCrone},
   ufPdoc in 'ufPdoc.pas' {FrmPdoc},
   ufNotif in 'ufNotif.pas' {FrmNotif},
-  ufErrStat in 'ufErrStat.pas' {FrmErrStat};
+  ufErrStat in 'ufErrStat.pas' {FrmErrStat},
+  u_frmSelReu in '..\..\Fins\u_frmSelReu.pas' {FrmSelReu};
 
 {$R *.res}
 

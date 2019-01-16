@@ -1,6 +1,6 @@
 object FrmPdoc: TFrmPdoc
-  Left = 494
-  Top = 428
+  Left = 418
+  Top = 343
   Width = 1198
   Height = 590
   Caption = #1055#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' - Pdoc'
@@ -221,14 +221,43 @@ object FrmPdoc: TFrmPdoc
       ShowHint = True
       OnClick = ToolButton5Click
     end
-    object CheckBox1: TCheckBox
+    object cxLabel1: TcxLabel
       Left = 303
+      Top = 4
+      Caption = #1044#1072#1090#1072':'
+      ParentFont = False
+      Style.Font.Charset = DEFAULT_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+    end
+    object cxDateEdit1: TcxDateEdit
+      Left = 341
       Top = 2
-      Width = 74
+      Properties.DateButtons = [btnClear, btnToday]
+      Properties.SaveTime = False
+      Properties.ShowTime = False
+      Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
+      Properties.OnCloseUp = cxDateEdit1PropertiesCloseUp
+      TabOrder = 2
+      Width = 121
+    end
+    object CheckBox1: TCheckBox
+      Left = 462
+      Top = 2
+      Width = 114
       Height = 22
       Hint = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1083#1100#1082#1086' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' (V=1)'
       Caption = #1040#1082#1090#1080#1074#1085#1099#1077' (V=1)'
       Checked = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
       State = cbChecked
       TabOrder = 1
       OnClick = CheckBox1Click
@@ -250,14 +279,15 @@ object FrmPdoc: TFrmPdoc
         'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
         ':fltId) and (:fltId2=0 or t.id=:fltId2)'
       'and (:flt2=0 or t.v=1)'
+      'and t.dt=:p_dt'
       'order by t.id desc')
     Optimize = False
     Variables.Data = {
-      0300000005000000040000003A464C5403000000040000000000000000000000
+      0300000006000000040000003A464C5403000000040000000000000000000000
       080000003A49445355425354010000000600000028302C312900000000000600
       00003A464C54494403000000040000000000000000000000070000003A464C54
       49443203000000040000000000000000000000050000003A464C543203000000
-      0000000000000000}
+      0000000000000000050000003A505F44540C0000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
       0400000018000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000006

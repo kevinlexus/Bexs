@@ -3,7 +3,7 @@ object FrmMain: TFrmMain
   Top = 294
   Width = 739
   Height = 644
-  Caption = 'Bexs'
+  Caption = 'Bexs - Browser for External System'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

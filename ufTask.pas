@@ -115,6 +115,7 @@ type
     cxGrid1DBTableView1OBJ_ADR: TcxGridDBColumn;
     N3: TMenuItem;
     Excel1: TMenuItem;
+    Memo1: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -356,6 +357,16 @@ begin
   begin
     // ошибка
     ACanvas.Font.Color:= clRed;
+  end
+  else if (s = 'INS') then
+  begin
+    // добавлено в загрузку
+    ACanvas.Font.Color:= clBlue;
+  end
+  else if (s = 'ACK') then
+  begin
+    // ожидание ответа
+    ACanvas.Font.Color:= clGreen;
   end
   else
   begin

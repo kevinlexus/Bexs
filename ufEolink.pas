@@ -45,7 +45,6 @@ type
     cxGrid1DBTableView1GUID: TcxGridDBColumn;
     cxGrid1DBTableView1CD: TcxGridDBColumn;
     cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn;
-    cxGrid1DBTableView1APP_TP: TcxGridDBColumn;
     cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn;
     cxGrid1DBTableView1OGRN: TcxGridDBColumn;
     cxGrid1DBTableView1DT_CRT: TcxGridDBColumn;
@@ -85,22 +84,13 @@ type
     OQ_add_house: TOracleQuery;
     OD_eolxpar: TOracleDataSet;
     DS_eolxpar: TDataSource;
-    cxGrid2: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
-    cxGridLevel1: TcxGridLevel;
     Splitter1: TSplitter;
-    cxGridDBTableView1ID: TcxGridDBColumn;
-    cxGridDBTableView1FK_PAR: TcxGridDBColumn;
-    cxGridDBTableView1N1: TcxGridDBColumn;
-    cxGridDBTableView1S1: TcxGridDBColumn;
-    cxGridDBTableView1D1: TcxGridDBColumn;
     OD_eolxparID: TFloatField;
     OD_eolxparFK_EOLINK: TFloatField;
     OD_eolxparFK_PAR: TFloatField;
     OD_eolxparN1: TFloatField;
     OD_eolxparS1: TStringField;
     OD_eolxparD1: TDateTimeField;
-    cxGridDBTableView1Column1: TcxGridDBColumn;
     OD_eolxparVAL_TP: TStringField;
     OD_EolinkLSK: TStringField;
     cxGrid1DBTableView1LSK: TcxGridDBColumn;
@@ -123,6 +113,20 @@ type
     N15: TMenuItem;
     OD_EolinkSTATUS: TFloatField;
     cxGrid1DBTableView1STATUS: TcxGridDBColumn;
+    N16: TMenuItem;
+    OD_EolinkSERVICEID: TStringField;
+    cxGrid1DBTableView1SERVICEID: TcxGridDBColumn;
+    Panel1: TPanel;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    cxGridDBTableView1ID: TcxGridDBColumn;
+    cxGridDBTableView1FK_PAR: TcxGridDBColumn;
+    cxGridDBTableView1Column1: TcxGridDBColumn;
+    cxGridDBTableView1N1: TcxGridDBColumn;
+    cxGridDBTableView1S1: TcxGridDBColumn;
+    cxGridDBTableView1D1: TcxGridDBColumn;
+    cxGridLevel1: TcxGridLevel;
+    Memo1: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -153,6 +157,10 @@ type
     procedure cxGrid1DBTableView1CustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+    procedure N16Click(Sender: TObject);
+    procedure cxGrid1DBTableView1COMMCustomDrawCell(
+      Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
   private
     { Private declarations }
   public
@@ -166,7 +174,7 @@ var
 
 implementation
 
-uses DataModule, ufMain;
+uses DataModule, ufMain, u_frmSelReu;
 
 {$R *.dfm}
 
@@ -318,6 +326,7 @@ begin
      N11.Enabled:=true;
      N13.Enabled:=true;
      N15.Enabled:=true;
+     N16.Enabled:=false;
   end
   else
   begin
@@ -326,6 +335,7 @@ begin
      N11.Enabled:=false;
      N13.Enabled:=false;
      N15.Enabled:=false;
+     N16.Enabled:=false;
   end;
 
   if OD_Eolink.FieldByName('OBJTPCD').AsString='Дом' then
@@ -334,6 +344,7 @@ begin
      N7.Enabled:=true;
      N12.Enabled:=true;
      N14.Enabled:=true;
+     N16.Enabled:=true;
   end
   else
   begin
@@ -341,6 +352,7 @@ begin
      N7.Enabled:=False;
      N12.Enabled:=false;
      N14.Enabled:=false;
+     N16.Enabled:=false;
   end;
 
   if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
@@ -597,6 +609,49 @@ begin
      //ACanvas.Brush.Color:= $00E1E1E1;
      ACanvas.Font.Color:= clGray;
   end;
+
+  // выделить запись
+  col:=cxGrid1DBTableView1.GetColumnByFieldName('NAME');
+  s := AViewInfo.GridRecord.DisplayTexts[col.Index];
+  if s = 'Дом' then
+  begin
+    // дом
+    ACanvas.Font.Style := [fsBold];
+  end
+
+
+end;
+
+procedure TFrmEolink.N16Click(Sender: TObject);
+var
+  res: Integer;
+begin
+  Application.CreateForm(TFrmSelReu, FrmSelReu);
+  if FrmSelReu.ShowModal = mrOk then
+  begin
+    res:=DataModule2.OP_gis.CallIntegerFunction('change_reu_by_house',
+        [OD_Eolink.FieldByName('ID').AsInteger, FrmSelReu.reu]);
+    if res <> 0 then
+    begin
+      Application.MessageBox('Ошибка переноса дома в новый УК!', 'Внимание!',
+        MB_OK + MB_ICONERROR);
+    end
+    else
+    begin
+      OD_Eolink.Refresh;  
+      Application.MessageBox('Дом успешно перенесен в новый УК!', 'Внимание!',
+        MB_OK + MB_ICONINFORMATION);
+    end;
+
+  end;
+
+end;
+
+procedure TFrmEolink.cxGrid1DBTableView1COMMCustomDrawCell(
+  Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+begin
+    ACanvas.Font.Color:= clRed;
 end;
 
 end.

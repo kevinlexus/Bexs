@@ -1,6 +1,6 @@
 object FrmTask: TFrmTask
-  Left = 818
-  Top = 222
+  Left = 618
+  Top = 216
   Width = 1222
   Height = 493
   Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
@@ -74,63 +74,63 @@ object FrmTask: TFrmTask
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 20
+        Width = 189
       end
       object cxGrid1DBTableView1STATE: TcxGridDBColumn
         DataBinding.FieldName = 'STATE'
-        Width = 39
+        Width = 29
       end
       object cxGrid1DBTableView1FK_ACT: TcxGridDBColumn
         DataBinding.FieldName = 'FK_ACT'
-        Width = 41
+        Width = 31
       end
       object cxGrid1DBTableView1ACT_NAME: TcxGridDBColumn
         DataBinding.FieldName = 'ACT_NAME'
-        Width = 100
+        Width = 113
       end
       object cxGrid1DBTableView1RESULT: TcxGridDBColumn
         DataBinding.FieldName = 'RESULT'
-        Width = 51
+        Width = 35
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
-        Width = 23
+        Width = 20
       end
       object cxGrid1DBTableView1ERRACKCNT: TcxGridDBColumn
         DataBinding.FieldName = 'ERRACKCNT'
-        Width = 49
+        Width = 33
       end
       object cxGrid1DBTableView1PRIORITY: TcxGridDBColumn
         DataBinding.FieldName = 'PRIORITY'
-        Width = 48
+        Width = 33
       end
       object cxGrid1DBTableView1TRACE: TcxGridDBColumn
         DataBinding.FieldName = 'TRACE'
-        Width = 49
+        Width = 33
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 50
+        Width = 34
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 49
+        Width = 32
       end
       object cxGrid1DBTableView1FK_USER: TcxGridDBColumn
         DataBinding.FieldName = 'FK_USER'
-        Width = 49
+        Width = 34
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 51
+        Width = 34
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 46
+        Width = 32
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 51
+        Width = 34
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -214,9 +214,9 @@ object FrmTask: TFrmTask
     TabOrder = 2
     object cxGrid2: TcxGrid
       Left = 1
-      Top = 1
+      Top = 90
       Width = 259
-      Height = 423
+      Height = 334
       Align = alClient
       PopupMenu = PopupMenu1
       TabOrder = 0
@@ -276,6 +276,22 @@ object FrmTask: TFrmTask
       object cxGridLevel1: TcxGridLevel
         GridView = cxGridDBTableView1
       end
+    end
+    object Memo1: TMemo
+      Left = 1
+      Top = 1
+      Width = 259
+      Height = 89
+      Align = alTop
+      Lines.Strings = (
+        '0 0 1 * * ? - '#1082#1072#1078#1076#1099#1081' '#1076#1077#1085#1100', '#1074' 1:00am'
+        '0 0 0/1 ? * * * - '#1082#1072#1078#1076#1099#1081' 1 '#1095#1072#1089
+        '0/30 * * ? * * * - '#1082#1072#1078#1076#1099#1077' 30 '#1089#1077#1082#1091#1085#1076
+        '* */5 * ? * * * - '#1082#1072#1078#1076#1099#1077' 5 '#1084#1080#1085#1091#1090
+        '15 */3 * ? * * - '#1082#1072#1078#1076#1099#1077' 3 '#1084#1080#1085#1091#1090#1099', '#1085#1072#1095#1080#1085#1072#1103' '#1089' 15 '
+        #1089#1077#1082#1091#1085#1076#1099
+        '0 0 0 ? * * 2034 - '#1079#1072#1087#1088#1077#1090#1080#1090#1100' ))')
+      TabOrder = 1
     end
   end
   object OD_Task: TOracleDataSet

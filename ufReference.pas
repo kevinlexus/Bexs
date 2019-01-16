@@ -81,11 +81,19 @@ type
     cxGridDBTableView1HIDE_IN_PD: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure cxGrid1DBTableView1MouseWheel(Sender: TObject;
+      Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure cxGridDBTableView1MouseWheel(Sender: TObject;
+      Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+      var Handled: Boolean);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
+type
+  TControlAccess = class(TControl);
 
 var
   FrmReference: TFrmReference;
@@ -110,6 +118,34 @@ procedure TFrmReference.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Action:=caFree;
+end;
+
+procedure TFrmReference.cxGrid1DBTableView1MouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  //Запретить колесо мышки в lookupcombobox
+  with cxGrid1DBTableView1.Controller.EditingController do
+    if Edit <> nil then
+    begin
+      HideEdit(False);
+      TControlAccess(cxGrid1DBTableView1.Site).DoMouseWheel(Shift, WheelDelta, MousePos);
+    end;
+
+end;
+
+procedure TFrmReference.cxGridDBTableView1MouseWheel(Sender: TObject;
+  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  //Запретить колесо мышки в lookupcombobox
+  with cxGrid1DBTableView1.Controller.EditingController do
+    if Edit <> nil then
+    begin
+      HideEdit(False);
+      TControlAccess(cxGrid1DBTableView1.Site).DoMouseWheel(Shift, WheelDelta, MousePos);
+    end;
+
 end;
 
 end.

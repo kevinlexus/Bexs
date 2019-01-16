@@ -1,6 +1,6 @@
 object FrmReference: TFrmReference
-  Left = 330
-  Top = 349
+  Left = 403
+  Top = 358
   Width = 1263
   Height = 563
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082#1080' '#1043#1048#1057
@@ -32,6 +32,7 @@ object FrmReference: TFrmReference
     Align = alLeft
     TabOrder = 0
     object cxGrid1DBTableView1: TcxGridDBTableView
+      OnMouseWheel = cxGrid1DBTableView1MouseWheel
       Navigator.Buttons.CustomButtons = <>
       Navigator.Visible = True
       DataController.DataModeController.GridModeBufferCount = 100
@@ -97,6 +98,7 @@ object FrmReference: TFrmReference
       Align = alClient
       TabOrder = 0
       object cxGridDBTableView1: TcxGridDBTableView
+        OnMouseWheel = cxGridDBTableView1MouseWheel
         Navigator.Buttons.CustomButtons = <>
         Navigator.Visible = True
         DataController.DataModeController.GridModeBufferCount = 100
@@ -215,7 +217,6 @@ object FrmReference: TFrmReference
     Top = 152
     object OD_ListTpID: TFloatField
       FieldName = 'ID'
-      Required = True
     end
     object OD_ListTpCD: TStringField
       FieldName = 'CD'
@@ -275,7 +276,6 @@ object FrmReference: TFrmReference
     Top = 208
     object OD_listID: TFloatField
       FieldName = 'ID'
-      Required = True
     end
     object OD_listPARENT_ID: TFloatField
       FieldName = 'PARENT_ID'
@@ -289,7 +289,6 @@ object FrmReference: TFrmReference
     end
     object OD_listNPP: TFloatField
       FieldName = 'NPP'
-      Required = True
     end
     object OD_listGUID: TStringField
       FieldName = 'GUID'
