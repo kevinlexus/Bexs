@@ -1,6 +1,6 @@
 object FrmTask: TFrmTask
-  Left = 618
-  Top = 216
+  Left = 427
+  Top = 451
   Width = 1222
   Height = 493
   Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
@@ -131,6 +131,9 @@ object FrmTask: TFrmTask
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
         Width = 34
+      end
+      object cxGrid1DBTableView1FK_PROC_UK: TcxGridDBColumn
+        DataBinding.FieldName = 'FK_PROC_UK'
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -303,7 +306,7 @@ object FrmTask: TFrmTask
       't.fk_user, t.dt_crt, t.dt_upd, t.comm, tp.name as eoltp_name, '
       
         ' '#39'REU:'#39'||e.reu||'#39','#39'||trim(g.name)||'#39', '#39'||trim(sp.name)||'#39', '#39'||lt' +
-        'rim(e.nd,'#39'0'#39')||'#39', '#39'||ltrim(e.kw,'#39'0'#39') as obj_adr, '
+        'rim(e.nd,'#39'0'#39')||'#39', '#39'||ltrim(e.kw,'#39'0'#39') as obj_adr, t.fk_proc_uk,'
       ' t.rowid'
       ' from EXS.TASK t'
       ' join bs.list s on t.fk_act=s.id '
@@ -339,7 +342,7 @@ object FrmTask: TFrmTask
       3131322C2033333331290000000000040000003A464C54030000000400000000
       00000000000000060000003A464C544944030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000015000000020000004944010000000000040000004755494401000000
+      0400000016000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000009
       000000504152454E545F49440100000000000600000044545F43525401000000
       00000600000044545F55504401000000000004000000434F4D4D010000000000
@@ -349,7 +352,8 @@ object FrmTask: TFrmTask
       01000000000006000000464B5F414354010000000000080000004143545F4E41
       4D4501000000000006000000524553554C540100000000000500000054475549
       4401000000000007000000464B5F555345520100000000000A000000454F4C54
-      505F4E414D45010000000000070000004F424A5F414452010000000000}
+      505F4E414D45010000000000070000004F424A5F4144520100000000000A0000
+      00464B5F50524F435F554B010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_TaskAfterQuery
@@ -451,6 +455,9 @@ object FrmTask: TFrmTask
     object OD_TaskOBJ_ADR: TStringField
       FieldName = 'OBJ_ADR'
       Size = 170
+    end
+    object OD_TaskFK_PROC_UK: TFloatField
+      FieldName = 'FK_PROC_UK'
     end
   end
   object DS_task: TDataSource

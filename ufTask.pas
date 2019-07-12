@@ -116,6 +116,8 @@ type
     N3: TMenuItem;
     Excel1: TMenuItem;
     Memo1: TMemo;
+    OD_TaskFK_PROC_UK: TFloatField;
+    cxGrid1DBTableView1FK_PROC_UK: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);

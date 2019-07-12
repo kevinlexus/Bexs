@@ -127,6 +127,12 @@ type
     cxGridDBTableView1D1: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
     Memo1: TMemo;
+    OD_EolinkFK_UK: TFloatField;
+    cxGrid1DBTableView1FK_UK: TcxGridDBColumn;
+    N17: TMenuItem;
+    N18: TMenuItem;
+    N19: TMenuItem;
+    N20: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -161,6 +167,9 @@ type
     procedure cxGrid1DBTableView1COMMCustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+    procedure N17Click(Sender: TObject);
+    procedure N19Click(Sender: TObject);
+    procedure N20Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -319,14 +328,29 @@ end;
 
 procedure TFrmEolink.OD_EolinkAfterScroll(DataSet: TDataSet);
 begin
-  if OD_Eolink.FieldByName('OBJTPCD').AsString='Организация' then
+  // РКЦ
+  if (OD_Eolink.FieldByName('OBJTPCD').AsString='Организация') and
+     (OD_Eolink.FieldByName('PARENT_ID').AsInteger = 0) then
+  begin
+     N19.Enabled:=true;
+     N20.Enabled:=true;
+  end
+  else
+  begin
+     N19.Enabled:=false;
+     N20.Enabled:=false;
+  end;
+
+  // УК
+  if (OD_Eolink.FieldByName('OBJTPCD').AsString='Организация') and
+     (OD_Eolink.FieldByName('PARENT_ID').AsInteger <> 0) then
   begin
      N1.Enabled:=true;
      N10.Enabled:=true;
      N11.Enabled:=true;
      N13.Enabled:=true;
      N15.Enabled:=true;
-     N16.Enabled:=false;
+     N17.Enabled:=true;
   end
   else
   begin
@@ -335,9 +359,10 @@ begin
      N11.Enabled:=false;
      N13.Enabled:=false;
      N15.Enabled:=false;
-     N16.Enabled:=false;
+     N17.Enabled:=false;
   end;
 
+  // Дом
   if OD_Eolink.FieldByName('OBJTPCD').AsString='Дом' then
   begin
      N6.Enabled:=true;
@@ -355,6 +380,7 @@ begin
      N16.Enabled:=false;
   end;
 
+  // Лиц.счет
   if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
      N4.Enabled:=true
   else
@@ -552,7 +578,7 @@ procedure TFrmEolink.N14Click(Sender: TObject);
   ret: Integer;
   chr: String;
 begin
-  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС по дому?',
+  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по экспорту ПД из ГИС по дому
@@ -572,7 +598,7 @@ procedure TFrmEolink.N15Click(Sender: TObject);
   ret: Integer;
   chr: String;
 begin
-  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС по УК?',
+  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по УК?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по экспорту ПД по УК
@@ -652,6 +678,62 @@ procedure TFrmEolink.cxGrid1DBTableView1COMMCustomDrawCell(
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 begin
     ACanvas.Font.Color:= clRed;
+end;
+
+procedure TFrmEolink.N17Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Загрузить все недостающие ПД по РСО?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // загрузить все недостающие ПД по РСО
+    ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_rso',
+        [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано ПД: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmEolink.N19Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Активировать задания по загрузке ПД, по РКЦ?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // активировать задания по загрузке ПД по УК
+    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_rkc',
+        [OD_Eolink.FieldByName('ID').AsInteger,
+        'GIS_IMP_PAY_DOCS']);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано Заданий: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
+end;
+
+procedure TFrmEolink.N20Click(Sender: TObject);
+  var
+  ret: Integer;
+  chr: String;
+begin
+  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по РКЦ?',
+    'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+  begin
+    // активировать задания по экспорту ПД по РКЦ
+    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
+        [OD_Eolink.FieldByName('ID').AsInteger,
+        'GIS_EXP_PAY_DOCS']);
+    DataModule2.OracleSession1.Commit;
+    chr:='Обработано Заданий: '+IntToStr(ret);
+    Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
+      MB_ICONINFORMATION);
+  end;
 end;
 
 end.

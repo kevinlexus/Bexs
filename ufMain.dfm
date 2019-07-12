@@ -65,6 +65,9 @@ object FrmMain: TFrmMain
         OnClick = N4Click
       end
     end
+    object Ver1011: TMenuItem
+      Caption = 'ver 1.01'
+    end
   end
   object ImageList1: TImageList
     Left = 24

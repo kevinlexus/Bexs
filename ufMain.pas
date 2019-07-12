@@ -23,6 +23,7 @@ type
     N7: TMenuItem;
     N8: TMenuItem;
     N9: TMenuItem;
+    Ver1011: TMenuItem;
     procedure N1Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
     procedure N3Click(Sender: TObject);
