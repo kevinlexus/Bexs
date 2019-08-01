@@ -1,8 +1,8 @@
 object FrmMain: TFrmMain
-  Left = 459
-  Top = 294
-  Width = 739
-  Height = 644
+  Left = 303
+  Top = 232
+  Width = 1279
+  Height = 749
   Caption = 'Bexs - Browser for External System'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object FrmMain: TFrmMain
   PixelsPerInch = 96
   TextHeight = 13
   object MainMenu1: TMainMenu
-    Left = 80
+    Left = 160
     Top = 32
     object File1: TMenuItem
       Caption = #1060#1072#1081#1083
@@ -70,7 +70,7 @@ object FrmMain: TFrmMain
     end
   end
   object ImageList1: TImageList
-    Left = 24
+    Left = 104
     Top = 32
     Bitmap = {
       494C010105000A00040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600

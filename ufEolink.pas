@@ -133,6 +133,8 @@ type
     N18: TMenuItem;
     N19: TMenuItem;
     N20: TMenuItem;
+    OD_EolinkLSK_REU: TStringField;
+    cxGrid1DBTableView1LSK_REU: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -420,9 +422,10 @@ end;
 
 procedure TFrmEolink.N2Click(Sender: TObject);
 begin
-  // найти корневую запись
-  FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
-                      'Дом', true);
+  // найти корневую запись, если заполнено поле lsk (как правило по лиц.счету),
+  // то найти лиц.счет
+  FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+                      'Дом', True, OD_Eolink.FieldByName('LSK').asString);
 end;
 
 
@@ -430,7 +433,7 @@ procedure TFrmEolink.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
-                      'Организация', true);
+                      'Организация', true, null);
 end;
 
 procedure TFrmEolink.N4Click(Sender: TObject);
@@ -487,7 +490,7 @@ begin
   begin
     // загрузить все недостающие ПД по дому
     ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_house',
-        [OD_Eolink.FieldByName('ID').AsInteger]);
+        [OD_Eolink.FieldByName('ID').AsInteger, null]);
     DataModule2.OracleSession1.Commit;    
     chr:='Обработано ПД: '+IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +

@@ -221,8 +221,8 @@ end;
 procedure TFrmPdoc.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
-  FrmMain.findRoot(OD_Pdoc.FieldByName('fk_eolink').asInteger,
-                      'Дом', true);
+  FrmMain.findRoot(OD_Pdoc.FieldByName('FK_EOLINK').asInteger,
+                      'Дом', True, OD_Pdoc.FieldByName('LSK').asString);
 
 end;
 
@@ -230,7 +230,7 @@ procedure TFrmPdoc.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Pdoc.FieldByName('fk_eolink').asInteger,
-                      'Организация', true);
+                      'Организация', true, null);
 
 end;
 
@@ -303,7 +303,7 @@ var
 begin
   // найти корневую запись
   id:=FrmMain.findRoot(OD_Pdoc.FieldByName('FK_EOLINK').asInteger,
-                      'Дом', false);
+                      'Дом', false, null);
   // найти задания Task
   Application.CreateForm(TFrmTask, FrmTask);
   FrmTask.setFltById(id);

@@ -118,6 +118,10 @@ type
     Memo1: TMemo;
     OD_TaskFK_PROC_UK: TFloatField;
     cxGrid1DBTableView1FK_PROC_UK: TcxGridDBColumn;
+    OD_TaskDT_NEXTSTART: TDateTimeField;
+    cxGrid1DBTableView1DT_NEXTSTART: TcxGridDBColumn;
+    OD_TaskLAG_NEXTSTART: TFloatField;
+    cxGrid1DBTableView1LAG_NEXTSTART: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -316,7 +320,7 @@ procedure TFrmTask.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-                      'Организация', true);
+                      'Организация', true, null);
 
 end;
 
@@ -324,7 +328,7 @@ procedure TFrmTask.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-                      'Дом', true);
+                      'Дом', true, null);
 
 end;
 

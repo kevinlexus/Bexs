@@ -5,7 +5,11 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, ufEolink, ufTask, ufPdoc, ufReference, ufRefCorrespond,
-  ImgList, cxGrid, cxGridExportLink;
+  ImgList, cxGrid, cxGridExportLink, OracleData, DB, fcxControl, fcxZone,
+  fcxCustomGrid, fcxCubeGrid, fcxDataSource, fcxComponent, fcxCube,
+  fcxSliceGridToolbar, ToolWin, ComCtrls, fcxCustomToolbar,
+  fcxCubeGridToolBar, fcxSliceGrid, fcxSlice, PivotCube_SRC, PivotMap_SRC,
+  ExtCtrls, PivotGrid_SRC, PivotToolBar_SRC;
 
 type
   TFrmMain = class(TForm)
@@ -39,7 +43,8 @@ type
   public
     function findRoot(id: Integer; // Id элемента
                    tp: String;         // Тип объекта для поиска
-                   isCreateFrmEolink: Boolean // создавать ли форму Eolink или вернуть id
+                   isCreateFrmEolink: Boolean; // создавать ли форму Eolink или вернуть id
+                   pLsk: String // найти лиц.счет, если указано
                    ): Integer;
   end;
 
@@ -78,7 +83,8 @@ end;
 // найти корневой объект
 function TFrmMain.findRoot(id: Integer; // Id элемента
                    tp: String;         // Тип объекта для поиска
-                   isCreateFrmEolink: Boolean // создавать ли форму Eolink или вернуть id
+                   isCreateFrmEolink: Boolean; // создавать ли форму Eolink или вернуть id
+                   pLsk: String // найти лиц.счет, если указано
                    ): Integer;
 var
   foundId: Integer;
@@ -93,6 +99,10 @@ begin
     begin
       Application.CreateForm(TFrmEolink, FrmEolink);
       FrmEolink.setFltById(foundId, 2);
+      if pLsk <> null then
+      begin
+        FrmEolink.OD_Eolink.SearchRecord('lsk', pLsk, [srFromBeginning]);
+      end;
     end
     else
     begin
