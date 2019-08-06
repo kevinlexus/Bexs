@@ -135,6 +135,8 @@ type
     N20: TMenuItem;
     OD_EolinkLSK_REU: TStringField;
     cxGrid1DBTableView1LSK_REU: TcxGridDBColumn;
+    OD_EolinkTGUID: TStringField;
+    cxGrid1DBTableView1TGUID: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
