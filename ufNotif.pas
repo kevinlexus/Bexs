@@ -226,7 +226,7 @@ procedure TFrmNotif.N1Click(Sender: TObject);
 begin
   // найти Извещение
   Application.CreateForm(TFrmPdoc, FrmPdoc);
-  FrmPdoc.setFltById(0, OD_Notif.FieldByName('FK_PDOC').asInteger, 1);
+  FrmPdoc.setFltById(0, OD_Notif.FieldByName('FK_PDOC').asInteger, 0, 1);
 
 end;
 

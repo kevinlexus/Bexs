@@ -133,10 +133,11 @@ type
     N18: TMenuItem;
     N19: TMenuItem;
     N20: TMenuItem;
-    OD_EolinkLSK_REU: TStringField;
-    cxGrid1DBTableView1LSK_REU: TcxGridDBColumn;
+    OD_EolinkNAME_REU: TStringField;
+    cxGrid1DBTableView1NAME_REU: TcxGridDBColumn;
     OD_EolinkTGUID: TStringField;
     cxGrid1DBTableView1TGUID: TcxGridDBColumn;
+    N21: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -174,6 +175,7 @@ type
     procedure N17Click(Sender: TObject);
     procedure N19Click(Sender: TObject);
     procedure N20Click(Sender: TObject);
+    procedure N21Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -299,10 +301,14 @@ begin
 end;
 
 procedure TFrmEolink.Eolink1Click(Sender: TObject);
+  var
+  foundId: Integer;
 begin
-  // найти задания Task
+  // найти задания Task по Дому данного объекта
+  foundId:=FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+                      'Дом', False, '');
   Application.CreateForm(TFrmTask, FrmTask);
-  FrmTask.setFltById(OD_Eolink.FieldByName('ID').asInteger);
+  FrmTask.setFltById(foundId);
 end;
 
 procedure TFrmEolink.N1Click(Sender: TObject);
@@ -366,9 +372,15 @@ begin
      N17.Enabled:=false;
   end;
 
+  // получить все ПД по Дому выбранного объекта
+  N21.Enabled:=false;
+  // получить ПД по Лиц.счету
+  N4.Enabled:=false;
+
   // Дом
   if OD_Eolink.FieldByName('OBJTPCD').AsString='Дом' then
   begin
+     N21.Enabled:=true;
      N6.Enabled:=true;
      N7.Enabled:=true;
      N12.Enabled:=true;
@@ -384,11 +396,34 @@ begin
      N16.Enabled:=false;
   end;
 
+  // Подъезд
+  if OD_Eolink.FieldByName('OBJTPCD').AsString='Подъезд' then
+  begin
+     N21.Enabled:=true;
+  end
+  else
+  begin
+  end;
+
+  // Помещение
+  if OD_Eolink.FieldByName('OBJTPCD').AsString='Квартира' then
+  begin
+     N21.Enabled:=true;
+  end
+  else
+  begin
+  end;
+
   // Лиц.счет
   if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
+  begin
+     N21.Enabled:=true;
      N4.Enabled:=true
+  end
   else
+  begin
      N4.Enabled:=false;
+  end;
 
 end;
 
@@ -442,7 +477,7 @@ procedure TFrmEolink.N4Click(Sender: TObject);
 begin
   // найти ПД
   Application.CreateForm(TFrmPdoc, FrmPdoc);
-  FrmPdoc.setFltById(OD_Eolink.FieldByName('ID').asInteger, 0, 1);
+  FrmPdoc.setFltById(OD_Eolink.FieldByName('ID').asInteger, 0, 0, 0);
 
 end;
 
@@ -739,6 +774,23 @@ begin
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
+end;
+
+procedure TFrmEolink.N21Click(Sender: TObject);
+var
+  foundId: Integer;
+begin
+  foundId:=FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+                      'Дом', False, '');
+
+  if foundId <> -1 then
+  begin
+    // найти ПД по дому
+    Application.CreateForm(TFrmPdoc, FrmPdoc);
+    FrmPdoc.setFltById(0, 0, foundId, 1);
+  end;
+
+
 end;
 
 end.

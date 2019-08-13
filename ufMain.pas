@@ -99,7 +99,7 @@ begin
     begin
       Application.CreateForm(TFrmEolink, FrmEolink);
       FrmEolink.setFltById(foundId, 2);
-      if pLsk <> null then
+      if pLsk <> '' then
       begin
         FrmEolink.OD_Eolink.SearchRecord('lsk', pLsk, [srFromBeginning]);
       end;
@@ -127,7 +127,7 @@ end;
 procedure TFrmMain.Pdoc1Click(Sender: TObject);
 begin
    Application.CreateForm(TFrmPdoc, FrmPdoc);
-   FrmPdoc.setFltById(0,0,1);
+   FrmPdoc.setFltById(0,0,0,1);
 end;
 
 procedure TFrmMain.N7Click(Sender: TObject);

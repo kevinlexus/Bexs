@@ -1,6 +1,6 @@
 object FrmPdoc: TFrmPdoc
-  Left = 659
-  Top = 363
+  Left = 602
+  Top = 308
   Width = 1198
   Height = 590
   Caption = #1055#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' - Pdoc'
@@ -240,7 +240,6 @@ object FrmPdoc: TFrmPdoc
       Properties.SaveTime = False
       Properties.ShowTime = False
       Properties.ValidationOptions = [evoRaiseException, evoShowErrorIcon]
-      Properties.OnCloseUp = cxDateEdit1PropertiesCloseUp
       TabOrder = 2
       Width = 121
     end
@@ -251,16 +250,23 @@ object FrmPdoc: TFrmPdoc
       Height = 22
       Hint = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1083#1100#1082#1086' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' (V=1)'
       Caption = #1040#1082#1090#1080#1074#1085#1099#1077' (V=1)'
-      Checked = True
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      State = cbChecked
       TabOrder = 1
-      OnClick = CheckBox1Click
+    end
+    object ToolButton6: TToolButton
+      Left = 576
+      Top = 2
+      Hint = #1053#1072#1081#1090#1080'!'
+      Caption = 'ToolButton6'
+      ImageIndex = 1
+      ParentShowHint = False
+      ShowHint = True
+      OnClick = ToolButton6Click
     end
   end
   object OD_Pdoc: TOracleDataSet
@@ -292,36 +298,19 @@ object FrmPdoc: TFrmPdoc
       ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
       
         'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
-        ':fltId) and (:fltId2=0 or t.id=:fltId2)'
+        ':fltId) and (:fltId2=0 or t.id=:fltId2) and (:fltId3=0 or h.id=:' +
+        'fltId3 or h2.id=:fltId3)'
       'and (:flt2=0 or t.v=1)'
-      'and t.dt=:p_dt'
-      'order by t.id desc'
-      ''
-      '/*'
-      'select t.*, e.lsk, o.name as uk, s.name as street, '
-      ' ltrim(h.nd,'#39'0'#39') as nd, p.entry, ltrim(k.kw,'#39'0'#39') as kw, t.rowid'
-      ' from EXS.PDOC t'
-      ' join EXS.EOLINK e on t.fk_eolink=e.id -- '#1083#1080#1094'.'#1089#1095#1077#1090
-      ' join EXS.EOLINK k on e.parent_id=k.id -- '#1082#1074#1072#1088#1090#1080#1088#1072
-      ' join EXS.EOLINK p on k.parent_id=p.id -- '#1087#1086#1076#1098#1077#1079#1076
-      ' join EXS.EOLINK h on p.parent_id=h.id -- '#1076#1086#1084
-      ' join EXS.EOLINK uk on h.parent_id=uk.id -- '#1059#1050
-      ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
-      ' join scott.spul s on h.kul=s.id -- '#1091#1083#1080#1094#1072
-      
-        'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
-        ':fltId) and (:fltId2=0 or t.id=:fltId2)'
-      'and (:flt2=0 or t.v=1)'
-      'and t.dt=:p_dt'
-      'order by t.id desc'
-      '*/')
+      'and nvl(:p_dt,t.dt)=t.dt'
+      'order by t.id desc')
     Optimize = False
     Variables.Data = {
-      0300000006000000040000003A464C5403000000040000000000000000000000
+      0300000007000000040000003A464C5403000000040000000000000000000000
       080000003A49445355425354010000000600000028302C312900000000000600
       00003A464C54494403000000040000000000000000000000070000003A464C54
       49443203000000040000000000000000000000050000003A464C543203000000
-      0000000000000000050000003A505F44540C0000000000000000000000}
+      0000000000000000050000003A505F44540C0000000000000000000000070000
+      003A464C54494433030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
       0400000018000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000006

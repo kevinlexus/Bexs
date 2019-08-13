@@ -102,6 +102,7 @@ type
     ask1: TMenuItem;
     cxDateEdit1: TcxDateEdit;
     cxLabel1: TcxLabel;
+    ToolButton6: TToolButton;
     procedure OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -109,7 +110,7 @@ type
     procedure ToolButton2Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
-    procedure setFltById(id: Integer; id2: Integer; flt2: Integer);
+    procedure setFltById(id, id2, id3, flt2: Integer);
     procedure Eolink1Click(Sender: TObject);
     procedure Eolink2Click(Sender: TObject);
     procedure Eolink3Click(Sender: TObject);
@@ -119,9 +120,8 @@ type
     procedure cxGrid1DBTableView1CustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
-    procedure CheckBox1Click(Sender: TObject);
     procedure ask1Click(Sender: TObject);
-    procedure cxDateEdit1PropertiesCloseUp(Sender: TObject);
+    procedure ToolButton6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -139,50 +139,52 @@ uses DataModule, ufEolink, ufMain, ufNotif;
 {$R *.dfm}
 
 // фильтр по Id
-procedure TFrmPdoc.setFltById(id: Integer; id2: Integer; flt2: Integer);
+
+procedure TFrmPdoc.setFltById(id, id2, id3, flt2: Integer);
 begin
   // установить фильтр по одному Id (или не устанавливать, если 0)
   OD_Pdoc.SetVariable('FLTID', id);
   OD_Pdoc.SetVariable('FLTID2', id2);
+  OD_Pdoc.SetVariable('FLTID3', id3);
   OD_Pdoc.SetVariable('FLT2', flt2);
-  OD_Pdoc.Active:=false;
-  OD_Pdoc.Active:=true;
-{  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
-  begin
-    OD_Pdoc.ReadOnly:=true;
-  end;}
-    // счетчик записей
-  loadRec:=0;
+  OD_Pdoc.Active := false;
+  OD_Pdoc.Active := true;
+  {  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+    begin
+      OD_Pdoc.ReadOnly:=true;
+    end;}
+      // счетчик записей
+  loadRec := 0;
 end;
 
 procedure TFrmPdoc.OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
   FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
 begin
-  loadRec:=loadRec+1;
-  if loadRec > 10000 then
+  loadRec := loadRec + 1;
+  if loadRec > 1000 then
   begin
     if Application.MessageBox('Загрузить еще?',
-      'Вы загрузили свыше 10000 записей', MB_YESNO +
+      'Вы загрузили свыше 1000 записей', MB_YESNO +
       MB_ICONQUESTION + MB_TOPMOST) = IDYES then
     begin
-     Action:=afContinue;
-     loadRec:=0;
+      Action := afContinue;
+      loadRec := 0;
     end
     else
     begin
-     Action:=afStop;
+      Action := afStop;
     end;
   end;
 end;
 
 procedure TFrmPdoc.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action:=caFree;
+  Action := caFree;
 end;
 
 procedure TFrmPdoc.ToolButton1Click(Sender: TObject);
 begin
-  OD_Pdoc.QBEMode:=True;
+  OD_Pdoc.QBEMode := True;
 
 end;
 
@@ -195,10 +197,10 @@ end;
 procedure TFrmPdoc.ToolButton4Click(Sender: TObject);
 begin
   // установить фильтр по id записей
-  OD_Pdoc.SetVariable('IDSUBST', '('+Edit1.Text+')');
+  OD_Pdoc.SetVariable('IDSUBST', '(' + Edit1.Text + ')');
   OD_Pdoc.SetVariable('FLT', 1);
-  OD_Pdoc.Active:=false;
-  OD_Pdoc.Active:=true;
+  OD_Pdoc.Active := false;
+  OD_Pdoc.Active := true;
 
 end;
 
@@ -206,8 +208,8 @@ procedure TFrmPdoc.ToolButton5Click(Sender: TObject);
 begin
   // снять фильтр по id записей
   OD_Pdoc.SetVariable('FLT', 0);
-  OD_Pdoc.Active:=false;
-  OD_Pdoc.Active:=true;
+  OD_Pdoc.Active := false;
+  OD_Pdoc.Active := true;
 
 end;
 
@@ -222,7 +224,7 @@ procedure TFrmPdoc.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Pdoc.FieldByName('FK_EOLINK').asInteger,
-                      'Дом', True, OD_Pdoc.FieldByName('LSK').asString);
+    'Дом', True, OD_Pdoc.FieldByName('LSK').asString);
 
 end;
 
@@ -230,22 +232,22 @@ procedure TFrmPdoc.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Pdoc.FieldByName('fk_eolink').asInteger,
-                      'Организация', true, null);
+    'Организация', true, null);
 
 end;
 
 procedure TFrmPdoc.INS1Click(Sender: TObject);
 begin
   if OD_Pdoc.State <> dsEdit then
-  OD_Pdoc.Edit;
+    OD_Pdoc.Edit;
   // действующий
-  OD_Pdoc.FieldByName('V').AsInteger:=1;
+  OD_Pdoc.FieldByName('V').AsInteger := 1;
   // статус - добавлен на загрузку
-  OD_Pdoc.FieldByName('STATUS').AsInteger:=0;
+  OD_Pdoc.FieldByName('STATUS').AsInteger := 0;
   // убрать ошибку
-  OD_Pdoc.FieldByName('ERR').AsInteger:=0;
+  OD_Pdoc.FieldByName('ERR').AsInteger := 0;
   // почистить последний результат
-  OD_Pdoc.FieldByName('RESULT').AsString:='';
+  OD_Pdoc.FieldByName('RESULT').AsString := '';
   OD_Pdoc.Post;
 
 end;
@@ -268,10 +270,10 @@ procedure TFrmPdoc.cxGrid1DBTableView1CustomDrawCell(
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
   col: TcxGridDBColumn;
-  s : string;
+  s: string;
 begin
   // цвет записи
-  col:=cxGrid1DBTableView1.GetColumnByFieldName('STATUS');
+  col := cxGrid1DBTableView1.GetColumnByFieldName('STATUS');
   s := AViewInfo.GridRecord.DisplayTexts[col.Index];
   if s = '1' then
   begin
@@ -283,18 +285,8 @@ begin
   begin
     // неактивная запись
      //ACanvas.Brush.Color:= $00E1E1E1;
-     ACanvas.Font.Color:= clGray;
+    ACanvas.Font.Color := clGray;
   end;
-end;
-
-procedure TFrmPdoc.CheckBox1Click(Sender: TObject);
-begin
-  if CheckBox1.Checked then
-    OD_Pdoc.SetVariable('FLT2', 1)
-  else
-    OD_Pdoc.SetVariable('FLT2', 0);
-  OD_Pdoc.Active:=false;
-  OD_Pdoc.Active:=true;
 end;
 
 procedure TFrmPdoc.ask1Click(Sender: TObject);
@@ -302,18 +294,27 @@ var
   id: Integer;
 begin
   // найти корневую запись
-  id:=FrmMain.findRoot(OD_Pdoc.FieldByName('FK_EOLINK').asInteger,
-                      'Дом', false, null);
+  id := FrmMain.findRoot(OD_Pdoc.FieldByName('FK_EOLINK').asInteger,
+    'Дом', false, '');
   // найти задания Task
   Application.CreateForm(TFrmTask, FrmTask);
   FrmTask.setFltById(id);
 end;
 
-procedure TFrmPdoc.cxDateEdit1PropertiesCloseUp(Sender: TObject);
+procedure TFrmPdoc.ToolButton6Click(Sender: TObject);
 begin
-  OD_Pdoc.SetVariable('P_DT', cxDateEdit1.Date);
-  OD_Pdoc.Active:=false;
-  OD_Pdoc.Active:=true;
+  if CheckBox1.Checked then
+    OD_Pdoc.SetVariable('FLT2', 1)
+  else
+    OD_Pdoc.SetVariable('FLT2', 0);
+
+  if cxDateEdit1.Text = '' then
+    OD_Pdoc.SetVariable('P_DT', null)
+  else
+    OD_Pdoc.SetVariable('P_DT', cxDateEdit1.Date);
+  OD_Pdoc.Active := false;
+  OD_Pdoc.Active := true;
 end;
 
 end.
+

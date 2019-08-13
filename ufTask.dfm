@@ -48,100 +48,106 @@ object FrmTask: TFrmTask
       OptionsView.GroupByBox = False
       object cxGrid1DBTableView1ID: TcxGridDBColumn
         DataBinding.FieldName = 'ID'
-        Width = 20
+        Width = 25
       end
       object cxGrid1DBTableView1PARENT_ID: TcxGridDBColumn
         DataBinding.FieldName = 'PARENT_ID'
-        Width = 20
+        Width = 25
       end
       object cxGrid1DBTableView1DEP_ID: TcxGridDBColumn
         DataBinding.FieldName = 'DEP_ID'
-        Width = 20
+        Width = 25
       end
       object cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_EOLINK'
-        Width = 50
+        Width = 37
       end
       object cxGrid1DBTableView1EOLTPNAME: TcxGridDBColumn
         Caption = #1058#1080#1087' '#1086#1073#1098#1077#1082#1090#1072
         DataBinding.FieldName = 'EOLTP_NAME'
-        Width = 20
+        Width = 25
       end
       object cxGrid1DBTableView1OBJ_ADR: TcxGridDBColumn
         Caption = #1040#1076#1088#1077#1089
         DataBinding.FieldName = 'OBJ_ADR'
-        Width = 64
+        Width = 49
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 160
+        Width = 122
       end
       object cxGrid1DBTableView1STATE: TcxGridDBColumn
         DataBinding.FieldName = 'STATE'
-        Width = 24
+        Width = 25
       end
       object cxGrid1DBTableView1FK_ACT: TcxGridDBColumn
         DataBinding.FieldName = 'FK_ACT'
-        Width = 26
+        Width = 25
       end
       object cxGrid1DBTableView1ACT_NAME: TcxGridDBColumn
         DataBinding.FieldName = 'ACT_NAME'
-        Width = 95
+        Width = 71
       end
       object cxGrid1DBTableView1RESULT: TcxGridDBColumn
         DataBinding.FieldName = 'RESULT'
-        Width = 30
+        Width = 25
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
-        Width = 20
+        Width = 25
       end
       object cxGrid1DBTableView1ERRACKCNT: TcxGridDBColumn
         DataBinding.FieldName = 'ERRACKCNT'
-        Width = 27
+        Width = 25
       end
       object cxGrid1DBTableView1PRIORITY: TcxGridDBColumn
         DataBinding.FieldName = 'PRIORITY'
-        Width = 28
+        Width = 25
       end
       object cxGrid1DBTableView1TRACE: TcxGridDBColumn
         DataBinding.FieldName = 'TRACE'
-        Width = 29
+        Width = 25
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         DataBinding.FieldName = 'GUID'
-        Width = 27
+        Width = 24
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 28
-      end
-      object cxGrid1DBTableView1FK_USER: TcxGridDBColumn
-        DataBinding.FieldName = 'FK_USER'
-        Width = 29
-      end
-      object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
-        DataBinding.FieldName = 'UNIQNUM'
-        Width = 28
-      end
-      object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
-        DataBinding.FieldName = 'DT_CRT'
-        Width = 27
-      end
-      object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
-        DataBinding.FieldName = 'DT_UPD'
-        Width = 29
+        Width = 25
       end
       object cxGrid1DBTableView1FK_PROC_UK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_PROC_UK'
-        Width = 54
+        Width = 41
+      end
+      object cxGrid1DBTableView1NAME_REU: TcxGridDBColumn
+        Caption = #1059#1050' '#1086#1073#1088#1072#1073#1086#1090#1082#1080
+        DataBinding.FieldName = 'NAME_REU'
+        Width = 81
+      end
+      object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
+        DataBinding.FieldName = 'UNIQNUM'
+        Width = 25
+      end
+      object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
+        DataBinding.FieldName = 'DT_CRT'
+        Width = 25
+      end
+      object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
+        DataBinding.FieldName = 'DT_UPD'
+        Width = 25
       end
       object cxGrid1DBTableView1DT_NEXTSTART: TcxGridDBColumn
         DataBinding.FieldName = 'DT_NEXTSTART'
-        Width = 80
+        Width = 61
       end
       object cxGrid1DBTableView1LAG_NEXTSTART: TcxGridDBColumn
         DataBinding.FieldName = 'LAG_NEXTSTART'
+        Width = 49
+      end
+      object cxGrid1DBTableView1FK_USER: TcxGridDBColumn
+        DataBinding.FieldName = 'FK_USER'
+        Width = 25
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -315,7 +321,7 @@ object FrmTask: TFrmTask
       
         ' '#39'REU:'#39'||e.reu||'#39','#39'||trim(g.name)||'#39', '#39'||trim(sp.name)||'#39', '#39'||lt' +
         'rim(e.nd,'#39'0'#39')||'#39', '#39'||ltrim(e.kw,'#39'0'#39') as obj_adr, t.fk_proc_uk, t' +
-        '.dt_nextstart, t.lag_nextstart,'
+        '.dt_nextstart, t.lag_nextstart, o.reu||'#39'-'#39'||o.name as name_reu,'
       ' t.rowid'
       ' from EXS.TASK t'
       ' join bs.list s on t.fk_act=s.id '
@@ -323,6 +329,8 @@ object FrmTask: TFrmTask
       ' left join bs.addr_tp tp on e.fk_objtp=tp.id'
       ' left join scott.spul sp on e.kul=sp.id'
       ' left join scott.t_org g on e.reu=g.reu'
+      ' left join EXS.EOLINK e2 on t.fk_proc_uk=e2.id'
+      ' left join scott.t_org o on e2.reu=o.reu'
       
         'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
         ':fltId)'
@@ -351,7 +359,7 @@ object FrmTask: TFrmTask
       3131322C2033333331290000000000040000003A464C54030000000400000000
       00000000000000060000003A464C544944030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000018000000020000004944010000000000040000004755494401000000
+      0400000019000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000009
       000000504152454E545F49440100000000000600000044545F43525401000000
       00000600000044545F55504401000000000004000000434F4D4D010000000000
@@ -363,7 +371,8 @@ object FrmTask: TFrmTask
       4401000000000007000000464B5F555345520100000000000A000000454F4C54
       505F4E414D45010000000000070000004F424A5F4144520100000000000A0000
       00464B5F50524F435F554B0100000000000C00000044545F4E45585453544152
-      540100000000000D0000004C41475F4E4558545354415254010000000000}
+      540100000000000D0000004C41475F4E45585453544152540100000000000800
+      00004E414D455F524555010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_TaskAfterQuery
@@ -474,6 +483,10 @@ object FrmTask: TFrmTask
     end
     object OD_TaskLAG_NEXTSTART: TFloatField
       FieldName = 'LAG_NEXTSTART'
+    end
+    object OD_TaskNAME_REU: TStringField
+      FieldName = 'NAME_REU'
+      Size = 68
     end
   end
   object DS_task: TDataSource

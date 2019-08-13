@@ -122,6 +122,8 @@ type
     cxGrid1DBTableView1DT_NEXTSTART: TcxGridDBColumn;
     OD_TaskLAG_NEXTSTART: TFloatField;
     cxGrid1DBTableView1LAG_NEXTSTART: TcxGridDBColumn;
+    OD_TaskNAME_REU: TStringField;
+    cxGrid1DBTableView1NAME_REU: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);

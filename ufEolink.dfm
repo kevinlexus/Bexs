@@ -1,6 +1,6 @@
 object FrmEolink: TFrmEolink
-  Left = 338
-  Top = 492
+  Left = 438
+  Top = 406
   Width = 1226
   Height = 475
   Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
@@ -85,9 +85,13 @@ object FrmEolink: TFrmEolink
         DataBinding.FieldName = 'LSK'
         Width = 29
       end
-      object cxGrid1DBTableView1LSK_REU: TcxGridDBColumn
-        Caption = #1059#1050
-        DataBinding.FieldName = 'LSK_REU'
+      object cxGrid1DBTableView1FK_UK: TcxGridDBColumn
+        DataBinding.FieldName = 'FK_UK'
+        Width = 42
+      end
+      object cxGrid1DBTableView1NAME_REU: TcxGridDBColumn
+        Caption = #1059#1050' '#1083#1080#1094'.'#1089#1095'.'
+        DataBinding.FieldName = 'NAME_REU'
         Width = 41
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
@@ -142,10 +146,6 @@ object FrmEolink: TFrmEolink
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
         Width = 38
-      end
-      object cxGrid1DBTableView1FK_UK: TcxGridDBColumn
-        DataBinding.FieldName = 'FK_UK'
-        Width = 42
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
@@ -321,13 +321,14 @@ object FrmEolink: TFrmEolink
       ' ltrim(t.nd,'#39'0'#39') as nd, t.entry,  ltrim(t.kw,'#39'0'#39') as kw, '
       
         ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj, t.ogrn, t.dt_' +
-        'crt, t.dt_upd, t.status, t.serviceId, t.fk_uk, r.reu as lsk_reu,' +
-        ' t.tguid,'
+        'crt, t.dt_upd, t.status, t.serviceId, t.fk_uk, r.reu||'#39'-'#39'||o.nam' +
+        'e as name_reu, t.tguid,'
       ' t.rowid from exs.eolink t'
       'left join bs.addr_tp tp on t.fk_objtp=tp.id'
       'left join scott.spul s on t.kul=s.id'
       'left join scott.t_org o on t.reu=o.reu'
       'left join exs.eolink r on t.fk_uk=r.id'
+      'left join scott.t_org o2 on r.reu=o2.reu'
       'where (:tp<>0 or t.id=:fltId) and (:tp<>1 or t.id in :idSubst) '
       ':substExp1'
       ':substExp2'
@@ -492,8 +493,8 @@ object FrmEolink: TFrmEolink
     object OD_EolinkFK_UK: TFloatField
       FieldName = 'FK_UK'
     end
-    object OD_EolinkLSK_REU: TStringField
-      FieldName = 'LSK_REU'
+    object OD_EolinkNAME_REU: TStringField
+      FieldName = 'NAME_REU'
       Size = 4
     end
     object OD_EolinkTGUID: TStringField
@@ -512,7 +513,7 @@ object FrmEolink: TFrmEolink
     Left = 120
     Top = 152
     object Eolink1: TMenuItem
-      Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1103' Task '#1087#1086' '#1086#1073#1098#1077#1082#1090#1091' Eolink'
+      Caption = #1053#1072#1081#1090#1080' '#1079#1072#1076#1072#1085#1080#1103' Task '#1087#1086' '#1044#1086#1084#1091' '#1074#1099#1073#1088#1072#1085#1085#1086#1075#1086' '#1086#1073#1098#1077#1082#1090#1072' Eolink'
       OnClick = Eolink1Click
     end
     object N2: TMenuItem
@@ -524,8 +525,12 @@ object FrmEolink: TFrmEolink
       OnClick = Eolink2Click
     end
     object N4: TMenuItem
-      Caption = #1053#1072#1081#1090#1080' '#1087#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' '#1087#1086' '#1051#1057
+      Caption = #1053#1072#1081#1090#1080' '#1055#1044' '#1087#1086' '#1051#1057
       OnClick = N4Click
+    end
+    object N21: TMenuItem
+      Caption = #1053#1072#1081#1090#1080' '#1055#1044' '#1087#1086' '#1044#1086#1084#1091' '#1074#1099#1073#1088#1072#1085#1085#1086#1075#1086' '#1086#1073#1098#1077#1082#1090#1072
+      OnClick = N21Click
     end
     object N3: TMenuItem
       Caption = '---'
