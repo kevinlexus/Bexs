@@ -294,6 +294,42 @@ object FrmPdoc: TFrmPdoc
         ' left join EXS.EOLINK h2 on k.parent_id=h2.id and h2.fk_objtp=tp' +
         '3.id -- '#1076#1086#1084', '#1077#1089#1083#1080' '#1082#1074#1072#1088#1090#1080#1088#1072' '#1085#1077' '#1074#1093#1086#1076#1080#1090' '#1074' '#1087#1086#1076#1098#1077#1079#1076
       ' join scott.spul s on nvl(h.kul,h2.kul)=s.id -- '#1091#1083#1080#1094#1072
+      ' left join EXS.EOLINK uk on e.fk_uk=uk.id -- '#1059#1050
+      ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
+      
+        'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
+        ':fltId) and (:fltId2=0 or t.id=:fltId2) and (:fltId3=0 or h.id=:' +
+        'fltId3 or h2.id=:fltId3)'
+      'and (:flt2=0 or t.v=1)'
+      'and nvl(:p_dt,t.dt)=t.dt'
+      'order by t.id desc'
+      ''
+      ''
+      '/*'
+      ''
+      'select t.*, e.lsk, o.name as uk, s.name as street, '
+      ' ltrim(h.nd,'#39'0'#39') as nd, p.entry, ltrim(k.kw,'#39'0'#39') as kw, t.rowid'
+      ' from EXS.PDOC t'
+      ' join bs.addr_tp tp on tp.cd='#39#1051#1057#39
+      ' join bs.addr_tp tp2 on tp2.cd='#39#1055#1086#1076#1098#1077#1079#1076#39
+      ' join bs.addr_tp tp3 on tp3.cd='#39#1044#1086#1084#39
+      ' join bs.addr_tp tp4 on tp4.cd='#39#1050#1074#1072#1088#1090#1080#1088#1072#39
+      
+        ' join EXS.EOLINK e on t.fk_eolink=e.id and e.fk_objtp=tp.id -- '#1083 +
+        #1080#1094'.'#1089#1095#1077#1090
+      
+        ' join EXS.EOLINK k on e.parent_id=k.id and k.fk_objtp=tp4.id -- ' +
+        #1087#1086#1084#1077#1097#1077#1085#1080#1077
+      
+        ' left join EXS.EOLINK p on k.parent_id=p.id and p.fk_objtp=tp2.i' +
+        'd -- '#1087#1086#1076#1098#1077#1079#1076
+      
+        ' left join EXS.EOLINK h on p.parent_id=h.id and h.fk_objtp=tp3.i' +
+        'd -- '#1076#1086#1084
+      
+        ' left join EXS.EOLINK h2 on k.parent_id=h2.id and h2.fk_objtp=tp' +
+        '3.id -- '#1076#1086#1084', '#1077#1089#1083#1080' '#1082#1074#1072#1088#1090#1080#1088#1072' '#1085#1077' '#1074#1093#1086#1076#1080#1090' '#1074' '#1087#1086#1076#1098#1077#1079#1076
+      ' join scott.spul s on nvl(h.kul,h2.kul)=s.id -- '#1091#1083#1080#1094#1072
       ' join EXS.EOLINK uk on nvl(h.parent_id,h2.parent_id)=uk.id -- '#1059#1050
       ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
       
@@ -302,7 +338,9 @@ object FrmPdoc: TFrmPdoc
         'fltId3 or h2.id=:fltId3)'
       'and (:flt2=0 or t.v=1)'
       'and nvl(:p_dt,t.dt)=t.dt'
-      'order by t.id desc')
+      'order by t.id desc'
+      ''
+      '*/')
     Optimize = False
     Variables.Data = {
       0300000007000000040000003A464C5403000000040000000000000000000000

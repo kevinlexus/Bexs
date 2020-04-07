@@ -161,7 +161,7 @@ procedure TFrmPdoc.OD_PdocAfterFetchRecord(Sender: TOracleDataSet;
   FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
 begin
   loadRec := loadRec + 1;
-  if loadRec > 1000 then
+  if loadRec > 10000 then
   begin
     if Application.MessageBox('Загрузить еще?',
       'Вы загрузили свыше 1000 записей', MB_YESNO +

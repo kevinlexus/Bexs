@@ -1,6 +1,6 @@
 object FrmTask: TFrmTask
-  Left = 428
-  Top = 257
+  Left = 684
+  Top = 154
   Width = 1222
   Height = 493
   Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
@@ -149,6 +149,15 @@ object FrmTask: TFrmTask
         DataBinding.FieldName = 'FK_USER'
         Width = 25
       end
+      object cxGrid1DBTableView1ID_FROM: TcxGridDBColumn
+        DataBinding.FieldName = 'ID_FROM'
+      end
+      object cxGrid1DBTableView1ID_TO: TcxGridDBColumn
+        DataBinding.FieldName = 'ID_TO'
+      end
+      object cxGrid1DBTableView1FK_EOLINK_LAST: TcxGridDBColumn
+        DataBinding.FieldName = 'FK_EOLINK_LAST'
+      end
     end
     object cxGrid1Level1: TcxGridLevel
       GridView = cxGrid1DBTableView1
@@ -231,9 +240,9 @@ object FrmTask: TFrmTask
     TabOrder = 2
     object cxGrid2: TcxGrid
       Left = 1
-      Top = 90
+      Top = 121
       Width = 259
-      Height = 334
+      Height = 303
       Align = alClient
       PopupMenu = PopupMenu1
       TabOrder = 0
@@ -298,7 +307,7 @@ object FrmTask: TFrmTask
       Left = 1
       Top = 1
       Width = 259
-      Height = 89
+      Height = 120
       Align = alTop
       Lines.Strings = (
         '0 0 1 * * ? - '#1082#1072#1078#1076#1099#1081' '#1076#1077#1085#1100', '#1074' 1:00am'
@@ -307,7 +316,7 @@ object FrmTask: TFrmTask
         '* */5 * ? * * * - '#1082#1072#1078#1076#1099#1077' 5 '#1084#1080#1085#1091#1090
         '15 */3 * ? * * - '#1082#1072#1078#1076#1099#1077' 3 '#1084#1080#1085#1091#1090#1099', '#1085#1072#1095#1080#1085#1072#1103' '#1089' 15 '
         #1089#1077#1082#1091#1085#1076#1099
-        '0 0 0 ? * * 2034 - '#1079#1072#1087#1088#1077#1090#1080#1090#1100' ))')
+        '0 0 0 ? * * 2079 - '#1079#1072#1087#1088#1077#1090#1080#1090#1100' ))')
       TabOrder = 1
     end
   end
@@ -322,6 +331,7 @@ object FrmTask: TFrmTask
         ' '#39'REU:'#39'||e.reu||'#39','#39'||trim(g.name)||'#39', '#39'||trim(sp.name)||'#39', '#39'||lt' +
         'rim(e.nd,'#39'0'#39')||'#39', '#39'||ltrim(e.kw,'#39'0'#39') as obj_adr, t.fk_proc_uk, t' +
         '.dt_nextstart, t.lag_nextstart, o.reu||'#39'-'#39'||o.name as name_reu,'
+      ' t.id_from, t.id_to, t.fk_eolink_last,'
       ' t.rowid'
       ' from EXS.TASK t'
       ' join bs.list s on t.fk_act=s.id '
@@ -359,7 +369,7 @@ object FrmTask: TFrmTask
       3131322C2033333331290000000000040000003A464C54030000000400000000
       00000000000000060000003A464C544944030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000019000000020000004944010000000000040000004755494401000000
+      040000001C000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000009
       000000504152454E545F49440100000000000600000044545F43525401000000
       00000600000044545F55504401000000000004000000434F4D4D010000000000
@@ -372,7 +382,9 @@ object FrmTask: TFrmTask
       505F4E414D45010000000000070000004F424A5F4144520100000000000A0000
       00464B5F50524F435F554B0100000000000C00000044545F4E45585453544152
       540100000000000D0000004C41475F4E45585453544152540100000000000800
-      00004E414D455F524555010000000000}
+      00004E414D455F5245550100000000000700000049445F46524F4D0100000000
+      000500000049445F544F0100000000000E000000464B5F454F4C494E4B5F4C41
+      5354010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_TaskAfterQuery
@@ -487,6 +499,15 @@ object FrmTask: TFrmTask
     object OD_TaskNAME_REU: TStringField
       FieldName = 'NAME_REU'
       Size = 68
+    end
+    object OD_TaskID_FROM: TFloatField
+      FieldName = 'ID_FROM'
+    end
+    object OD_TaskID_TO: TFloatField
+      FieldName = 'ID_TO'
+    end
+    object OD_TaskFK_EOLINK_LAST: TFloatField
+      FieldName = 'FK_EOLINK_LAST'
     end
   end
   object DS_task: TDataSource

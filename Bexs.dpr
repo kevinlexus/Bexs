@@ -13,7 +13,8 @@ uses
   ufPdoc in 'ufPdoc.pas' {FrmPdoc},
   ufNotif in 'ufNotif.pas' {FrmNotif},
   ufErrStat in 'ufErrStat.pas' {FrmErrStat},
-  u_frmSelReu in '..\..\Fins\u_frmSelReu.pas' {FrmSelReu};
+  u_frmSelReu in 'u_frmSelReu.pas' {FrmSelReu},
+  uRefDocTpCorrespond in 'uRefDocTpCorrespond.pas' {FrmRefDocTpCorrespond};
 
 {$R *.res}
 

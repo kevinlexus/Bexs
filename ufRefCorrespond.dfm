@@ -1,6 +1,6 @@
 object FrmRefCorrespond: TFrmRefCorrespond
-  Left = 426
-  Top = 483
+  Left = 436
+  Top = 205
   Width = 800
   Height = 491
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082' '#1089#1086#1086#1090#1074#1077#1090#1089#1090#1074#1080#1103' '#1091#1089#1083#1091#1075
@@ -54,7 +54,7 @@ object FrmRefCorrespond: TFrmRefCorrespond
         Width = 51
       end
       object cxGrid1DBTableView1USLNAME: TcxGridDBColumn
-        Caption = #1059#1089#1083#1091#1075#1072', '#1073#1080#1083#1083#1080#1085#1075
+        Caption = #1059#1089#1083#1091#1075#1072', '#1044#1080#1088#1077#1082#1090
         DataBinding.FieldName = 'FK_USL'
         PropertiesClassName = 'TcxLookupComboBoxProperties'
         Properties.DropDownWidth = 250
@@ -204,7 +204,7 @@ object FrmRefCorrespond: TFrmRefCorrespond
         '  (tp.fk_ext in (1,51) and tp.fk_eolink=:fk_eolink or tp.fk_ext ' +
         'in (2,50))'
       'where t.guid is not null'
-      'and (tp.fk_eolink=:fk_eolink  or tp.fk_ext in (2,50))'
+      'and (tp.fk_eolink =:fk_eolink  or tp.fk_ext in (2,50))'
       'and t.actual=1'
       'order by serv_name')
     Optimize = False

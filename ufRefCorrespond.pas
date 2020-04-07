@@ -22,7 +22,7 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, OracleData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  ExtCtrls, cxDBLookupComboBox;
+  ExtCtrls, cxDBLookupComboBox, StdCtrls;
 
 type
   TFrmRefCorrespond = class(TForm)

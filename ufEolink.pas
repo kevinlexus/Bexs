@@ -23,7 +23,8 @@ uses
   cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   StdCtrls, ComCtrls, ToolWin, Menus, ufTask, ufPdoc, Oracle, ExtCtrls,
-  cxDBLookupComboBox, cxCalendar;
+  cxDBLookupComboBox, cxCalendar, cxButtonEdit, ActnList, XPStyleActnCtrls,
+  ActnMan;
 
 type
   TFrmEolink = class(TForm)
@@ -45,7 +46,7 @@ type
     cxGrid1DBTableView1GUID: TcxGridDBColumn;
     cxGrid1DBTableView1CD: TcxGridDBColumn;
     cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn;
-    cxGrid1DBTableView1FK_KLSK_OBJ: TcxGridDBColumn;
+    cxGrid1DBTableView1FK_KLSK_PREMISE: TcxGridDBColumn;
     cxGrid1DBTableView1OGRN: TcxGridDBColumn;
     cxGrid1DBTableView1DT_CRT: TcxGridDBColumn;
     cxGrid1DBTableView1DT_UPD: TcxGridDBColumn;
@@ -138,6 +139,10 @@ type
     OD_EolinkTGUID: TStringField;
     cxGrid1DBTableView1TGUID: TcxGridDBColumn;
     N21: TMenuItem;
+    cxGrid1DBTableView1ButtonTask: TcxGridDBColumn;
+    ActionManager1: TActionManager;
+    Action1: TAction;
+    Action2: TAction;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -145,13 +150,11 @@ type
     procedure ToolButton2Click(Sender: TObject);
     procedure ToolButton4Click(Sender: TObject);
     procedure ToolButton5Click(Sender: TObject);
-    procedure Eolink1Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
     procedure OD_EolinkAfterScroll(DataSet: TDataSet);
     procedure OD_eolxparAfterScroll(DataSet: TDataSet);
     procedure OD_eolxparAfterInsert(DataSet: TDataSet);
-    procedure N2Click(Sender: TObject);
     procedure Eolink2Click(Sender: TObject);
     procedure N4Click(Sender: TObject);
     procedure OD_EolinkAfterQuery(Sender: TOracleDataSet);
@@ -176,6 +179,8 @@ type
     procedure N19Click(Sender: TObject);
     procedure N20Click(Sender: TObject);
     procedure N21Click(Sender: TObject);
+    procedure Action1Execute(Sender: TObject);
+    procedure Action2Execute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -298,17 +303,6 @@ procedure TFrmEolink.ToolButton5Click(Sender: TObject);
 begin
   // снять фильтр по id записей
   setFltById(0, 3);
-end;
-
-procedure TFrmEolink.Eolink1Click(Sender: TObject);
-  var
-  foundId: Integer;
-begin
-  // найти задания Task по Дому данного объекта
-  foundId:=FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
-                      'Дом', False, '');
-  Application.CreateForm(TFrmTask, FrmTask);
-  FrmTask.setFltById(foundId);
 end;
 
 procedure TFrmEolink.N1Click(Sender: TObject);
@@ -457,20 +451,11 @@ begin
     OD_eolink.FieldByName('ID').AsInteger;
 end;
 
-procedure TFrmEolink.N2Click(Sender: TObject);
-begin
-  // найти корневую запись, если заполнено поле lsk (как правило по лиц.счету),
-  // то найти лиц.счет
-  FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
-                      'Дом', True, OD_Eolink.FieldByName('LSK').asString);
-end;
-
-
 procedure TFrmEolink.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
-                      'Организация', true, null);
+                      'Организация', true, '');
 end;
 
 procedure TFrmEolink.N4Click(Sender: TObject);
@@ -504,6 +489,7 @@ procedure TFrmEolink.N6Click(Sender: TObject);
   ret: Integer;
   chr: String;
 begin
+  // Не работает! ред. 05.11.2019
   if Application.MessageBox('Отменить все активные ПД по дому?',
     'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
@@ -522,6 +508,7 @@ procedure TFrmEolink.N7Click(Sender: TObject);
   ret: Integer;
   chr: String;
 begin
+  // Не работает! ред. 05.11.2019
   if Application.MessageBox('Загрузить все недостающие ПД по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
@@ -544,7 +531,7 @@ begin
   if Application.MessageBox('Отменить все активные ПД по УК?',
     'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
-    // отменить все активные ПД по УК
+    // отменить все активные ПД по УК (РСО)
     ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_uk',
         [OD_Eolink.FieldByName('ID').AsInteger]);
     DataModule2.OracleSession1.Commit;    
@@ -578,6 +565,7 @@ procedure TFrmEolink.N12Click(Sender: TObject);
   ret: Integer;
   chr: String;
 begin
+  // Не работает! ред. 05.11.2019
   if Application.MessageBox('Активировать задания по загрузке ПД по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
@@ -603,8 +591,7 @@ begin
   begin
     // активировать задания по загрузке ПД по УК
     ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
-        [OD_Eolink.FieldByName('ID').AsInteger,
-        'GIS_IMP_PAY_DOCS']);
+        ['GIS_IMP_PAY_DOCS', OD_Eolink.FieldByName('ID').AsInteger]);
     DataModule2.OracleSession1.Commit;
     chr:='Обработано Заданий: '+IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
@@ -618,6 +605,7 @@ procedure TFrmEolink.N14Click(Sender: TObject);
   ret: Integer;
   chr: String;
 begin
+  // Не работает! ред. 05.11.2019
   if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
@@ -791,6 +779,26 @@ begin
   end;
 
 
+end;
+
+procedure TFrmEolink.Action1Execute(Sender: TObject);
+  var
+  foundId: Integer;
+begin
+  // найти задания Task по Дому данного объекта
+  foundId:=FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+                      'Дом', False, '');
+  Application.CreateForm(TFrmTask, FrmTask);
+  FrmTask.setFltById(foundId);
+
+end;
+
+procedure TFrmEolink.Action2Execute(Sender: TObject);
+begin
+  // найти корневую запись, если заполнено поле lsk (как правило по лиц.счету),
+  // то найти лиц.счет
+  FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+                      'Дом', True, OD_Eolink.FieldByName('LSK').asString);
 end;
 
 end.

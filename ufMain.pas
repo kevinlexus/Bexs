@@ -28,6 +28,7 @@ type
     N8: TMenuItem;
     N9: TMenuItem;
     Ver1011: TMenuItem;
+    N10: TMenuItem;
     procedure N1Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
     procedure N3Click(Sender: TObject);
@@ -38,6 +39,7 @@ type
     procedure expToExcel(fname: string; cxGrid1: TcxGrid);
     procedure N8Click(Sender: TObject);
     procedure N9Click(Sender: TObject);
+    procedure N10Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,7 +55,7 @@ var
 
 implementation
 
-uses DataModule, ufNotif, ufErrStat;
+uses DataModule, ufNotif, ufErrStat, uRefDocTpCorrespond;
 
 {$R *.dfm}
 
@@ -163,6 +165,11 @@ end;
 procedure TFrmMain.N9Click(Sender: TObject);
 begin
   Application.CreateForm(TFrmErrStat, FrmErrStat);
+end;
+
+procedure TFrmMain.N10Click(Sender: TObject);
+begin
+   Application.CreateForm(TFrmRefDocTpCorrespond, FrmRefDocTpCorrespond);
 end;
 
 end.
