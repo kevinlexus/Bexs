@@ -130,6 +130,10 @@ type
     cxGrid1DBTableView1ID_TO: TcxGridDBColumn;
     OD_TaskFK_EOLINK_LAST: TFloatField;
     cxGrid1DBTableView1FK_EOLINK_LAST: TcxGridDBColumn;
+    OD_TaskEXISTS_TASKXTASK: TStringField;
+    cxGrid1DBTableView1EXISTS_TASKXTASK: TcxGridDBColumn;
+    ToolButton6: TToolButton;
+    ToolButton7: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ToolButton1Click(Sender: TObject);
     procedure ToolButton2Click(Sender: TObject);
@@ -154,17 +158,20 @@ type
     procedure cxGrid1DBTableView1CustomDrawCell(
       Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
       AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
+    procedure ToolButton7Click(Sender: TObject);
+    procedure toggleColumnsVisible();
   private
     { Private declarations }
   public
     procedure setFltById(id: Integer);
-    procedure changeState(State: String);
+    procedure changeState(State: string);
   end;
 
 var
   FrmTask: TFrmTask;
   loadRec: Integer;
   isLoadAllRec: Boolean;
+  isColumnsVisible: Boolean = true;
 
 implementation
 
@@ -173,39 +180,40 @@ uses ufEolink, DataModule, ufCrone, ufMain;
 {$R *.dfm}
 
 // фильтр по Id
+
 procedure TFrmTask.setFltById(id: Integer);
 begin
   // установить фильтр по одному Id (или не устанавливать, если 0)
   OD_Task.SetVariable('FLTID', id);
-  OD_Task.Active:=false;
-  OD_Task.Active:=true;
-{  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
-  begin
-    OD_Task.ReadOnly:=true;
-  end;}
-  OD_taskxpar.Active:=true;
-    // счетчик записей
-  loadRec:=0;
+  OD_Task.Active := false;
+  OD_Task.Active := true;
+  {  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+    begin
+      OD_Task.ReadOnly:=true;
+    end;}
+  OD_taskxpar.Active := true;
+  // счетчик записей
+  loadRec := 0;
 end;
 
 procedure TFrmTask.OD_TaskAfterFetchRecord(Sender: TOracleDataSet;
   FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
 begin
-  loadRec:=loadRec+1;
+  loadRec := loadRec + 1;
   if loadRec > 10000 then
   begin
     if (isLoadAllRec) or (Application.MessageBox('Загрузить еще?',
       'Вы загрузили свыше 10000 записей', MB_YESNO +
       MB_ICONQUESTION + MB_TOPMOST) = IDYES) then
     begin
-     Action:=afContinue;
-     loadRec:=0;
-     isLoadAllRec:=True;
-    end                                           
+      Action := afContinue;
+      loadRec := 0;
+      isLoadAllRec := True;
+    end
     else
     begin
-     Action:=afStop;
-     isLoadAllRec:=False;
+      Action := afStop;
+      isLoadAllRec := False;
     end;
   end;
 
@@ -213,12 +221,12 @@ end;
 
 procedure TFrmTask.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action:=caFree;
+  Action := caFree;
 end;
 
 procedure TFrmTask.ToolButton1Click(Sender: TObject);
 begin
-  OD_Task.QBEMode:=True;
+  OD_Task.QBEMode := True;
 end;
 
 procedure TFrmTask.ToolButton2Click(Sender: TObject);
@@ -229,18 +237,18 @@ end;
 procedure TFrmTask.ToolButton4Click(Sender: TObject);
 begin
   // установить фильтр по id записей
-  OD_Task.SetVariable('IDSUBST', '('+Edit1.Text+')');
+  OD_Task.SetVariable('IDSUBST', '(' + Edit1.Text + ')');
   OD_Task.SetVariable('FLT', 1);
-  OD_Task.Active:=false;
-  OD_Task.Active:=true;
+  OD_Task.Active := false;
+  OD_Task.Active := true;
 end;
 
 procedure TFrmTask.ToolButton5Click(Sender: TObject);
 begin
   // снять фильтр по id записей
   OD_Task.SetVariable('FLT', 0);
-  OD_Task.Active:=false;
-  OD_Task.Active:=true;
+  OD_Task.Active := false;
+  OD_Task.Active := true;
 
 end;
 
@@ -253,34 +261,34 @@ end;
 
 procedure TFrmTask.OD_taskxparAfterScroll(DataSet: TDataSet);
 begin
-  if (OD_taskxpar.FieldByName('VAL_TP').AsString='NM')
-      or (OD_taskxpar.FieldByName('VAL_TP').AsString='BL') then
+  if (OD_taskxpar.FieldByName('VAL_TP').AsString = 'NM')
+    or (OD_taskxpar.FieldByName('VAL_TP').AsString = 'BL') then
   begin
-      OD_taskxpar.FieldByName('N1').ReadOnly:=False;
-      OD_taskxpar.FieldByName('S1').ReadOnly:=True;
-      OD_taskxpar.FieldByName('D1').ReadOnly:=True;
-      Crone1.Enabled:=false;
+    OD_taskxpar.FieldByName('N1').ReadOnly := False;
+    OD_taskxpar.FieldByName('S1').ReadOnly := True;
+    OD_taskxpar.FieldByName('D1').ReadOnly := True;
+    Crone1.Enabled := false;
   end
-  else if OD_taskxpar.FieldByName('VAL_TP').AsString='ST' then
+  else if OD_taskxpar.FieldByName('VAL_TP').AsString = 'ST' then
   begin
-      OD_taskxpar.FieldByName('N1').ReadOnly:=True;
-      OD_taskxpar.FieldByName('S1').ReadOnly:=False;
-      OD_taskxpar.FieldByName('D1').ReadOnly:=True;
-      Crone1.Enabled:=true;
+    OD_taskxpar.FieldByName('N1').ReadOnly := True;
+    OD_taskxpar.FieldByName('S1').ReadOnly := False;
+    OD_taskxpar.FieldByName('D1').ReadOnly := True;
+    Crone1.Enabled := true;
   end
-  else if OD_taskxpar.FieldByName('VAL_TP').AsString='DT' then
+  else if OD_taskxpar.FieldByName('VAL_TP').AsString = 'DT' then
   begin
-      OD_taskxpar.FieldByName('N1').ReadOnly:=True;
-      OD_taskxpar.FieldByName('S1').ReadOnly:=True;
-      OD_taskxpar.FieldByName('D1').ReadOnly:=False;
-      Crone1.Enabled:=false;
+    OD_taskxpar.FieldByName('N1').ReadOnly := True;
+    OD_taskxpar.FieldByName('S1').ReadOnly := True;
+    OD_taskxpar.FieldByName('D1').ReadOnly := False;
+    Crone1.Enabled := false;
   end
 
 end;
 
 procedure TFrmTask.OD_taskxparAfterInsert(DataSet: TDataSet);
 begin
-  OD_taskxpar.FieldByName('FK_TASK').AsInteger:=
+  OD_taskxpar.FieldByName('FK_TASK').AsInteger :=
     OD_task.FieldByName('ID').AsInteger;
 end;
 
@@ -289,13 +297,14 @@ begin
   Application.CreateForm(TFrmCrone, FrmCrone);
 end;
 
-procedure TFrmTask.changeState(State: String);
+procedure TFrmTask.changeState(State: string);
 begin
   if OD_Task.State <> dsEdit then
-  OD_Task.Edit;
-  OD_Task.FieldByName('STATE').AsString:=State;
+    OD_Task.Edit;
+  OD_Task.FieldByName('STATE').AsString := State;
   OD_Task.Post;
 end;
+
 procedure TFrmTask.INS1Click(Sender: TObject);
 begin
   changeState('INS');
@@ -328,7 +337,7 @@ procedure TFrmTask.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-                      'Организация', true, null);
+    'Организация', true, null);
 
 end;
 
@@ -336,20 +345,21 @@ procedure TFrmTask.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-                      'Дом', true, null);
+    'Дом', true, null);
 
 end;
 
 procedure TFrmTask.FormCreate(Sender: TObject);
 begin
   // запрет выгрузки всех записей
-  isLoadAllRec:=False;
+  isLoadAllRec := False;
+  toggleColumnsVisible();
 end;
 
 procedure TFrmTask.OD_TaskAfterQuery(Sender: TOracleDataSet);
 begin
   // запрет выгрузки всех записей
-  isLoadAllRec:=False;
+  isLoadAllRec := False;
 end;
 
 procedure TFrmTask.Excel1Click(Sender: TObject);
@@ -361,26 +371,26 @@ procedure TFrmTask.cxGrid1DBTableView1CustomDrawCell(
   Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
- col: TcxGridDBColumn;
- s : string;
+  col: TcxGridDBColumn;
+  s: string;
 begin
   // цвет записи
-  col:=cxGrid1DBTableView1.GetColumnByFieldName('STATE');
-  s := AViewInfo.GridRecord.DisplayTexts[7];
+  col := cxGrid1DBTableView1.GetColumnByFieldName('STATE');
+  s := AViewInfo.GridRecord.DisplayTexts[col.Index];
   if (s = 'ERR') or (s = 'ERS') then
   begin
     // ошибка
-    ACanvas.Font.Color:= clRed;
+    ACanvas.Font.Color := clRed;
   end
   else if (s = 'INS') then
   begin
     // добавлено в загрузку
-    ACanvas.Font.Color:= clBlue;
+    ACanvas.Font.Color := clBlue;
   end
   else if (s = 'ACK') then
   begin
     // ожидание ответа
-    ACanvas.Font.Color:= clGreen;
+    ACanvas.Font.Color := clGreen;
   end
   else
   begin
@@ -388,4 +398,55 @@ begin
   end;
 end;
 
+procedure TFrmTask.ToolButton7Click(Sender: TObject);
+begin
+  toggleColumnsVisible();
+end;
+
+procedure TFrmTask.toggleColumnsVisible();
+var
+  col: TcxGridDBColumn;
+begin
+
+  if isColumnsVisible then
+  begin
+    isColumnsVisible := False;
+  end
+  else
+  begin
+    isColumnsVisible := True;
+  end;
+
+  col := cxGrid1DBTableView1.GetColumnByFieldName('UNIQNUM');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('CD');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('ERRACKCNT');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('GUID');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('TGUID');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('FK_USER');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('EOLTP_NAME');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('OBJ_ADR');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('DT_NEXTSTART');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('LAG_NEXTSTART');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('NAME_REU');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('ID_FROM');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('ID_TO');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('FK_EOLINK_LAST');
+  col.Visible := isColumnsVisible;
+
+end;
+
 end.
+

@@ -139,10 +139,14 @@ type
     OD_EolinkTGUID: TStringField;
     cxGrid1DBTableView1TGUID: TcxGridDBColumn;
     N21: TMenuItem;
-    cxGrid1DBTableView1ButtonTask: TcxGridDBColumn;
     ActionManager1: TActionManager;
     Action1: TAction;
     Action2: TAction;
+    N22: TMenuItem;
+    ToolButton6: TToolButton;
+    ToolButton7: TToolButton;
+    OD_EolinkFK_HOUSE: TFloatField;
+    cxGrid1DBTableView1FK_HOUSE: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -181,6 +185,9 @@ type
     procedure N21Click(Sender: TObject);
     procedure Action1Execute(Sender: TObject);
     procedure Action2Execute(Sender: TObject);
+    procedure N22Click(Sender: TObject);
+    procedure toggleColumnsVisible();
+    procedure ToolButton7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -191,6 +198,7 @@ var
   FrmEolink: TFrmEolink;
   loadRec: Integer;
   isLoadAllRec: Boolean;
+  isColumnsVisible: Boolean = true;
 
 implementation
 
@@ -198,86 +206,159 @@ uses DataModule, ufMain, u_frmSelReu;
 
 {$R *.dfm}
 
+procedure TFrmEolink.toggleColumnsVisible();
+var
+  col: TcxGridDBColumn;
+begin
+
+  if isColumnsVisible then
+  begin
+    isColumnsVisible := False;
+  end
+  else
+  begin
+    isColumnsVisible := True;
+  end;
+
+  col := cxGrid1DBTableView1.GetColumnByFieldName('CD');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('KUL');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('FK_UK');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('NAME_REU');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('GUID');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('UNIQNUM');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('SERVICEID');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('FK_KLSK_OBJ');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('OGRN');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('ENTRY');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('DT_CRT');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('DT_UPD');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('TGUID');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('FK_HOUSE');
+  col.Visible := isColumnsVisible;
+
+end;
+
 // настроить главный датасет
+
 procedure TFrmEolink.setFltById(id: Integer; tp: Integer);
 begin
-  if tp=0 then
+  if tp = 0 then
   begin
     // фильтр по одному Id
-    OD_Eolink.SetVariable('TP', 0);
+    //OD_Eolink.SetVariable('TP', 0);
+    OD_Eolink.SetVariable('substExp3', '');
     // фильтр по одному Id
-    OD_Eolink.SetVariable('FLTID', id);
-    OD_Eolink.SetVariable('IDSUBST', '(0)');
+    //OD_Eolink.SetVariable('FLTID', id);
+    //OD_Eolink.SetVariable('IDSUBST', '(0)');
+    OD_Eolink.SetVariable('substExp4', '');
     // connect by - убрать
     OD_Eolink.SetVariable('SUBSTEXP1', '');
     // where
     //OD_Eolink.SetVariable('SUBSTEXP1', 'where ('+IntToStr(:flt)+'=0 or t.id in '+IntToStr(:flt)+') and (:fltId=0 or t.id=:fltId)');
     // order by
-    OD_Eolink.SetVariable('SUBSTEXP2', 'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
+    OD_Eolink.SetVariable('SUBSTEXP2',
+      'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
   end
-  else if tp=1 then
+  else if tp = 1 then
   begin
     // фильтр по нескольким Id
-    OD_Eolink.SetVariable('TP', 1);
-    OD_Eolink.SetVariable('IDSUBST', '('+Edit1.Text+')');
+    //OD_Eolink.SetVariable('TP', 1);
+    //OD_Eolink.SetVariable('IDSUBST', '(' + Edit1.Text + ')');
+    OD_Eolink.SetVariable('substExp3', 'and t.id in (' + Edit1.Text + ')');
     // connect by - убрать
     OD_Eolink.SetVariable('SUBSTEXP1', '');
-    OD_Eolink.SetVariable('SUBSTEXP2', 'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
+    OD_Eolink.SetVariable('SUBSTEXP2',
+      'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
   end
-  else if tp=3 then
+  else if tp = 3 then
   begin
     // снять фильтр по нескольким Id
-    OD_Eolink.SetVariable('TP', -1);
-    OD_Eolink.SetVariable('IDSUBST', '(0)');
+    //OD_Eolink.SetVariable('TP', -1);
+    //OD_Eolink.SetVariable('IDSUBST', '(0)');
+    OD_Eolink.SetVariable('substExp3', '');
+    OD_Eolink.SetVariable('substExp4', '');
     // connect by - убрать
     OD_Eolink.SetVariable('SUBSTEXP1', '');
-    OD_Eolink.SetVariable('SUBSTEXP2', 'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
+    OD_Eolink.SetVariable('SUBSTEXP2',
+      'order by t.id, t.parent_id, s.name, ltrim(t.nd,''0''), ltrim(t.kw,''0'')');
   end
   else
   begin
     // фильтр дерево, начиная с Id
-    OD_Eolink.SetVariable('TP', 2);
-    OD_Eolink.SetVariable('IDSUBST', '(0)');
-    OD_Eolink.SetVariable('SUBSTEXP1', 'start with t.id='+IntToStr(id)+' connect by prior t.id=t.parent_id');
+    //OD_Eolink.SetVariable('TP', 2);
+    OD_Eolink.SetVariable('substExp3', '');
+    OD_Eolink.SetVariable('substExp4', '');
+
+    //OD_Eolink.SetVariable('IDSUBST', '(0)');
+    OD_Eolink.SetVariable('SUBSTEXP1', 'start with t.id=' + IntToStr(id) +
+      ' connect by prior t.id=t.parent_id');
     // order by - убрать
     OD_Eolink.SetVariable('SUBSTEXP2', '');
   end;
 
-  OD_Eolink.Active:=false;
-  OD_Eolink.Active:=true;
-  // права доступа
-  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
+{  if tp = 3 then
   begin
-    OD_Eolink.ReadOnly:=true;
-  end;
-  OD_eolxpar.Active:=true;
+    OD_Eolink.Active := false;
+    // QBE запрос - вначале фильтр по типу "организация", иначе орг. теряются внизу списка и я забываю отправить по ним ПД (у Полыс) ред.13.05.20
+    OD_Eolink.Active := True;
+    OD_Eolink.QBEMode := True;
+    OD_Eolink.QBEDefinition.FieldByName('FK_OBJTP').Value := '1';
+    OD_Eolink.ExecuteQBE;
+  end
+  else
+  begin
+    OD_Eolink.Active := True;
+  end;}
+  OD_Eolink.Active := False;
+  OD_Eolink.Active := True;
+
+  // права доступа
+{  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername) <> 'scott' then
+  begin
+    OD_Eolink.ReadOnly := true;
+  end;}
+  OD_eolxpar.Active := False;
+  OD_eolxpar.Active := true;
   // счетчик записей
-  loadRec:=0;
+  loadRec := 0;
 end;
 
 procedure TFrmEolink.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  Action:=caFree;
+  Action := caFree;
 end;
 
 procedure TFrmEolink.OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
   FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
 begin
-  loadRec:=loadRec+1;
+  loadRec := loadRec + 1;
   if loadRec > 10000 then
   begin
     if (isLoadAllRec) or (Application.MessageBox('Загрузить все записи?',
       'Вы загрузили свыше 10000 записей', MB_YESNO +
       MB_ICONQUESTION + MB_TOPMOST) = IDYES) then
     begin
-     Action:=afContinue;
-     loadRec:=0;
-     isLoadAllRec:=True;
+      Action := afContinue;
+      loadRec := 0;
+      isLoadAllRec := True;
     end
     else
     begin
-     Action:=afStop;
-     isLoadAllRec:=False;
+      Action := afStop;
+      isLoadAllRec := False;
     end;
   end;
 
@@ -285,7 +366,7 @@ end;
 
 procedure TFrmEolink.ToolButton1Click(Sender: TObject);
 begin
-  OD_Eolink.QBEMode:=True;
+  OD_Eolink.QBEMode := True;
 end;
 
 procedure TFrmEolink.ToolButton2Click(Sender: TObject);
@@ -307,16 +388,18 @@ end;
 
 procedure TFrmEolink.N1Click(Sender: TObject);
 begin
-  if Application.MessageBox('В данную организацию будут добавлены недостающие дома из справочника обмена с ГИС ЖКХ',
+  if
+    Application.MessageBox('В данную организацию будут добавлены недостающие дома из справочника обмена с ГИС ЖКХ',
     'Внимание!', MB_OKCANCEL + MB_ICONWARNING) = IDOK then
   begin
     // добавить к организации недостающие дома с guid
     // из справочника для обмена с ГИС
     OQ_add_house.SetVariable('REU', OD_Eolink.FieldByName('REU').AsString);
-    OQ_add_house.SetVariable('FK_EOLINK', OD_Eolink.FieldByName('ID').AsInteger);
+    OQ_add_house.SetVariable('FK_EOLINK',
+      OD_Eolink.FieldByName('ID').AsInteger);
     OQ_add_house.Execute;
-    OD_Eolink.Active:=false;
-    OD_Eolink.Active:=true;
+    OD_Eolink.Active := false;
+    OD_Eolink.Active := true;
   end;
 end;
 
@@ -324,130 +407,130 @@ procedure TFrmEolink.PopupMenu1Popup(Sender: TObject);
 begin
   // погасить добавление домов, если не организация
   if OD_Eolink.FieldByName('FK_OBJTP').AsInteger <> 1 then
-      N1.Enabled:=false
+    N1.Enabled := false
   else
-      N1.Enabled:=True;
+    N1.Enabled := True;
 
 end;
 
 procedure TFrmEolink.OD_EolinkAfterScroll(DataSet: TDataSet);
 begin
   // РКЦ
-  if (OD_Eolink.FieldByName('OBJTPCD').AsString='Организация') and
-     (OD_Eolink.FieldByName('PARENT_ID').AsInteger = 0) then
+  if (OD_Eolink.FieldByName('OBJTPCD').AsString = 'Организация') and
+    (OD_Eolink.FieldByName('PARENT_ID').AsInteger = 0) then
   begin
-     N19.Enabled:=true;
-     N20.Enabled:=true;
+    N19.Enabled := true;
+    N20.Enabled := true;
   end
   else
   begin
-     N19.Enabled:=false;
-     N20.Enabled:=false;
+    N19.Enabled := false;
+    N20.Enabled := false;
   end;
 
   // УК
-  if (OD_Eolink.FieldByName('OBJTPCD').AsString='Организация') and
-     (OD_Eolink.FieldByName('PARENT_ID').AsInteger <> 0) then
+  if (OD_Eolink.FieldByName('OBJTPCD').AsString = 'Организация') and
+    (OD_Eolink.FieldByName('PARENT_ID').AsInteger <> 0) then
   begin
-     N1.Enabled:=true;
-     N10.Enabled:=true;
-     N11.Enabled:=true;
-     N13.Enabled:=true;
-     N15.Enabled:=true;
-     N17.Enabled:=true;
+    N1.Enabled := true;
+    N10.Enabled := true;
+    N11.Enabled := true;
+    N13.Enabled := true;
+    N15.Enabled := true;
+    N17.Enabled := true;
   end
   else
   begin
-     N1.Enabled:=false;
-     N10.Enabled:=false;
-     N11.Enabled:=false;
-     N13.Enabled:=false;
-     N15.Enabled:=false;
-     N17.Enabled:=false;
+    N1.Enabled := false;
+    N10.Enabled := false;
+    N11.Enabled := false;
+    N13.Enabled := false;
+    N15.Enabled := false;
+    N17.Enabled := false;
   end;
 
   // получить все ПД по Дому выбранного объекта
-  N21.Enabled:=false;
+  N21.Enabled := false;
   // получить ПД по Лиц.счету
-  N4.Enabled:=false;
+  N4.Enabled := false;
 
   // Дом
-  if OD_Eolink.FieldByName('OBJTPCD').AsString='Дом' then
+  if OD_Eolink.FieldByName('OBJTPCD').AsString = 'Дом' then
   begin
-     N21.Enabled:=true;
-     N6.Enabled:=true;
-     N7.Enabled:=true;
-     N12.Enabled:=true;
-     N14.Enabled:=true;
-     N16.Enabled:=true;
+    N21.Enabled := true;
+    N6.Enabled := true;
+    N7.Enabled := true;
+    N12.Enabled := true;
+    N14.Enabled := true;
+    N16.Enabled := true;
   end
   else
   begin
-     N6.Enabled:=False;
-     N7.Enabled:=False;
-     N12.Enabled:=false;
-     N14.Enabled:=false;
-     N16.Enabled:=false;
+    N6.Enabled := False;
+    N7.Enabled := False;
+    N12.Enabled := false;
+    N14.Enabled := false;
+    N16.Enabled := false;
   end;
 
   // Подъезд
-  if OD_Eolink.FieldByName('OBJTPCD').AsString='Подъезд' then
+  if OD_Eolink.FieldByName('OBJTPCD').AsString = 'Подъезд' then
   begin
-     N21.Enabled:=true;
+    N21.Enabled := true;
   end
   else
   begin
   end;
 
   // Помещение
-  if OD_Eolink.FieldByName('OBJTPCD').AsString='Квартира' then
+  if OD_Eolink.FieldByName('OBJTPCD').AsString = 'Квартира' then
   begin
-     N21.Enabled:=true;
+    N21.Enabled := true;
   end
   else
   begin
   end;
 
   // Лиц.счет
-  if OD_Eolink.FieldByName('OBJTPCD').AsString='ЛС' then
+  if OD_Eolink.FieldByName('OBJTPCD').AsString = 'ЛС' then
   begin
-     N21.Enabled:=true;
-     N4.Enabled:=true
+    N21.Enabled := true;
+    N4.Enabled := true
   end
   else
   begin
-     N4.Enabled:=false;
+    N4.Enabled := false;
   end;
 
 end;
 
 procedure TFrmEolink.OD_eolxparAfterScroll(DataSet: TDataSet);
 begin
-  if (OD_eolxpar.FieldByName('VAL_TP').AsString='NM')
-      or (OD_eolxpar.FieldByName('VAL_TP').AsString='BL') then
+  if (OD_eolxpar.FieldByName('VAL_TP').AsString = 'NM')
+    or (OD_eolxpar.FieldByName('VAL_TP').AsString = 'BL') then
   begin
-      OD_eolxpar.FieldByName('N1').ReadOnly:=False;
-      OD_eolxpar.FieldByName('S1').ReadOnly:=True;
-      OD_eolxpar.FieldByName('D1').ReadOnly:=True;
+    OD_eolxpar.FieldByName('N1').ReadOnly := False;
+    OD_eolxpar.FieldByName('S1').ReadOnly := True;
+    OD_eolxpar.FieldByName('D1').ReadOnly := True;
   end
-  else if OD_eolxpar.FieldByName('VAL_TP').AsString='ST' then
+  else if OD_eolxpar.FieldByName('VAL_TP').AsString = 'ST' then
   begin
-      OD_eolxpar.FieldByName('N1').ReadOnly:=True;
-      OD_eolxpar.FieldByName('S1').ReadOnly:=False;
-      OD_eolxpar.FieldByName('D1').ReadOnly:=True;
+    OD_eolxpar.FieldByName('N1').ReadOnly := True;
+    OD_eolxpar.FieldByName('S1').ReadOnly := False;
+    OD_eolxpar.FieldByName('D1').ReadOnly := True;
   end
-  else if OD_eolxpar.FieldByName('VAL_TP').AsString='DT' then
+  else if OD_eolxpar.FieldByName('VAL_TP').AsString = 'DT' then
   begin
-      OD_eolxpar.FieldByName('N1').ReadOnly:=True;
-      OD_eolxpar.FieldByName('S1').ReadOnly:=True;
-      OD_eolxpar.FieldByName('D1').ReadOnly:=False;
+    OD_eolxpar.FieldByName('N1').ReadOnly := True;
+    OD_eolxpar.FieldByName('S1').ReadOnly := True;
+    OD_eolxpar.FieldByName('D1').ReadOnly := False;
   end
 
 end;
 
 procedure TFrmEolink.OD_eolxparAfterInsert(DataSet: TDataSet);
 begin
-  OD_eolxpar.FieldByName('FK_EOLINK').AsInteger:=
+  OD_eolxpar.FieldByName('FK_EOLINK').AsInteger :=
     OD_eolink.FieldByName('ID').AsInteger;
 end;
 
@@ -455,7 +538,7 @@ procedure TFrmEolink.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Eolink.FieldByName('id').asInteger,
-                      'Организация', true, '');
+    'Организация', true, '');
 end;
 
 procedure TFrmEolink.N4Click(Sender: TObject);
@@ -469,14 +552,15 @@ end;
 procedure TFrmEolink.OD_EolinkAfterQuery(Sender: TOracleDataSet);
 begin
   // запрет выгрузки всех записей
-  isLoadAllRec:=False;
+  isLoadAllRec := False;
 
 end;
 
 procedure TFrmEolink.FormCreate(Sender: TObject);
 begin
   // запрет выгрузки всех записей
-  isLoadAllRec:=False;
+  isLoadAllRec := False;
+  toggleColumnsVisible();
 end;
 
 procedure TFrmEolink.Excel1Click(Sender: TObject);
@@ -485,38 +569,39 @@ begin
 end;
 
 procedure TFrmEolink.N6Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   // Не работает! ред. 05.11.2019
   if Application.MessageBox('Отменить все активные ПД по дому?',
-    'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+    'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) =
+    IDYES then
   begin
     // отменить все активные ПД по дому
-    ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_house',
-        [OD_Eolink.FieldByName('ID').AsInteger]);
-    DataModule2.OracleSession1.Commit;    
-    chr:='Обработано ПД: '+IntToStr(ret);
+    ret := DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_house',
+      [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;
+    chr := 'Обработано ПД: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
 end;
 
 procedure TFrmEolink.N7Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   // Не работает! ред. 05.11.2019
   if Application.MessageBox('Загрузить все недостающие ПД по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // загрузить все недостающие ПД по дому
-    ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_house',
-        [OD_Eolink.FieldByName('ID').AsInteger, null]);
-    DataModule2.OracleSession1.Commit;    
-    chr:='Обработано ПД: '+IntToStr(ret);
+    ret := DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_house',
+      [OD_Eolink.FieldByName('ID').AsInteger, null]);
+    DataModule2.OracleSession1.Commit;
+    chr := 'Обработано ПД: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -524,36 +609,37 @@ begin
 end;
 
 procedure TFrmEolink.N10Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   if Application.MessageBox('Отменить все активные ПД по УК?',
-    'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
+    'Внимание! Опасное действие!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) =
+    IDYES then
   begin
     // отменить все активные ПД по УК (РСО)
-    ret:=DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_uk',
-        [OD_Eolink.FieldByName('ID').AsInteger]);
-    DataModule2.OracleSession1.Commit;    
-    chr:='Обработано ПД: '+IntToStr(ret);
+    ret := DataModule2.OP_gis.CallIntegerFunction('withdraw_pd_by_uk',
+      [OD_Eolink.FieldByName('ID').AsInteger]);
+    DataModule2.OracleSession1.Commit;
+    chr := 'Обработано ПД: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
 end;
 
 procedure TFrmEolink.N11Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   if Application.MessageBox('Загрузить все недостающие ПД по УК?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // загрузить все недостающие ПД по УК
-    ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_uk',
-        [OD_Eolink.FieldByName('ID').AsInteger]);
+    ret := DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_uk',
+      [OD_Eolink.FieldByName('ID').AsInteger]);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано ПД: '+IntToStr(ret);
+    chr := 'Обработано ПД: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -561,20 +647,20 @@ begin
 end;
 
 procedure TFrmEolink.N12Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   // Не работает! ред. 05.11.2019
   if Application.MessageBox('Активировать задания по загрузке ПД по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по загрузке ПД по дому
-    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_house',
-        [OD_Eolink.FieldByName('ID').AsInteger,
-        'GIS_IMP_PAY_DOCS']);
+    ret := DataModule2.OP_gis.CallIntegerFunction('activate_task_by_house',
+      [OD_Eolink.FieldByName('ID').AsInteger,
+      'GIS_IMP_PAY_DOCS']);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано Заданий: '+IntToStr(ret);
+    chr := 'Обработано Заданий: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -582,18 +668,18 @@ begin
 end;
 
 procedure TFrmEolink.N13Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   if Application.MessageBox('Активировать задания по загрузке ПД по УК?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по загрузке ПД по УК
-    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
-        ['GIS_IMP_PAY_DOCS', OD_Eolink.FieldByName('ID').AsInteger]);
+    ret := DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
+      ['GIS_IMP_PAY_DOCS', OD_Eolink.FieldByName('ID').AsInteger]);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано Заданий: '+IntToStr(ret);
+    chr := 'Обработано Заданий: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -601,20 +687,21 @@ begin
 end;
 
 procedure TFrmEolink.N14Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   // Не работает! ред. 05.11.2019
-  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по дому?',
+  if
+    Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по дому?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по экспорту ПД из ГИС по дому
-    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_house',
-        [OD_Eolink.FieldByName('ID').AsInteger,
-        'GIS_EXP_PAY_DOCS']);
+    ret := DataModule2.OP_gis.CallIntegerFunction('activate_task_by_house',
+      [OD_Eolink.FieldByName('ID').AsInteger,
+      'GIS_EXP_PAY_DOCS']);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано Заданий: '+IntToStr(ret);
+    chr := 'Обработано Заданий: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -622,19 +709,20 @@ begin
 end;
 
 procedure TFrmEolink.N15Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
-  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по УК?',
+  if
+    Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по УК?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по экспорту ПД по УК
-    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
-        [OD_Eolink.FieldByName('ID').AsInteger,
-        'GIS_EXP_PAY_DOCS']);
+    ret := DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
+      [OD_Eolink.FieldByName('ID').AsInteger,
+      'GIS_EXP_PAY_DOCS']);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано Заданий: '+IntToStr(ret);
+    chr := 'Обработано Заданий: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -645,11 +733,11 @@ procedure TFrmEolink.cxGrid1DBTableView1CustomDrawCell(
   Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 var
- col: TcxGridDBColumn;
- s : string;
+  col: TcxGridDBColumn;
+  s: string;
 begin
   // цвет записи
-  col:=cxGrid1DBTableView1.GetColumnByFieldName('STATUS');
+  col := cxGrid1DBTableView1.GetColumnByFieldName('STATUS');
   s := AViewInfo.GridRecord.DisplayTexts[col.Index];
   if s = '1' then
   begin
@@ -661,18 +749,17 @@ begin
   begin
     // неактивная запись
      //ACanvas.Brush.Color:= $00E1E1E1;
-     ACanvas.Font.Color:= clGray;
+    ACanvas.Font.Color := clGray;
   end;
 
   // выделить запись
-  col:=cxGrid1DBTableView1.GetColumnByFieldName('NAME');
+  col := cxGrid1DBTableView1.GetColumnByFieldName('NAME');
   s := AViewInfo.GridRecord.DisplayTexts[col.Index];
   if s = 'Дом' then
   begin
     // дом
     ACanvas.Font.Style := [fsBold];
   end
-
 
 end;
 
@@ -683,8 +770,8 @@ begin
   Application.CreateForm(TFrmSelReu, FrmSelReu);
   if FrmSelReu.ShowModal = mrOk then
   begin
-    res:=DataModule2.OP_gis.CallIntegerFunction('change_reu_by_house',
-        [OD_Eolink.FieldByName('ID').AsInteger, FrmSelReu.reu]);
+    res := DataModule2.OP_gis.CallIntegerFunction('change_reu_by_house',
+      [OD_Eolink.FieldByName('ID').AsInteger, FrmSelReu.reu]);
     if res <> 0 then
     begin
       Application.MessageBox('Ошибка переноса дома в новый УК!', 'Внимание!',
@@ -692,7 +779,7 @@ begin
     end
     else
     begin
-      OD_Eolink.Refresh;  
+      OD_Eolink.Refresh;
       Application.MessageBox('Дом успешно перенесен в новый УК!', 'Внимание!',
         MB_OK + MB_ICONINFORMATION);
     end;
@@ -705,60 +792,61 @@ procedure TFrmEolink.cxGrid1DBTableView1COMMCustomDrawCell(
   Sender: TcxCustomGridTableView; ACanvas: TcxCanvas;
   AViewInfo: TcxGridTableDataCellViewInfo; var ADone: Boolean);
 begin
-    ACanvas.Font.Color:= clRed;
+  ACanvas.Font.Color := clRed;
 end;
 
 procedure TFrmEolink.N17Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   if Application.MessageBox('Загрузить все недостающие ПД по РСО?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // загрузить все недостающие ПД по РСО
-    ret:=DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_rso',
-        [OD_Eolink.FieldByName('ID').AsInteger]);
+    ret := DataModule2.OP_gis.CallIntegerFunction('insert_pd_by_rso',
+      [OD_Eolink.FieldByName('ID').AsInteger]);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано ПД: '+IntToStr(ret);
+    chr := 'Обработано ПД: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
 end;
 
 procedure TFrmEolink.N19Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
   if Application.MessageBox('Активировать задания по загрузке ПД, по РКЦ?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по загрузке ПД по УК
-    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_rkc',
-        [OD_Eolink.FieldByName('ID').AsInteger,
-        'GIS_IMP_PAY_DOCS']);
+    ret := DataModule2.OP_gis.CallIntegerFunction('activate_task_by_rkc',
+      [OD_Eolink.FieldByName('ID').AsInteger,
+      'GIS_IMP_PAY_DOCS']);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано Заданий: '+IntToStr(ret);
+    chr := 'Обработано Заданий: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
 end;
 
 procedure TFrmEolink.N20Click(Sender: TObject);
-  var
+var
   ret: Integer;
-  chr: String;
+  chr: string;
 begin
-  if Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по РКЦ?',
+  if
+    Application.MessageBox('Активировать задания по экспорту ПД из ГИС, по РКЦ?',
     'Внимание!', MB_YESNO + MB_ICONWARNING + MB_DEFBUTTON2) = IDYES then
   begin
     // активировать задания по экспорту ПД по РКЦ
-    ret:=DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
-        [OD_Eolink.FieldByName('ID').AsInteger,
-        'GIS_EXP_PAY_DOCS']);
+    ret := DataModule2.OP_gis.CallIntegerFunction('activate_task_by_uk',
+      [OD_Eolink.FieldByName('ID').AsInteger,
+      'GIS_EXP_PAY_DOCS']);
     DataModule2.OracleSession1.Commit;
-    chr:='Обработано Заданий: '+IntToStr(ret);
+    chr := 'Обработано Заданий: ' + IntToStr(ret);
     Application.MessageBox(PChar(chr), 'Внимание!', MB_OK +
       MB_ICONINFORMATION);
   end;
@@ -768,8 +856,8 @@ procedure TFrmEolink.N21Click(Sender: TObject);
 var
   foundId: Integer;
 begin
-  foundId:=FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
-                      'Дом', False, '');
+  foundId := FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+    'Дом', False, '');
 
   if foundId <> -1 then
   begin
@@ -778,16 +866,15 @@ begin
     FrmPdoc.setFltById(0, 0, foundId, 1);
   end;
 
-
 end;
 
 procedure TFrmEolink.Action1Execute(Sender: TObject);
-  var
+var
   foundId: Integer;
 begin
   // найти задания Task по Дому данного объекта
-  foundId:=FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
-                      'Дом', False, '');
+  foundId := FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
+    'Дом', False, '');
   Application.CreateForm(TFrmTask, FrmTask);
   FrmTask.setFltById(foundId);
 
@@ -798,7 +885,24 @@ begin
   // найти корневую запись, если заполнено поле lsk (как правило по лиц.счету),
   // то найти лиц.счет
   FrmMain.findRoot(OD_Eolink.FieldByName('ID').asInteger,
-                      'Дом', True, OD_Eolink.FieldByName('LSK').asString);
+    'Дом', True, OD_Eolink.FieldByName('LSK').asString);
+end;
+
+procedure TFrmEolink.N22Click(Sender: TObject);
+var
+  id: Integer;
+begin
+  // найти задания Task объекту
+  id := OD_Eolink.FieldByName('ID').asInteger;
+  Application.CreateForm(TFrmTask, FrmTask);
+  FrmTask.setFltById(id);
+
+end;
+
+procedure TFrmEolink.ToolButton7Click(Sender: TObject);
+begin
+  toggleColumnsVisible();
 end;
 
 end.
+

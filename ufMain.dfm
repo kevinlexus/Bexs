@@ -1,6 +1,6 @@
 object FrmMain: TFrmMain
-  Left = 441
-  Top = 616
+  Left = 448
+  Top = 228
   Width = 1279
   Height = 749
   Caption = 'Bexs - Browser for External System'
@@ -70,7 +70,7 @@ object FrmMain: TFrmMain
       end
     end
     object Ver1011: TMenuItem
-      Caption = 'ver 1.08'
+      Caption = 'ver 1.16'
     end
   end
   object ImageList1: TImageList

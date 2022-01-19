@@ -143,10 +143,38 @@ uses DataModule, ufEolink, ufMain, ufNotif;
 procedure TFrmPdoc.setFltById(id, id2, id3, flt2: Integer);
 begin
   // установить фильтр по одному Id (или не устанавливать, если 0)
-  OD_Pdoc.SetVariable('FLTID', id);
+{  OD_Pdoc.SetVariable('FLTID', id);
   OD_Pdoc.SetVariable('FLTID2', id2);
   OD_Pdoc.SetVariable('FLTID3', id3);
   OD_Pdoc.SetVariable('FLT2', flt2);
+  }
+
+  if (id <> 0) then
+    OD_Pdoc.SetVariable('SUBSTEXP2', 'and t.fk_eolink=' + IntToStr(id))
+  else
+    OD_Pdoc.SetVariable('SUBSTEXP2', '');
+
+  if (id2 <> 0) then
+    OD_Pdoc.SetVariable('SUBSTEXP3', 'and t.id=' + IntToStr(id2))
+  else
+    OD_Pdoc.SetVariable('SUBSTEXP3', '');
+
+  if (id3 <> 0) then
+  begin
+    OD_Pdoc.SetVariable('SUBSTEXP4', 'and coalesce(h.id,h2.id,h3.id)=' + IntToStr(id3));
+    //OD_Pdoc.SetVariable('SUBSTEXP6', 'and h2.id=' + IntToStr(id3));
+  end
+  else
+  begin
+    OD_Pdoc.SetVariable('SUBSTEXP4', '');
+    //OD_Pdoc.SetVariable('SUBSTEXP6', '');
+  end;
+
+  if (flt2 <> 0) then
+    OD_Pdoc.SetVariable('SUBSTEXP5', 'and t.v=1')
+  else
+    OD_Pdoc.SetVariable('SUBSTEXP5', '');
+
   OD_Pdoc.Active := false;
   OD_Pdoc.Active := true;
   {  if LowerCase(DataModule2.OracleLogon1.Session.LogonUsername)<>'scott' then
@@ -197,17 +225,22 @@ end;
 procedure TFrmPdoc.ToolButton4Click(Sender: TObject);
 begin
   // установить фильтр по id записей
-  OD_Pdoc.SetVariable('IDSUBST', '(' + Edit1.Text + ')');
-  OD_Pdoc.SetVariable('FLT', 1);
-  OD_Pdoc.Active := false;
-  OD_Pdoc.Active := true;
+  if Edit1.Text <> '' then
+  begin
+    OD_Pdoc.SetVariable('SUBSTEXP1', 'and t.id in (' + Edit1.Text+')');
+    OD_Pdoc.Active := false;
+    OD_Pdoc.Active := true;
+  end
+  else
+    OD_Pdoc.SetVariable('SUBSTEXP1', '');
 
 end;
 
 procedure TFrmPdoc.ToolButton5Click(Sender: TObject);
 begin
   // снять фильтр по id записей
-  OD_Pdoc.SetVariable('FLT', 0);
+  //OD_Pdoc.SetVariable('FLT', 0);
+  OD_Pdoc.SetVariable('SUBSTEXP1', '');
   OD_Pdoc.Active := false;
   OD_Pdoc.Active := true;
 
@@ -304,14 +337,24 @@ end;
 procedure TFrmPdoc.ToolButton6Click(Sender: TObject);
 begin
   if CheckBox1.Checked then
+    OD_Pdoc.SetVariable('SUBSTEXP5', 'and t.v=1')
+  else
+    OD_Pdoc.SetVariable('SUBSTEXP5', '');
+  if cxDateEdit1.Text <> '' then
+    OD_Pdoc.SetVariable('SUBSTEXP7', 'and t.dt=to_date('''+cxDateEdit1.Text+''', ''DD.MM.YYYY'')')
+  else
+    OD_Pdoc.SetVariable('SUBSTEXP7', '');
+
+{  if CheckBox1.Checked then
     OD_Pdoc.SetVariable('FLT2', 1)
   else
     OD_Pdoc.SetVariable('FLT2', 0);
-
-  if cxDateEdit1.Text = '' then
+ }
+{  if cxDateEdit1.Text = '' then
     OD_Pdoc.SetVariable('P_DT', null)
   else
     OD_Pdoc.SetVariable('P_DT', cxDateEdit1.Date);
+    }
   OD_Pdoc.Active := false;
   OD_Pdoc.Active := true;
 end;

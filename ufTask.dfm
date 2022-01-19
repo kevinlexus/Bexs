@@ -1,6 +1,6 @@
 object FrmTask: TFrmTask
-  Left = 684
-  Top = 154
+  Left = 619
+  Top = 70
   Width = 1222
   Height = 493
   Caption = #1047#1072#1076#1072#1085#1080#1103' - Task'
@@ -57,6 +57,10 @@ object FrmTask: TFrmTask
       object cxGrid1DBTableView1DEP_ID: TcxGridDBColumn
         DataBinding.FieldName = 'DEP_ID'
         Width = 25
+      end
+      object cxGrid1DBTableView1EXISTS_TASKXTASK: TcxGridDBColumn
+        Caption = #1056#1086#1076#1080#1090#1077#1083#1100#1089#1082#1086#1077'?'
+        DataBinding.FieldName = 'EXISTS_TASKXTASK'
       end
       object cxGrid1DBTableView1FK_EOLINK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_EOLINK'
@@ -229,6 +233,21 @@ object FrmTask: TFrmTask
       ShowHint = True
       OnClick = ToolButton5Click
     end
+    object ToolButton6: TToolButton
+      Left = 303
+      Top = 2
+      Width = 8
+      Caption = 'ToolButton6'
+      ImageIndex = 4
+      Style = tbsSeparator
+    end
+    object ToolButton7: TToolButton
+      Left = 311
+      Top = 2
+      Caption = 'ToolButton7'
+      ImageIndex = 2
+      OnClick = ToolButton7Click
+    end
   end
   object Panel1: TPanel
     Left = 945
@@ -325,7 +344,10 @@ object FrmTask: TFrmTask
       
         'select t.id, t.parent_id, t.dep_id, t.fk_eolink, t.state, t.uniq' +
         'num, t.cd, t.errackcnt, t.priority, t.trace,'
-      't.fk_act, s.name as act_name, t.result, t.guid, t.tguid, '
+      
+        't.fk_act, s.name as act_name, t.result, t.guid, t.tguid, case wh' +
+        'en x.cnt is not null then '#39'TASKXTASK'#39' else '#39#39' end as exists_task' +
+        'xtask, '
       't.fk_user, t.dt_crt, t.dt_upd, t.comm, tp.name as eoltp_name, '
       
         ' '#39'REU:'#39'||e.reu||'#39','#39'||trim(g.name)||'#39', '#39'||trim(sp.name)||'#39', '#39'||lt' +
@@ -341,6 +363,9 @@ object FrmTask: TFrmTask
       ' left join scott.t_org g on e.reu=g.reu'
       ' left join EXS.EOLINK e2 on t.fk_proc_uk=e2.id'
       ' left join scott.t_org o on e2.reu=o.reu'
+      
+        ' left join (select t.fk_child, count(*) as cnt from exs.taskxtas' +
+        'k t group by t.fk_child) x on t.id=x.fk_child'
       
         'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
         ':fltId)'
@@ -369,7 +394,7 @@ object FrmTask: TFrmTask
       3131322C2033333331290000000000040000003A464C54030000000400000000
       00000000000000060000003A464C544944030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      040000001C000000020000004944010000000000040000004755494401000000
+      040000001D000000020000004944010000000000040000004755494401000000
       000002000000434401000000000007000000554E49514E554D01000000000009
       000000504152454E545F49440100000000000600000044545F43525401000000
       00000600000044545F55504401000000000004000000434F4D4D010000000000
@@ -384,7 +409,8 @@ object FrmTask: TFrmTask
       540100000000000D0000004C41475F4E45585453544152540100000000000800
       00004E414D455F5245550100000000000700000049445F46524F4D0100000000
       000500000049445F544F0100000000000E000000464B5F454F4C494E4B5F4C41
-      5354010000000000}
+      5354010000000000100000004558495354535F5441534B585441534B01000000
+      0000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_TaskAfterQuery
@@ -508,6 +534,11 @@ object FrmTask: TFrmTask
     end
     object OD_TaskFK_EOLINK_LAST: TFloatField
       FieldName = 'FK_EOLINK_LAST'
+    end
+    object OD_TaskEXISTS_TASKXTASK: TStringField
+      FieldName = 'EXISTS_TASKXTASK'
+      ReadOnly = True
+      Size = 9
     end
   end
   object DS_task: TDataSource
