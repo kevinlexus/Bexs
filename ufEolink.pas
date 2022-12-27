@@ -24,7 +24,7 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid,
   StdCtrls, ComCtrls, ToolWin, Menus, ufTask, ufPdoc, Oracle, ExtCtrls,
   cxDBLookupComboBox, cxCalendar, cxButtonEdit, ActnList, XPStyleActnCtrls,
-  ActnMan;
+  ActnMan, dxDateRanges, System.Actions;
 
 type
   TFrmEolink = class(TForm)
@@ -147,6 +147,8 @@ type
     ToolButton7: TToolButton;
     OD_EolinkFK_HOUSE: TFloatField;
     cxGrid1DBTableView1FK_HOUSE: TcxGridDBColumn;
+    OD_EolinkGUID_GIS: TStringField;
+    cxGrid1DBTableView1GUID_GIS: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -229,6 +231,8 @@ begin
   col := cxGrid1DBTableView1.GetColumnByFieldName('NAME_REU');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('GUID');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('GUID_GIS');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('UNIQNUM');
   col.Visible := isColumnsVisible;

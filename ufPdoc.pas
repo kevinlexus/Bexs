@@ -24,7 +24,7 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
   StdCtrls, ComCtrls, ToolWin, Menus, cxCheckBox, ufTask, cxContainer,
   dxCore, cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar,
-  cxLabel;
+  cxLabel, dxDateRanges;
 
 type
   TFrmPdoc = class(TForm)

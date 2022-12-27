@@ -1,9 +1,9 @@
 object FrmEolink: TFrmEolink
   Left = 562
   Top = 862
-  Width = 1226
-  Height = 475
   Caption = #1054#1073#1098#1077#1082#1090#1099' - Eolink'
+  ClientHeight = 436
+  ClientWidth = 1210
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -60,106 +60,113 @@ object FrmEolink: TFrmEolink
       end
       object cxGrid1DBTableView1FK_OBJTP: TcxGridDBColumn
         DataBinding.FieldName = 'FK_OBJTP'
-        Width = 25
+        Width = 20
       end
       object cxGrid1DBTableView1NAME: TcxGridDBColumn
         Caption = #1058#1080#1087
         DataBinding.FieldName = 'NAME'
         BestFitMaxWidth = 20
-        Width = 52
+        Width = 38
       end
       object cxGrid1DBTableView1REU: TcxGridDBColumn
         DataBinding.FieldName = 'REU'
         BestFitMaxWidth = 15
         MinWidth = 15
-        Width = 20
+        Width = 15
       end
       object cxGrid1DBTableView1UK: TcxGridDBColumn
         DataBinding.FieldName = 'UK'
-        Width = 89
+        Width = 65
       end
       object cxGrid1DBTableView1KUL: TcxGridDBColumn
         DataBinding.FieldName = 'KUL'
-        Width = 31
+        Width = 23
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
-        Width = 52
+        Width = 38
       end
       object cxGrid1DBTableView1ND: TcxGridDBColumn
         DataBinding.FieldName = 'ND'
-        Width = 24
+        Width = 20
       end
       object cxGrid1DBTableView1KW: TcxGridDBColumn
         DataBinding.FieldName = 'KW'
-        Width = 22
+        Width = 20
       end
       object cxGrid1DBTableView1LSK: TcxGridDBColumn
         Caption = #1051#1080#1094'.'#1089#1095'.'
         DataBinding.FieldName = 'LSK'
         BestFitMaxWidth = 30
-        Width = 31
+        Width = 23
       end
       object cxGrid1DBTableView1STATUS: TcxGridDBColumn
         DataBinding.FieldName = 'STATUS'
-        Width = 35
+        Width = 26
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
         OnCustomDrawCell = cxGrid1DBTableView1COMMCustomDrawCell
-        Width = 143
+        Width = 105
       end
       object cxGrid1DBTableView1FK_UK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_UK'
-        Width = 31
+        Width = 22
       end
       object cxGrid1DBTableView1NAME_REU: TcxGridDBColumn
         Caption = #1059#1050' '#1083#1080#1094'.'#1089#1095'.'
         DataBinding.FieldName = 'NAME_REU'
-        Width = 34
+        Width = 25
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
+        Caption = 'GUID '#1060#1048#1040#1057
         DataBinding.FieldName = 'GUID'
-        Width = 24
+        Width = 33
+      end
+      object cxGrid1DBTableView1GUID_GIS: TcxGridDBColumn
+        Caption = 'GUID '#1043#1048#1057
+        DataBinding.FieldName = 'GUID_GIS'
+        Width = 38
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 26
+        Width = 29
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 25
+        Width = 28
       end
       object cxGrid1DBTableView1SERVICEID: TcxGridDBColumn
         DataBinding.FieldName = 'SERVICEID'
-        Width = 37
+        Width = 40
       end
       object cxGrid1DBTableView1FK_KLSK_PREMISE: TcxGridDBColumn
         DataBinding.FieldName = 'FK_KLSK_OBJ'
-        Width = 27
+        Width = 29
       end
       object cxGrid1DBTableView1OGRN: TcxGridDBColumn
         DataBinding.FieldName = 'OGRN'
-        Width = 33
+        Width = 36
       end
       object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
         DataBinding.FieldName = 'ENTRY'
-        Width = 21
+        Width = 29
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 27
+        Width = 29
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 30
+        Width = 31
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 34
+        Width = 36
       end
       object cxGrid1DBTableView1FK_HOUSE: TcxGridDBColumn
         DataBinding.FieldName = 'FK_HOUSE'
+        Width = 69
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -176,7 +183,7 @@ object FrmEolink: TFrmEolink
     TabOrder = 1
     object ToolButton1: TToolButton
       Left = 0
-      Top = 2
+      Top = 0
       Hint = #1053#1072#1089#1090#1088#1086#1080#1090#1100' '#1092#1080#1083#1100#1090#1088' QBE'
       Caption = 'ToolButton1'
       ImageIndex = 0
@@ -186,7 +193,7 @@ object FrmEolink: TFrmEolink
     end
     object ToolButton2: TToolButton
       Left = 23
-      Top = 2
+      Top = 0
       Hint = #1042#1082#1083#1102#1095#1080#1090#1100' '#1092#1080#1083#1100#1090#1088' QBE'
       Caption = 'ToolButton2'
       ImageIndex = 1
@@ -196,7 +203,7 @@ object FrmEolink: TFrmEolink
     end
     object ToolButton3: TToolButton
       Left = 46
-      Top = 2
+      Top = 0
       Width = 8
       Caption = 'ToolButton3'
       ImageIndex = 2
@@ -204,7 +211,7 @@ object FrmEolink: TFrmEolink
     end
     object Edit1: TEdit
       Left = 54
-      Top = 2
+      Top = 0
       Width = 203
       Height = 22
       Hint = #1042#1074#1077#1089#1090#1080' Eolink.Id'
@@ -214,7 +221,7 @@ object FrmEolink: TFrmEolink
     end
     object ToolButton4: TToolButton
       Left = 257
-      Top = 2
+      Top = 0
       Hint = #1060#1080#1083#1100#1090#1088' '#1087#1086' Eolink.Id'
       Caption = 'ToolButton4'
       ImageIndex = 4
@@ -224,7 +231,7 @@ object FrmEolink: TFrmEolink
     end
     object ToolButton5: TToolButton
       Left = 280
-      Top = 2
+      Top = 0
       Hint = #1057#1085#1103#1090#1100' '#1092#1080#1083#1100#1090#1088' '#1087#1086' Eolink.Id'
       Caption = 'ToolButton5'
       ImageIndex = 3
@@ -234,7 +241,7 @@ object FrmEolink: TFrmEolink
     end
     object ToolButton6: TToolButton
       Left = 303
-      Top = 2
+      Top = 0
       Width = 8
       Caption = 'ToolButton6'
       ImageIndex = 4
@@ -242,7 +249,7 @@ object FrmEolink: TFrmEolink
     end
     object ToolButton7: TToolButton
       Left = 311
-      Top = 2
+      Top = 0
       Hint = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1074#1089#1077' '#1082#1086#1083#1086#1085#1082#1080
       Caption = 'ToolButton7'
       ImageIndex = 2
@@ -350,7 +357,7 @@ object FrmEolink: TFrmEolink
       ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj, '
       
         't.ogrn, t.dt_crt, t.dt_upd, t.status, t.serviceId, t.fk_uk, o2.r' +
-        'eu||'#39'-'#39'||o2.name as name_reu, t.tguid, t.fk_house,'
+        'eu||'#39'-'#39'||o2.name as name_reu, t.tguid, t.fk_house, t.guid_gis,'
       ' t.rowid from exs.eolink t'
       'left join bs.addr_tp tp on t.fk_objtp=tp.id'
       'left join scott.spul s on t.kul=s.id'
@@ -370,25 +377,31 @@ object FrmEolink: TFrmEolink
         'w,'#39'0'#39')*/')
     Optimize = False
     Variables.Data = {
-      03000000040000000A0000003A53554253544558503101000000000000000000
-      00000A0000003A5355425354455850320100000000000000000000000A000000
-      3A5355425354455850330100000000000000000000000A0000003A5355425354
-      45585034010000000000000000000000}
+      0400000004000000140000003A00530055004200530054004500580050003100
+      010000000000000000000000140000003A005300550042005300540045005800
+      50003200010000000000000000000000140000003A0053005500420053005400
+      4500580050003300010000000000000000000000140000003A00530055004200
+      530054004500580050003400010000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      040000001C000000020000004944010000000000030000005245550100000000
-      00020000004E44010000000000020000004B5701000000000005000000454E54
-      5259010000000000040000004755494401000000000002000000434401000000
-      000008000000464B5F4F424A545001000000000007000000554E49514E554D01
-      0000000000060000004150505F54500100000000000B000000464B5F4B4C534B
-      5F4F424A01000000000009000000504152454E545F4944010000000000040000
-      004F47524E0100000000000600000044545F4352540100000000000600000044
-      545F555044010000000000040000004E414D4501000000000002000000554B01
-      000000000006000000535452454554010000000000030000004B554C01000000
-      000004000000434F4D4D010000000000030000004C534B010000000000070000
-      004F424A54504344010000000000060000005354415455530100000000000900
-      000053455256494345494401000000000005000000464B5F554B010000000000
-      050000005447554944010000000000080000004E414D455F5245550100000000
-      0008000000464B5F484F555345010000000000}
+      050000001D000000040000004900440001000000000006000000520045005500
+      010000000000040000004E004400010000000000040000004B00570001000000
+      00000A00000045004E0054005200590001000000000008000000470055004900
+      440001000000000004000000430044000100000000001000000046004B005F00
+      4F0042004A00540050000100000000000E00000055004E00490051004E005500
+      4D000100000000000C0000004100500050005F00540050000100000000001600
+      000046004B005F004B004C0053004B005F004F0042004A000100000000001200
+      000050004100520045004E0054005F0049004400010000000000080000004F00
+      470052004E000100000000000C000000440054005F0043005200540001000000
+      00000C000000440054005F00550050004400010000000000080000004E004100
+      4D0045000100000000000400000055004B000100000000000C00000053005400
+      5200450045005400010000000000060000004B0055004C000100000000000800
+      000043004F004D004D00010000000000060000004C0053004B00010000000000
+      0E0000004F0042004A0054005000430044000100000000000C00000053005400
+      4100540055005300010000000000120000005300450052005600490043004500
+      490044000100000000000A00000046004B005F0055004B000100000000000A00
+      000054004700550049004400010000000000100000004E0041004D0045005F00
+      5200450055000100000000001000000046004B005F0048004F00550053004500
+      0100000000001000000047005500490044005F00470049005300010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_EolinkAfterQuery
@@ -537,6 +550,10 @@ object FrmEolink: TFrmEolink
     end
     object OD_EolinkFK_HOUSE: TFloatField
       FieldName = 'FK_HOUSE'
+    end
+    object OD_EolinkGUID_GIS: TStringField
+      FieldName = 'GUID_GIS'
+      Size = 36
     end
   end
   object DS_eolink: TDataSource
@@ -702,8 +719,9 @@ object FrmEolink: TFrmEolink
     Session = DataModule2.OracleSession1
     Optimize = False
     Variables.Data = {
-      0300000002000000040000003A5245550500000000000000000000000A000000
-      3A464B5F454F4C494E4B030000000000000000000000}
+      0400000002000000080000003A00520045005500050000000000000000000000
+      140000003A0046004B005F0045004F004C0049004E004B000300000000000000
+      00000000}
     Left = 32
     Top = 216
   end
@@ -715,13 +733,14 @@ object FrmEolink: TFrmEolink
       'where t.fk_eolink=:fk_eolink and t.fk_par=p.id')
     Optimize = False
     Variables.Data = {
-      03000000010000000A0000003A464B5F454F4C494E4B03000000000000000000
-      0000}
+      0400000001000000140000003A0046004B005F0045004F004C0049004E004B00
+      030000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      040000000700000002000000494401000000000009000000464B5F454F4C494E
-      4B01000000000006000000464B5F504152010000000000020000004E31010000
-      0000000200000053310100000000000200000044310100000000000600000056
-      414C5F5450010000000000}
+      050000000700000004000000490044000100000000001200000046004B005F00
+      45004F004C0049004E004B000100000000000C00000046004B005F0050004100
+      5200010000000000040000004E00310001000000000004000000530031000100
+      0000000004000000440031000100000000000C000000560041004C005F005400
+      5000010000000000}
     Master = OD_Eolink
     MasterFields = 'ID'
     DetailFields = 'FK_EOLINK'

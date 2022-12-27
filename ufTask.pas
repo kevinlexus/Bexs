@@ -23,7 +23,7 @@ uses
   cxDBData, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, OracleData,
   ComCtrls, ToolWin, StdCtrls, Menus, cxDBLookupComboBox, cxCalendar,
-  ExtCtrls, cxGridExportLink;
+  ExtCtrls, cxGridExportLink, dxDateRanges;
 
 type
   TFrmTask = class(TForm)
@@ -337,7 +337,7 @@ procedure TFrmTask.Eolink3Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-    'Организация', true, null);
+    'Организация', true, '');
 
 end;
 
@@ -345,7 +345,7 @@ procedure TFrmTask.Eolink2Click(Sender: TObject);
 begin
   // найти корневую запись
   FrmMain.findRoot(OD_Task.FieldByName('fk_eolink').asInteger,
-    'Дом', true, null);
+    'Дом', true, '');
 
 end;
 
@@ -353,6 +353,7 @@ procedure TFrmTask.FormCreate(Sender: TObject);
 begin
   // запрет выгрузки всех записей
   isLoadAllRec := False;
+  isColumnsVisible := True;
   toggleColumnsVisible();
 end;
 
@@ -419,8 +420,6 @@ begin
 
   col := cxGrid1DBTableView1.GetColumnByFieldName('UNIQNUM');
   col.Visible := isColumnsVisible;
-  col := cxGrid1DBTableView1.GetColumnByFieldName('CD');
-  col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('ERRACKCNT');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('GUID');
@@ -445,6 +444,7 @@ begin
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('FK_EOLINK_LAST');
   col.Visible := isColumnsVisible;
+
 
 end;
 

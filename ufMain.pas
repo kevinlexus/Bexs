@@ -7,9 +7,9 @@ uses
   Dialogs, Menus, ufEolink, ufTask, ufPdoc, ufReference, ufRefCorrespond,
   ImgList, cxGrid, cxGridExportLink, OracleData, DB, fcxControl, fcxZone,
   fcxCustomGrid, fcxCubeGrid, fcxDataSource, fcxComponent, fcxCube,
-  fcxSliceGridToolbar, ToolWin, ComCtrls, fcxCustomToolbar,
-  fcxCubeGridToolBar, fcxSliceGrid, fcxSlice, PivotCube_SRC, PivotMap_SRC,
-  ExtCtrls, PivotGrid_SRC, PivotToolBar_SRC;
+  fcxSliceGridToolbar, ToolWin, ComCtrls, fcxCustomToolbar, fcxCubeGridToolBar,
+  fcxSliceGrid, fcxSlice, ExtCtrls, System.ImageList, Vcl.StdCtrls, WUpdate,
+  WUpdateWiz;
 
 type
   TFrmMain = class(TForm)
@@ -29,6 +29,10 @@ type
     N9: TMenuItem;
     Ver1011: TMenuItem;
     N10: TMenuItem;
+    WebUpdate1: TWebUpdate;
+    Button1: TButton;
+    WebUpdateWizard1: TWebUpdateWizard;
+    Button2: TButton;
     procedure N1Click(Sender: TObject);
     procedure Eolink1Click(Sender: TObject);
     procedure N3Click(Sender: TObject);
@@ -40,60 +44,75 @@ type
     procedure N8Click(Sender: TObject);
     procedure N9Click(Sender: TObject);
     procedure N10Click(Sender: TObject);
-  private
-    { Private declarations }
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private    { Private declarations }
   public
     function findRoot(id: Integer; // Id элемента
-                   tp: String;         // Тип объекта для поиска
-                   isCreateFrmEolink: Boolean; // создавать ли форму Eolink или вернуть id
-                   pLsk: String // найти лиц.счет, если указано
-                   ): Integer;
+      tp: string;         // Тип объекта для поиска
+      isCreateFrmEolink: Boolean; // создавать ли форму Eolink или вернуть id
+      pLsk: String // найти лиц.счет, если указано
+    ): Integer;
   end;
 
 var
   FrmMain: TFrmMain;
 
+
 implementation
 
-uses DataModule, ufNotif, ufErrStat, uRefDocTpCorrespond;
+uses
+  DataModule, ufNotif, ufErrStat, uRefDocTpCorrespond;
 
 {$R *.dfm}
 
 procedure TFrmMain.N1Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmEolink, FrmEolink);
-   FrmEolink.setFltById(0, 3);
+  Application.CreateForm(TFrmEolink, FrmEolink);
+  FrmEolink.setFltById(0, 3);
+end;
+
+procedure TFrmMain.Button1Click(Sender: TObject);
+begin
+  if WebUpdate1.NewVersionAvailable() then
+  begin
+    WebUpdate1.DoUpdate;
+  end;
+end;
+
+procedure TFrmMain.Button2Click(Sender: TObject);
+begin
+WebUpdateWizard1.Execute(true);
 end;
 
 procedure TFrmMain.Eolink1Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmTask, FrmTask);
-   FrmTask.setFltById(0);
+  Application.CreateForm(TFrmTask, FrmTask);
+  FrmTask.setFltById(0);
 end;
 
 procedure TFrmMain.N3Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmReference, FrmReference);
+  Application.CreateForm(TFrmReference, FrmReference);
 end;
 
 procedure TFrmMain.N4Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmRefCorrespond, FrmRefCorrespond);
+  Application.CreateForm(TFrmRefCorrespond, FrmRefCorrespond);
 
 end;
 
 // найти корневой объект
 function TFrmMain.findRoot(id: Integer; // Id элемента
-                   tp: String;         // Тип объекта для поиска
-                   isCreateFrmEolink: Boolean; // создавать ли форму Eolink или вернуть id
-                   pLsk: String // найти лиц.счет, если указано
-                   ): Integer;
+  tp: string;         // Тип объекта для поиска
+  isCreateFrmEolink: Boolean; // создавать ли форму Eolink или вернуть id
+  pLsk: String // найти лиц.счет, если указано
+): Integer;
 var
   foundId: Integer;
   str: string;
 begin
-  foundId:=DataModule2.OP_gis.CallIntegerFunction('get_root_eolink',
-      [id, tp]);
+  foundId := DataModule2.OP_gis.CallIntegerFunction('get_root_eolink', [id, tp]);
   if foundId <> 0 then
   begin
     // найти иерархию объектов Eolink
@@ -108,17 +127,16 @@ begin
     end
     else
     begin
-      Result:=foundId;
+      Result := foundId;
       exit;
     end;
   end
   else
   begin
-    str:='Объект с типом '+tp+' не найден!';
-    Application.MessageBox(PChar(str), 'Внимание!',
-      MB_OK + MB_ICONSTOP);
+    str := 'Объект с типом ' + tp + ' не найден!';
+    Application.MessageBox(PChar(str), 'Внимание!', MB_OK + MB_ICONSTOP);
   end;
-  Result:=-1;
+  Result := -1;
 end;
 
 procedure TFrmMain.N6Click(Sender: TObject);
@@ -128,35 +146,35 @@ end;
 
 procedure TFrmMain.Pdoc1Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmPdoc, FrmPdoc);
-   FrmPdoc.setFltById(0,0,0,1);
+  Application.CreateForm(TFrmPdoc, FrmPdoc);
+  FrmPdoc.setFltById(0, 0, 0, 1);
 end;
 
 procedure TFrmMain.N7Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmNotif, FrmNotif);
-   FrmNotif.setFltById(0,0);
+  Application.CreateForm(TFrmNotif, FrmNotif);
+  FrmNotif.setFltById(0, 0);
 
 end;
 
 procedure TFrmMain.expToExcel(fname: string; cxGrid1: TcxGrid);
- var
-   dir, str: string;
+var
+  dir, str: string;
 begin
   dir := GetCurrentDir;
   ExportGridToExcel(fname, cxGrid1, false, true, true, 'xls');
-  str:='Сохранено в '+dir+'\'+fname+'.xls';
-  Application.MessageBox(PChar(str), 'Внимание!', MB_OK +
-    MB_ICONINFORMATION);
+  str := 'Сохранено в ' + dir + '\' + fname + '.xls';
+  Application.MessageBox(PChar(str), 'Внимание!', MB_OK + MB_ICONINFORMATION);
 end;
 
 procedure TFrmMain.N8Click(Sender: TObject);
 var
-  i : Word;
+  i: Word;
 begin
   // закрыть все MDI окна
   try
-   for i := 0 to MDIChildCount - 1 do MDIChildren[i].Close;
+    for i := 0 to MDIChildCount - 1 do
+      MDIChildren[i].Close;
   except
 
   end;
@@ -169,7 +187,8 @@ end;
 
 procedure TFrmMain.N10Click(Sender: TObject);
 begin
-   Application.CreateForm(TFrmRefDocTpCorrespond, FrmRefDocTpCorrespond);
+  Application.CreateForm(TFrmRefDocTpCorrespond, FrmRefDocTpCorrespond);
 end;
 
 end.
+

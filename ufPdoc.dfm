@@ -1,9 +1,9 @@
 object FrmPdoc: TFrmPdoc
   Left = 944
   Top = 218
-  Width = 1198
-  Height = 590
   Caption = #1055#1083#1072#1090#1077#1078#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' - Pdoc'
+  ClientHeight = 551
+  ClientWidth = 1182
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -165,7 +165,7 @@ object FrmPdoc: TFrmPdoc
     TabOrder = 2
     object ToolButton1: TToolButton
       Left = 0
-      Top = 2
+      Top = 0
       Hint = #1053#1072#1089#1090#1088#1086#1080#1090#1100' '#1092#1080#1083#1100#1090#1088' QBE'
       Caption = 'ToolButton1'
       ImageIndex = 0
@@ -175,7 +175,7 @@ object FrmPdoc: TFrmPdoc
     end
     object ToolButton2: TToolButton
       Left = 23
-      Top = 2
+      Top = 0
       Hint = #1042#1082#1083#1102#1095#1080#1090#1100' '#1092#1080#1083#1100#1090#1088' QBE'
       Caption = 'ToolButton2'
       ImageIndex = 1
@@ -185,7 +185,7 @@ object FrmPdoc: TFrmPdoc
     end
     object ToolButton3: TToolButton
       Left = 46
-      Top = 2
+      Top = 0
       Width = 8
       Caption = 'ToolButton3'
       ImageIndex = 2
@@ -193,7 +193,7 @@ object FrmPdoc: TFrmPdoc
     end
     object Edit1: TEdit
       Left = 54
-      Top = 2
+      Top = 0
       Width = 203
       Height = 22
       Hint = #1042#1074#1077#1089#1090#1080' Task.Id'
@@ -203,8 +203,8 @@ object FrmPdoc: TFrmPdoc
     end
     object ToolButton4: TToolButton
       Left = 257
-      Top = 2
-      Hint = #1060#1080#1083#1100#1090#1088' '#1087#1086' Task.Id'
+      Top = 0
+      Hint = #1060#1080#1083#1100#1090#1088' '#1087#1086' Pdoc.Id'
       Caption = 'ToolButton4'
       ImageIndex = 4
       ParentShowHint = False
@@ -213,8 +213,8 @@ object FrmPdoc: TFrmPdoc
     end
     object ToolButton5: TToolButton
       Left = 280
-      Top = 2
-      Hint = #1057#1085#1103#1090#1100' '#1092#1080#1083#1100#1090#1088' '#1087#1086' Task.Id'
+      Top = 0
+      Hint = #1057#1085#1103#1090#1100' '#1092#1080#1083#1100#1090#1088' '#1087#1086' Pdoc.Id'
       Caption = 'ToolButton5'
       ImageIndex = 3
       ParentShowHint = False
@@ -223,7 +223,7 @@ object FrmPdoc: TFrmPdoc
     end
     object cxLabel1: TcxLabel
       Left = 303
-      Top = 4
+      Top = 2
       Caption = #1044#1072#1090#1072':'
       ParentFont = False
       Style.Font.Charset = DEFAULT_CHARSET
@@ -235,7 +235,7 @@ object FrmPdoc: TFrmPdoc
     end
     object cxDateEdit1: TcxDateEdit
       Left = 341
-      Top = 2
+      Top = 0
       Properties.DateButtons = [btnClear, btnToday]
       Properties.SaveTime = False
       Properties.ShowTime = False
@@ -245,7 +245,7 @@ object FrmPdoc: TFrmPdoc
     end
     object CheckBox1: TCheckBox
       Left = 462
-      Top = 2
+      Top = 0
       Width = 114
       Height = 22
       Hint = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1083#1100#1082#1086' '#1072#1082#1090#1080#1074#1085#1099#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1099' (V=1)'
@@ -260,7 +260,7 @@ object FrmPdoc: TFrmPdoc
     end
     object ToolButton6: TToolButton
       Left = 576
-      Top = 2
+      Top = 0
       Hint = #1053#1072#1081#1090#1080'!'
       Caption = 'ToolButton6'
       ImageIndex = 1
@@ -280,7 +280,6 @@ object FrmPdoc: TFrmPdoc
       ' join bs.addr_tp tp on tp.cd='#39#1051#1057#39
       ' join bs.addr_tp tp2 on tp2.cd='#39#1055#1086#1076#1098#1077#1079#1076#39
       ' join bs.addr_tp tp3 on tp3.cd='#39#1044#1086#1084#39
-      '-- join bs.addr_tp tp4 on tp4.cd='#39#1050#1074#1072#1088#1090#1080#1088#1072#39
       
         ' join EXS.EOLINK e on t.fk_eolink=e.id and e.fk_objtp=tp.id -- '#1083 +
         #1080#1094'.'#1089#1095#1077#1090
@@ -300,7 +299,6 @@ object FrmPdoc: TFrmPdoc
         ' left join EXS.EOLINK h3 on k.id=h3.id and h3.fk_objtp=tp3.id --' +
         ' '#1095#1072#1089#1090#1085#1099#1081' '#1076#1086#1084
       ' join scott.spul s on k.kul=s.id -- '#1091#1083#1080#1094#1072
-      '-- join scott.spul s on nvl(h.kul,h2.kul)=s.id -- '#1091#1083#1080#1094#1072
       ' left join EXS.EOLINK uk on e.fk_uk=uk.id -- '#1059#1050
       ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
       'where 1=1'
@@ -310,117 +308,35 @@ object FrmPdoc: TFrmPdoc
       ':substExp4'
       ':substExp5'
       ':substExp7'
-      '--(:flt=0 or t.id in :idSubst) '
-      '--and (:fltId=0 or t.fk_eolink=:fltId) '
-      '--and (:fltId2=0 or t.id=:fltId2) '
-      '--and (:fltId3=0 or h.id=:fltId3 or h2.id=:fltId3)'
-      '--and (:flt2=0 or t.v=1)'
-      '--and nvl(:p_dt,t.dt)=t.dt'
-      'order by t.id desc'
-      ''
-      '/*'
-      'select t.*, e.lsk, o.name as uk, s.name as street, '
-      
-        ' ltrim(coalesce(h.nd, k.nd),'#39'0'#39') as nd, -- '#1083#1080#1073#1086' '#1084#1082#1076' '#1076#1086#1084', '#1083#1080#1073#1086' '#1095#1072 +
-        #1089#1090#1085#1099#1081' '#1076#1086#1084
-      ' p.entry, ltrim(k.kw,'#39'0'#39') as kw, t.rowid'
-      ' from EXS.PDOC t'
-      ' join bs.addr_tp tp on tp.cd='#39#1051#1057#39
-      ' join bs.addr_tp tp2 on tp2.cd='#39#1055#1086#1076#1098#1077#1079#1076#39
-      ' join bs.addr_tp tp3 on tp3.cd='#39#1044#1086#1084#39
-      '-- join bs.addr_tp tp4 on tp4.cd='#39#1050#1074#1072#1088#1090#1080#1088#1072#39
-      
-        ' join EXS.EOLINK e on t.fk_eolink=e.id and e.fk_objtp=tp.id -- '#1083 +
-        #1080#1094'.'#1089#1095#1077#1090
-      
-        ' join EXS.EOLINK k on e.parent_id=k.id --and k.fk_objtp=tp4.id -' +
-        '- '#1087#1086#1084#1077#1097#1077#1085#1080#1077' '#1080#1083#1080' '#1095#1072#1089#1090#1085#1099#1081' '#1076#1086#1084
-      
-        ' left join EXS.EOLINK p on k.parent_id=p.id and p.fk_objtp=tp2.i' +
-        'd -- '#1087#1086#1076#1098#1077#1079#1076
-      
-        ' left join EXS.EOLINK h on p.parent_id=h.id and h.fk_objtp=tp3.i' +
-        'd -- '#1076#1086#1084
-      
-        ' left join EXS.EOLINK h2 on k.parent_id=h2.id and h2.fk_objtp=tp' +
-        '3.id -- '#1076#1086#1084', '#1077#1089#1083#1080' '#1082#1074#1072#1088#1090#1080#1088#1072' '#1085#1077' '#1074#1093#1086#1076#1080#1090' '#1074' '#1087#1086#1076#1098#1077#1079#1076
-      ' join scott.spul s on k.kul=s.id -- '#1091#1083#1080#1094#1072
-      '-- join scott.spul s on nvl(h.kul,h2.kul)=s.id -- '#1091#1083#1080#1094#1072
-      ' left join EXS.EOLINK uk on e.fk_uk=uk.id -- '#1059#1050
-      ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
-      'where '
-      ':substExp1'
-      ':substExp2'
-      ':substExp3'
-      ':substExp4'
-      ':substExp5'
-      ':substExp6'
-      '--(:flt=0 or t.id in :idSubst) '
-      '--and (:fltId=0 or t.fk_eolink=:fltId) '
-      '--and (:fltId2=0 or t.id=:fltId2) '
-      '--and (:fltId3=0 or h.id=:fltId3 or h2.id=:fltId3)'
-      '--and (:flt2=0 or t.v=1)'
-      '--and nvl(:p_dt,t.dt)=t.dt'
-      'order by t.id desc'
-      ''
-      '*/'
-      ''
-      ''
-      '/*select t.*, e.lsk, o.name as uk, s.name as street, '
-      ' ltrim(h.nd,'#39'0'#39') as nd, p.entry, ltrim(k.kw,'#39'0'#39') as kw, t.rowid'
-      ' from EXS.PDOC t'
-      ' join bs.addr_tp tp on tp.cd='#39#1051#1057#39
-      ' join bs.addr_tp tp2 on tp2.cd='#39#1055#1086#1076#1098#1077#1079#1076#39
-      ' join bs.addr_tp tp3 on tp3.cd='#39#1044#1086#1084#39
-      ' join bs.addr_tp tp4 on tp4.cd='#39#1050#1074#1072#1088#1090#1080#1088#1072#39
-      
-        ' join EXS.EOLINK e on t.fk_eolink=e.id and e.fk_objtp=tp.id -- '#1083 +
-        #1080#1094'.'#1089#1095#1077#1090
-      
-        ' join EXS.EOLINK k on e.parent_id=k.id and k.fk_objtp=tp4.id -- ' +
-        #1087#1086#1084#1077#1097#1077#1085#1080#1077
-      
-        ' left join EXS.EOLINK p on k.parent_id=p.id and p.fk_objtp=tp2.i' +
-        'd -- '#1087#1086#1076#1098#1077#1079#1076
-      
-        ' left join EXS.EOLINK h on p.parent_id=h.id and h.fk_objtp=tp3.i' +
-        'd -- '#1076#1086#1084
-      
-        ' left join EXS.EOLINK h2 on k.parent_id=h2.id and h2.fk_objtp=tp' +
-        '3.id -- '#1076#1086#1084', '#1077#1089#1083#1080' '#1082#1074#1072#1088#1090#1080#1088#1072' '#1085#1077' '#1074#1093#1086#1076#1080#1090' '#1074' '#1087#1086#1076#1098#1077#1079#1076
-      ' join scott.spul s on nvl(h.kul,h2.kul)=s.id -- '#1091#1083#1080#1094#1072
-      ' left join EXS.EOLINK uk on e.fk_uk=uk.id -- '#1059#1050
-      ' join scott.t_org o on uk.reu=o.reu -- '#1059#1050
-      
-        'where (:flt=0 or t.id in :idSubst) and (:fltId=0 or t.fk_eolink=' +
-        ':fltId) and (:fltId2=0 or t.id=:fltId2) and (:fltId3=0 or h.id=:' +
-        'fltId3 or h2.id=:fltId3)'
-      'and (:flt2=0 or t.v=1)'
-      'and nvl(:p_dt,t.dt)=t.dt'
-      'order by t.id desc'
-      '*/'
-      '')
+      'order by t.id desc')
     Optimize = False
     Variables.Data = {
-      03000000070000000A0000003A53554253544558503101000000000000000000
-      00000A0000003A5355425354455850320100000000000000000000000A000000
-      3A5355425354455850330100000000000000000000000A0000003A5355425354
-      455850340100000000000000000000000A0000003A5355425354455850350100
-      000000000000000000000A0000003A5355425354455850360100000000000000
-      000000000A0000003A535542535445585037010000000000000000000000}
+      0400000007000000140000003A00530055004200530054004500580050003100
+      010000000000000000000000140000003A005300550042005300540045005800
+      50003200010000000000000000000000140000003A0053005500420053005400
+      4500580050003300010000000000000000000000140000003A00530055004200
+      530054004500580050003400010000000000000000000000140000003A005300
+      5500420053005400450058005000350001000000000000000000000014000000
+      3A00530055004200530054004500580050003600010000000000000000000000
+      140000003A005300550042005300540045005800500037000100000000000000
+      00000000}
     QBEDefinition.QBEFieldDefs = {
-      0400000018000000020000004944010000000000040000004755494401000000
-      000002000000434401000000000007000000554E49514E554D01000000000006
-      00000044545F4352540100000000000600000044545F55504401000000000009
-      000000464B5F454F4C494E4B01000000000006000000524553554C5401000000
-      0000050000005447554944010000000000060000005354415455530100000000
-      0001000000560100000000000200000044540100000000000300000045525201
-      0000000000030000004C534B01000000000002000000554B0100000000000600
-      0000535452454554010000000000020000004E4401000000000005000000454E
-      545259010000000000020000004B5701000000000004000000434F4D4D010000
-      0000000800000053554D4D415F494E0100000000000800000050454E59415F49
-      4E0100000000000900000053554D4D415F4F5554010000000000090000005045
-      4E59415F4F5554010000000000}
+      0500000018000000040000004900440001000000000008000000470055004900
+      440001000000000004000000430044000100000000000E00000055004E004900
+      51004E0055004D000100000000000C000000440054005F004300520054000100
+      000000000C000000440054005F00550050004400010000000000120000004600
+      4B005F0045004F004C0049004E004B000100000000000C000000520045005300
+      55004C0054000100000000000A00000054004700550049004400010000000000
+      0C00000053005400410054005500530001000000000002000000560001000000
+      0000040000004400540001000000000006000000450052005200010000000000
+      060000004C0053004B000100000000000400000055004B000100000000000C00
+      0000530054005200450045005400010000000000040000004E00440001000000
+      00000A00000045004E00540052005900010000000000040000004B0057000100
+      000000000800000043004F004D004D0001000000000010000000530055004D00
+      4D0041005F0049004E0001000000000010000000500045004E00590041005F00
+      49004E0001000000000012000000530055004D004D0041005F004F0055005400
+      01000000000012000000500045004E00590041005F004F005500540001000000
+      0000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterFetchRecord = OD_PdocAfterFetchRecord

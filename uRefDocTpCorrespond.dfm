@@ -1,9 +1,9 @@
 object FrmRefDocTpCorrespond: TFrmRefDocTpCorrespond
   Left = 649
   Top = 242
-  Width = 712
-  Height = 444
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082' '#1089#1086#1086#1090#1074#1077#1090#1089#1090#1074#1080#1103' '#1090#1080#1087#1086#1074' '#1076#1086#1082#1091#1084#1077#1085#1090#1086#1074
+  ClientHeight = 405
+  ClientWidth = 696
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -69,8 +69,9 @@ object FrmRefDocTpCorrespond: TFrmRefDocTpCorrespond
       'order by t.name')
     Optimize = False
     QBEDefinition.QBEFieldDefs = {
-      04000000030000000200000049440100000000000D000000464B5F4558535F55
-      5F4C495354010000000000070000004E414D455F5450010000000000}
+      050000000300000004000000490044000100000000001A00000046004B005F00
+      4500580053005F0055005F004C004900530054000100000000000E0000004E00
+      41004D0045005F0054005000010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     Session = DataModule2.OracleSession1
@@ -104,8 +105,8 @@ object FrmRefDocTpCorrespond: TFrmRefDocTpCorrespond
       'order by s.s1')
     Optimize = False
     QBEDefinition.QBEFieldDefs = {
-      0400000002000000020000004944010000000000040000004E414D4501000000
-      0000}
+      05000000020000000400000049004400010000000000080000004E0041004D00
+      4500010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     Session = DataModule2.OracleSession1
