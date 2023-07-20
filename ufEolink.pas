@@ -149,6 +149,7 @@ type
     cxGrid1DBTableView1FK_HOUSE: TcxGridDBColumn;
     OD_EolinkGUID_GIS: TStringField;
     cxGrid1DBTableView1GUID_GIS: TcxGridDBColumn;
+    N23: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -190,6 +191,7 @@ type
     procedure N22Click(Sender: TObject);
     procedure toggleColumnsVisible();
     procedure ToolButton7Click(Sender: TObject);
+    procedure N23Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -467,6 +469,7 @@ begin
     N12.Enabled := true;
     N14.Enabled := true;
     N16.Enabled := true;
+    N23.Enabled := true;
   end
   else
   begin
@@ -475,6 +478,7 @@ begin
     N12.Enabled := false;
     N14.Enabled := false;
     N16.Enabled := false;
+    N23.Enabled := false;
   end;
 
   // Подъезд
@@ -783,6 +787,7 @@ begin
     end
     else
     begin
+      DataModule2.OracleSession1.Commit;
       OD_Eolink.Refresh;
       Application.MessageBox('Дом успешно перенесен в новый УК!', 'Внимание!',
         MB_OK + MB_ICONINFORMATION);
@@ -900,6 +905,31 @@ begin
   id := OD_Eolink.FieldByName('ID').asInteger;
   Application.CreateForm(TFrmTask, FrmTask);
   FrmTask.setFltById(id);
+
+end;
+
+procedure TFrmEolink.N23Click(Sender: TObject);
+var
+  res: Integer;
+begin
+  Application.CreateForm(TFrmSelReu, FrmSelReu);
+  if FrmSelReu.ShowModal = mrOk then
+  begin
+    res := DataModule2.OP_gis.CallIntegerFunction('change_reu_in_task_by_house',
+      [OD_Eolink.FieldByName('ID').AsInteger, FrmSelReu.reu, 'GIS_EXP_METERS']);
+    if res <> 0 then
+    begin
+      Application.MessageBox('Ошибка переноса задания выгрузки счетчиков дома в новый УК(РСО)!', 'Внимание!',
+        MB_OK + MB_ICONERROR);
+    end
+    else
+    begin
+      DataModule2.OracleSession1.Commit;
+      Application.MessageBox('Задание по выгрузке счетчиков, успешно перенесено в новый УК(РСО)!', 'Внимание!',
+        MB_OK + MB_ICONINFORMATION);
+    end;
+
+  end;
 
 end;
 
