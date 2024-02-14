@@ -19,19 +19,24 @@ object FrmEolink: TFrmEolink
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
-    Left = 929
+    Left = 1182
     Top = 29
     Width = 8
     Height = 407
+    Align = alRight
+    ExplicitLeft = 1194
+    ExplicitTop = 35
   end
   object cxGrid1: TcxGrid
     Left = 0
     Top = 29
-    Width = 929
+    Width = 1182
     Height = 407
-    Align = alLeft
+    Align = alClient
     PopupMenu = PopupMenu1
     TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitWidth = 1145
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       Navigator.Visible = True
@@ -66,7 +71,7 @@ object FrmEolink: TFrmEolink
         Caption = #1058#1080#1087
         DataBinding.FieldName = 'NAME'
         BestFitMaxWidth = 20
-        Width = 38
+        Width = 29
       end
       object cxGrid1DBTableView1REU: TcxGridDBColumn
         DataBinding.FieldName = 'REU'
@@ -76,15 +81,15 @@ object FrmEolink: TFrmEolink
       end
       object cxGrid1DBTableView1UK: TcxGridDBColumn
         DataBinding.FieldName = 'UK'
-        Width = 65
+        Width = 51
       end
       object cxGrid1DBTableView1KUL: TcxGridDBColumn
         DataBinding.FieldName = 'KUL'
-        Width = 23
+        Width = 20
       end
       object cxGrid1DBTableView1STREET: TcxGridDBColumn
         DataBinding.FieldName = 'STREET'
-        Width = 38
+        Width = 29
       end
       object cxGrid1DBTableView1ND: TcxGridDBColumn
         DataBinding.FieldName = 'ND'
@@ -98,75 +103,79 @@ object FrmEolink: TFrmEolink
         Caption = #1051#1080#1094'.'#1089#1095'.'
         DataBinding.FieldName = 'LSK'
         BestFitMaxWidth = 30
-        Width = 23
+        Width = 20
       end
       object cxGrid1DBTableView1STATUS: TcxGridDBColumn
         DataBinding.FieldName = 'STATUS'
-        Width = 26
+        Width = 20
       end
       object cxGrid1DBTableView1COMM: TcxGridDBColumn
         DataBinding.FieldName = 'COMM'
         OnCustomDrawCell = cxGrid1DBTableView1COMMCustomDrawCell
-        Width = 105
+        Width = 82
       end
       object cxGrid1DBTableView1FK_UK: TcxGridDBColumn
         DataBinding.FieldName = 'FK_UK'
-        Width = 22
+        Width = 20
       end
       object cxGrid1DBTableView1NAME_REU: TcxGridDBColumn
         Caption = #1059#1050' '#1083#1080#1094'.'#1089#1095'.'
         DataBinding.FieldName = 'NAME_REU'
-        Width = 25
+        Width = 20
       end
       object cxGrid1DBTableView1GUID: TcxGridDBColumn
         Caption = 'GUID '#1060#1048#1040#1057
         DataBinding.FieldName = 'GUID'
-        Width = 33
+        Width = 25
       end
       object cxGrid1DBTableView1GUID_GIS: TcxGridDBColumn
         Caption = 'GUID '#1043#1048#1057
         DataBinding.FieldName = 'GUID_GIS'
+        Width = 30
+      end
+      object cxGrid1DBTableView1HM_GUID: TcxGridDBColumn
+        DataBinding.FieldName = 'HM_GUID'
         Width = 38
       end
       object cxGrid1DBTableView1CD: TcxGridDBColumn
         DataBinding.FieldName = 'CD'
-        Width = 29
+        Width = 34
       end
       object cxGrid1DBTableView1UNIQNUM: TcxGridDBColumn
         DataBinding.FieldName = 'UNIQNUM'
-        Width = 28
+        Width = 31
       end
       object cxGrid1DBTableView1SERVICEID: TcxGridDBColumn
         DataBinding.FieldName = 'SERVICEID'
-        Width = 40
+        Width = 46
       end
       object cxGrid1DBTableView1FK_KLSK_PREMISE: TcxGridDBColumn
         DataBinding.FieldName = 'FK_KLSK_OBJ'
-        Width = 29
+        Width = 33
       end
       object cxGrid1DBTableView1OGRN: TcxGridDBColumn
         DataBinding.FieldName = 'OGRN'
-        Width = 36
+        Width = 42
       end
       object cxGrid1DBTableView1ENTRY: TcxGridDBColumn
         DataBinding.FieldName = 'ENTRY'
-        Width = 29
+        Width = 33
       end
       object cxGrid1DBTableView1DT_CRT: TcxGridDBColumn
         DataBinding.FieldName = 'DT_CRT'
-        Width = 29
+        Width = 33
       end
       object cxGrid1DBTableView1DT_UPD: TcxGridDBColumn
         DataBinding.FieldName = 'DT_UPD'
-        Width = 31
+        Width = 36
       end
       object cxGrid1DBTableView1TGUID: TcxGridDBColumn
         DataBinding.FieldName = 'TGUID'
-        Width = 36
+        Width = 41
       end
       object cxGrid1DBTableView1FK_HOUSE: TcxGridDBColumn
         DataBinding.FieldName = 'FK_HOUSE'
-        Width = 69
+        Width = 79
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -259,21 +268,24 @@ object FrmEolink: TFrmEolink
     end
   end
   object Panel1: TPanel
-    Left = 937
+    Left = 1190
     Top = 29
-    Width = 273
+    Width = 20
     Height = 407
-    Align = alClient
+    Align = alRight
     Caption = 'Panel1'
     TabOrder = 2
     object cxGrid2: TcxGrid
       Left = 1
-      Top = 90
-      Width = 271
-      Height = 316
+      Top = 1
+      Width = 18
+      Height = 405
       Align = alClient
       PopupMenu = PopupMenu1
       TabOrder = 0
+      ExplicitTop = 90
+      ExplicitWidth = 104
+      ExplicitHeight = 316
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         Navigator.Visible = True
@@ -330,40 +342,25 @@ object FrmEolink: TFrmEolink
         GridView = cxGridDBTableView1
       end
     end
-    object Memo1: TMemo
-      Left = 1
-      Top = 1
-      Width = 271
-      Height = 89
-      Align = alTop
-      Lines.Strings = (
-        '0 0 1 * * ? - '#1082#1072#1078#1076#1099#1081' '#1076#1077#1085#1100', '#1074' 1:00am'
-        '0 0 0/1 ? * * * - '#1082#1072#1078#1076#1099#1081' 1 '#1095#1072#1089
-        '0/30 * * ? * * * - '#1082#1072#1078#1076#1099#1077' 30 '#1089#1077#1082#1091#1085#1076
-        '* */5 * ? * * * - '#1082#1072#1078#1076#1099#1077' 5 '#1084#1080#1085#1091#1090
-        '15 */3 * ? * * - '#1082#1072#1078#1076#1099#1077' 3 '#1084#1080#1085#1091#1090#1099', '#1085#1072#1095#1080#1085#1072#1103' '#1089' 15 '
-        #1089#1077#1082#1091#1085#1076#1099
-        '0 0 0 ? * * 2034 - '#1079#1072#1087#1088#1077#1090#1080#1090#1100' ))')
-      TabOrder = 1
-    end
   end
   object OD_Eolink: TOracleDataSet
     SQL.Strings = (
       
         'select t.id, t.parent_id, t.lsk, t.fk_objtp, tp.name, tp.cd as o' +
         'bjTpCd, o.name as uk, t.comm as comm, t.reu, t.kul, s.name as st' +
-        'reet, '
-      ' ltrim(t.nd,'#39'0'#39') as nd, t.entry,  ltrim(t.kw,'#39'0'#39') as kw, '
-      ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj, '
+        'reet,'#11
+      ' ltrim(t.nd,'#39'0'#39') as nd, t.entry,  ltrim(t.kw,'#39'0'#39') as kw,'#11
+      ' t.guid, t.cd, t.uniqnum, t.app_tp, t.fk_klsk_obj,'#11
       
         't.ogrn, t.dt_crt, t.dt_upd, t.status, t.serviceId, t.fk_uk, o2.r' +
-        'eu||'#39'-'#39'||o2.name as name_reu, t.tguid, t.fk_house, t.guid_gis,'
-      ' t.rowid from exs.eolink t'
-      'left join bs.addr_tp tp on t.fk_objtp=tp.id'
-      'left join scott.spul s on t.kul=s.id'
-      'left join scott.t_org o on t.reu=o.reu'
-      'left join exs.eolink r on t.fk_uk=r.id'
-      'left join scott.t_org o2 on r.reu=o2.reu'
+        'eu||'#39'-'#39'||o2.name as name_reu, t.tguid, t.fk_house, t.guid_gis, t' +
+        '.hm_guid,'#11
+      ' t.rowid from exs.eolink t'#11
+      'left join bs.addr_tp tp on t.fk_objtp=tp.id'#11
+      'left join scott.spul s on t.kul=s.id'#11
+      'left join scott.t_org o on t.reu=o.reu'#11
+      'left join exs.eolink r on t.fk_uk=r.id'#11
+      'left join scott.t_org o2 on r.reu=o2.reu'#11
       'where 1=1'
       ':substExp3'
       ':substExp4'
@@ -383,7 +380,7 @@ object FrmEolink: TFrmEolink
       4500580050003300010000000000000000000000140000003A00530055004200
       530054004500580050003400010000000000000000000000}
     QBEDefinition.QBEFieldDefs = {
-      050000001D000000040000004900440001000000000006000000520045005500
+      050000001E000000040000004900440001000000000006000000520045005500
       010000000000040000004E004400010000000000040000004B00570001000000
       00000A00000045004E0054005200590001000000000008000000470055004900
       440001000000000004000000430044000100000000001000000046004B005F00
@@ -401,7 +398,8 @@ object FrmEolink: TFrmEolink
       490044000100000000000A00000046004B005F0055004B000100000000000A00
       000054004700550049004400010000000000100000004E0041004D0045005F00
       5200450055000100000000001000000046004B005F0048004F00550053004500
-      0100000000001000000047005500490044005F00470049005300010000000000}
+      0100000000001000000047005500490044005F00470049005300010000000000
+      0E00000048004D005F004700550049004400010000000000}
     QueryAllRecords = False
     RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
     AfterQuery = OD_EolinkAfterQuery
@@ -553,6 +551,10 @@ object FrmEolink: TFrmEolink
     end
     object OD_EolinkGUID_GIS: TStringField
       FieldName = 'GUID_GIS'
+      Size = 36
+    end
+    object OD_EolinkHM_GUID: TStringField
+      FieldName = 'HM_GUID'
       Size = 36
     end
   end

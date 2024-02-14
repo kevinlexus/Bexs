@@ -21,7 +21,7 @@ uses
   dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, dxSkinscxPCPainter,
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, DB,
   cxDBData, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxGridLevel, cxClasses, cxGridCustomView, cxGrid;
+  cxGridLevel, cxClasses, cxGridCustomView, cxGrid, dxDateRanges;
 
 type
   TFrmCrone = class(TForm)
@@ -49,15 +49,15 @@ uses ufTask, DataModule;
 
 procedure TFrmCrone.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if Application.MessageBox('Сохранить значение Crone?', 'Внимание!', MB_YESNO 
+{  if Application.MessageBox('Сохранить значение Crone?', 'Внимание!', MB_YESNO
     + MB_ICONQUESTION) = IDYES then
   begin
-    if FrmTask.OD_taskxpar.State <> dsEdit then
-      FrmTask.OD_taskxpar.Edit;
-    FrmTask.OD_taskxpar.fieldByName('S1').AsString :=
-      DataModule2.OD_crone.fieldByName('EXPR').AsString;
+//    if FrmTask.OD_taskxpar.State <> dsEdit then
+//      FrmTask.OD_taskxpar.Edit;
+//    FrmTask.OD_taskxpar.fieldByName('S1').AsString :=
+//      DataModule2.OD_crone.fieldByName('EXPR').AsString;
   end;
-
+  }
 
   Action:=caFree;
 end;

@@ -127,7 +127,6 @@ type
     cxGridDBTableView1S1: TcxGridDBColumn;
     cxGridDBTableView1D1: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
-    Memo1: TMemo;
     OD_EolinkFK_UK: TFloatField;
     cxGrid1DBTableView1FK_UK: TcxGridDBColumn;
     N17: TMenuItem;
@@ -150,6 +149,8 @@ type
     OD_EolinkGUID_GIS: TStringField;
     cxGrid1DBTableView1GUID_GIS: TcxGridDBColumn;
     N23: TMenuItem;
+    OD_EolinkHM_GUID: TStringField;
+    cxGrid1DBTableView1HM_GUID: TcxGridDBColumn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OD_EolinkAfterFetchRecord(Sender: TOracleDataSet;
       FilterAccept: Boolean; var Action: TAfterFetchRecordAction);
@@ -235,6 +236,8 @@ begin
   col := cxGrid1DBTableView1.GetColumnByFieldName('GUID');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('GUID_GIS');
+  col.Visible := isColumnsVisible;
+  col := cxGrid1DBTableView1.GetColumnByFieldName('HM_GUID');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('UNIQNUM');
   col.Visible := isColumnsVisible;

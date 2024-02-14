@@ -1,9 +1,9 @@
 object FrmCrone: TFrmCrone
   Left = 563
   Top = 211
-  Width = 349
-  Height = 642
   Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082' Crone'
+  ClientHeight = 603
+  ClientWidth = 333
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

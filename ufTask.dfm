@@ -18,19 +18,14 @@ object FrmTask: TFrmTask
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Splitter1: TSplitter
-    Left = 937
-    Top = 29
-    Width = 8
-    Height = 425
-  end
   object cxGrid1: TcxGrid
     Left = 0
     Top = 29
-    Width = 937
+    Width = 1206
     Height = 425
-    Align = alLeft
+    Align = alClient
     TabOrder = 0
+    ExplicitWidth = 937
     object cxGrid1DBTableView1: TcxGridDBTableView
       PopupMenu = PopupMenu1
       Navigator.Buttons.CustomButtons = <>
@@ -247,98 +242,6 @@ object FrmTask: TFrmTask
       Caption = 'ToolButton7'
       ImageIndex = 2
       OnClick = ToolButton7Click
-    end
-  end
-  object Panel1: TPanel
-    Left = 945
-    Top = 29
-    Width = 261
-    Height = 425
-    Align = alClient
-    Caption = 'Panel1'
-    TabOrder = 2
-    object cxGrid2: TcxGrid
-      Left = 1
-      Top = 121
-      Width = 259
-      Height = 303
-      Align = alClient
-      PopupMenu = PopupMenu1
-      TabOrder = 0
-      object cxGridDBTableView1: TcxGridDBTableView
-        PopupMenu = PopupMenu2
-        Navigator.Buttons.CustomButtons = <>
-        Navigator.Visible = True
-        DataController.DataModeController.GridModeBufferCount = 100
-        DataController.DataSource = DS_taskxpar
-        DataController.KeyFieldNames = 'ID'
-        DataController.Summary.DefaultGroupSummaryItems = <>
-        DataController.Summary.FooterSummaryItems = <>
-        DataController.Summary.SummaryGroups = <>
-        OptionsBehavior.CellHints = True
-        OptionsSelection.InvertSelect = False
-        OptionsView.ColumnAutoWidth = True
-        OptionsView.GroupByBox = False
-        object cxGridDBTableView1ID: TcxGridDBColumn
-          DataBinding.FieldName = 'ID'
-          Width = 20
-        end
-        object cxGridDBTableView1FK_PAR: TcxGridDBColumn
-          DataBinding.FieldName = 'FK_PAR'
-          Width = 43
-        end
-        object cxGridDBTableView1Column1: TcxGridDBColumn
-          Caption = #1055#1072#1088#1072#1084#1077#1090#1088
-          DataBinding.FieldName = 'FK_PAR'
-          PropertiesClassName = 'TcxLookupComboBoxProperties'
-          Properties.DropDownSizeable = True
-          Properties.DropDownWidth = 250
-          Properties.KeyFieldNames = 'ID'
-          Properties.ListColumns = <
-            item
-              FieldName = 'NAME'
-            end>
-          Properties.ListSource = DataModule2.DS_par
-          MinWidth = 25
-          Width = 134
-        end
-        object cxGridDBTableView1N1: TcxGridDBColumn
-          DataBinding.FieldName = 'N1'
-          Width = 35
-        end
-        object cxGridDBTableView1S1: TcxGridDBColumn
-          DataBinding.FieldName = 'S1'
-          Width = 59
-        end
-        object cxGridDBTableView1D1: TcxGridDBColumn
-          DataBinding.FieldName = 'D1'
-          PropertiesClassName = 'TcxDateEditProperties'
-          Properties.DateButtons = [btnClear, btnNow, btnToday]
-          Properties.Kind = ckDateTime
-          Width = 92
-        end
-      end
-      object cxGridLevel1: TcxGridLevel
-        GridView = cxGridDBTableView1
-      end
-    end
-    object Memo1: TMemo
-      Left = 1
-      Top = 1
-      Width = 259
-      Height = 120
-      Align = alTop
-      Lines.Strings = (
-        #1054#1073#1103#1079#1072#1090#1077#1083#1100#1085#1086' '#1091#1082#1072#1079#1099#1074#1072#1090#1100' '#1089#1077#1082#1091#1085#1076#1099'!!!'
-        '0 0 1 * * ? - '#1082#1072#1078#1076#1099#1081' '#1076#1077#1085#1100', '#1074' 1:00am'
-        '0 0 0/1 ? * * * - '#1082#1072#1078#1076#1099#1081' 1 '#1095#1072#1089
-        '0/30 * * ? * * * - '#1082#1072#1078#1076#1099#1077' 30 '#1089#1077#1082#1091#1085#1076
-        '0 */1 * ? * * * - '#1082#1072#1078#1076#1099#1077' 1 '#1084#1080#1085#1091#1090#1091', '#1085#1072#1095#1080#1085#1072#1103' '#1089' 0 '
-        #1089#1077#1082'.'
-        '15 */3 * ? * * - '#1082#1072#1078#1076#1099#1077' 3 '#1084#1080#1085#1091#1090#1099', '#1085#1072#1095#1080#1085#1072#1103' '#1089' 15 '
-        #1089#1077#1082#1091#1085#1076#1099
-        '0 0 0 ? * * 2079 - '#1079#1072#1087#1088#1077#1090#1080#1090#1100' ))')
-      TabOrder = 1
     end
   end
   object OD_Task: TOracleDataSet
@@ -600,63 +503,6 @@ object FrmTask: TFrmTask
       Caption = #1069#1082#1089#1087#1086#1088#1090' '#1074' Excel'
       OnClick = Excel1Click
     end
-  end
-  object OD_taskxpar: TOracleDataSet
-    SQL.Strings = (
-      
-        'select t.*, p.val_tp, t.rowid from EXS.TASKXPAR t, oralv.u_hfpar' +
-        ' p'
-      'where t.fk_task=:fk_task and t.fk_par=p.id')
-    Optimize = False
-    Variables.Data = {
-      0400000001000000100000003A0046004B005F005400410053004B0003000000
-      0000000000000000}
-    QBEDefinition.QBEFieldDefs = {
-      050000000700000004000000490044000100000000000C00000046004B005F00
-      500041005200010000000000040000004E003100010000000000040000005300
-      310001000000000004000000440031000100000000000C000000560041004C00
-      5F00540050000100000000000E00000046004B005F005400410053004B000100
-      00000000}
-    Master = OD_Task
-    MasterFields = 'ID'
-    DetailFields = 'FK_TASK'
-    QueryAllRecords = False
-    RefreshOptions = [roBeforeEdit, roAfterInsert, roAfterUpdate, roAllFields]
-    Session = DataModule2.OracleSession1
-    DesignActivation = True
-    AfterInsert = OD_taskxparAfterInsert
-    AfterScroll = OD_taskxparAfterScroll
-    Left = 640
-    Top = 152
-    object OD_taskxparID: TFloatField
-      FieldName = 'ID'
-    end
-    object OD_taskxparFK_PAR: TFloatField
-      FieldName = 'FK_PAR'
-      Required = True
-    end
-    object OD_taskxparN1: TFloatField
-      FieldName = 'N1'
-    end
-    object OD_taskxparS1: TStringField
-      FieldName = 'S1'
-      Size = 1024
-    end
-    object OD_taskxparD1: TDateTimeField
-      FieldName = 'D1'
-    end
-    object OD_taskxparVAL_TP: TStringField
-      FieldName = 'VAL_TP'
-      Size = 2
-    end
-    object OD_taskxparFK_TASK: TFloatField
-      FieldName = 'FK_TASK'
-    end
-  end
-  object DS_taskxpar: TDataSource
-    DataSet = OD_taskxpar
-    Left = 680
-    Top = 152
   end
   object PopupMenu2: TPopupMenu
     Left = 1009

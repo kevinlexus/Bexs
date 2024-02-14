@@ -90,7 +90,7 @@ object FrmMain: TFrmMain
       end
     end
     object Ver1011: TMenuItem
-      Caption = 'ver 1.19'
+      Caption = 'ver 1.20'
     end
   end
   object ImageList1: TImageList

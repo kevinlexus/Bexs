@@ -1,9 +1,9 @@
 object FrmSelReu: TFrmSelReu
   Left = 1095
   Top = 169
-  Width = 252
-  Height = 114
   Caption = #1042#1099#1073#1086#1088' '#1059#1050
+  ClientHeight = 75
+  ClientWidth = 236
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -56,8 +56,8 @@ object FrmSelReu: TFrmSelReu
       'order by t.reu')
     Optimize = False
     QBEDefinition.QBEFieldDefs = {
-      0400000002000000040000004E414D4501000000000003000000524555010000
-      000000}
+      0500000002000000080000004E0041004D004500010000000000060000005200
+      45005500010000000000}
     Session = DataModule2.OracleSession1
     Active = True
   end

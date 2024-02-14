@@ -81,26 +81,6 @@ type
     Eolink1: TMenuItem;
     OD_TaskEOLTP_NAME: TStringField;
     cxGrid1DBTableView1EOLTPNAME: TcxGridDBColumn;
-    OD_taskxpar: TOracleDataSet;
-    OD_taskxparID: TFloatField;
-    OD_taskxparFK_PAR: TFloatField;
-    OD_taskxparN1: TFloatField;
-    OD_taskxparS1: TStringField;
-    OD_taskxparD1: TDateTimeField;
-    OD_taskxparVAL_TP: TStringField;
-    DS_taskxpar: TDataSource;
-    Splitter1: TSplitter;
-    OD_taskxparFK_TASK: TFloatField;
-    Panel1: TPanel;
-    cxGrid2: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
-    cxGridDBTableView1ID: TcxGridDBColumn;
-    cxGridDBTableView1FK_PAR: TcxGridDBColumn;
-    cxGridDBTableView1Column1: TcxGridDBColumn;
-    cxGridDBTableView1N1: TcxGridDBColumn;
-    cxGridDBTableView1S1: TcxGridDBColumn;
-    cxGridDBTableView1D1: TcxGridDBColumn;
-    cxGridLevel1: TcxGridLevel;
     PopupMenu2: TPopupMenu;
     Crone1: TMenuItem;
     INS1: TMenuItem;
@@ -115,7 +95,6 @@ type
     cxGrid1DBTableView1OBJ_ADR: TcxGridDBColumn;
     N3: TMenuItem;
     Excel1: TMenuItem;
-    Memo1: TMemo;
     OD_TaskFK_PROC_UK: TFloatField;
     cxGrid1DBTableView1FK_PROC_UK: TcxGridDBColumn;
     OD_TaskDT_NEXTSTART: TDateTimeField;
@@ -191,7 +170,7 @@ begin
     begin
       OD_Task.ReadOnly:=true;
     end;}
-  OD_taskxpar.Active := true;
+//  OD_taskxpar.Active := true;
   // счетчик записей
   loadRec := 0;
 end;
@@ -261,7 +240,7 @@ end;
 
 procedure TFrmTask.OD_taskxparAfterScroll(DataSet: TDataSet);
 begin
-  if (OD_taskxpar.FieldByName('VAL_TP').AsString = 'NM')
+{  if (OD_taskxpar.FieldByName('VAL_TP').AsString = 'NM')
     or (OD_taskxpar.FieldByName('VAL_TP').AsString = 'BL') then
   begin
     OD_taskxpar.FieldByName('N1').ReadOnly := False;
@@ -283,13 +262,13 @@ begin
     OD_taskxpar.FieldByName('D1').ReadOnly := False;
     Crone1.Enabled := false;
   end
-
+ }
 end;
 
 procedure TFrmTask.OD_taskxparAfterInsert(DataSet: TDataSet);
 begin
-  OD_taskxpar.FieldByName('FK_TASK').AsInteger :=
-    OD_task.FieldByName('ID').AsInteger;
+//  OD_taskxpar.FieldByName('FK_TASK').AsInteger :=
+//    OD_task.FieldByName('ID').AsInteger;
 end;
 
 procedure TFrmTask.Crone1Click(Sender: TObject);
@@ -435,8 +414,8 @@ begin
   col := cxGrid1DBTableView1.GetColumnByFieldName('DT_NEXTSTART');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('LAG_NEXTSTART');
-  col.Visible := isColumnsVisible;
-  col := cxGrid1DBTableView1.GetColumnByFieldName('NAME_REU');
+  //col.Visible := isColumnsVisible;
+  //col := cxGrid1DBTableView1.GetColumnByFieldName('NAME_REU');
   col.Visible := isColumnsVisible;
   col := cxGrid1DBTableView1.GetColumnByFieldName('ID_FROM');
   col.Visible := isColumnsVisible;
